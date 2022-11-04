@@ -1,4 +1,13 @@
-let x = 200;
-let y = 300;
-let width = 210;
-let height = 244;
+class HouseB {
+    constructor() {
+        this.x = 200;
+        this.y = 300;
+        this.width = 210;
+        this.height = 244;
+        this.image = loadImage('assets/images/house-b.png');
+    }
+
+    draw() {
+        image(this.image,this.x,this.y,this.width,this.height);
+    }
+}

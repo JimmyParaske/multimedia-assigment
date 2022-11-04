@@ -1,15 +1,34 @@
-import menuBackground from './assets/menuBackground.png';
-import Button from './src/button';
-
-export default class startMenu{
-  constructor(p5){
-    this.p5 = p5;
-    this.background = p5.loadImage(menuBackground);
-    startButton = new Button(this.p5,10,10,'start');
+class Background {
+  constructor() {
+    this.image = loadImage('assets/images/landscape.png');
+    this.music = loadSound('assets/sounds/start-music.mp3');
+    this.proceed = false;
   }
+
+  draw() {
+    //Backround
+    image(this.image, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2, CANVAS_WIDTH, CANVAS_HEIGHT);
+
+    //Music
+    this.music.play();
     
-  draw(){
-    this.p5.image(this.background,0,0);
-    startButton.draw();
+    //Game title
+    textFont();
+    fill(255);
+    stroke(0);
+    strokeWeight(10);
+    textSize(100, 100, 150);
+    text('Title');
+
+    //Buttons
+  }
+
+  setup() {
+
+  }
+
+  //Getters
+  getProceed() {
+    return this.proceed;
   }
 }

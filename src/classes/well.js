@@ -1,4 +1,13 @@
-let x = 200;
-let y = 300;
-let width = 65;
-let height = 65;
+class Well {
+    constructor() {
+        this.x = 200;
+        this.y = 300;
+        this.width = 65;
+        this.height = 65;
+        this.image = loadImage('assets/images/well.png');
+    }
+
+    draw() {
+        image(this.image,this.x,this.y,this.width,this.height);
+    }
+}
