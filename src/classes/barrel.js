@@ -1,10 +1,10 @@
-class Barrel {
+export default class Barrel {
     constructor() {
         this.x = 200;
         this.y = 300;
         this.width = 24;
         this.height = 30;
-        this.image = loadImage('assets/images/barrel.png');
+        this.image = loadImage('./assets/images/barrel.png');
     }
 
     draw() {

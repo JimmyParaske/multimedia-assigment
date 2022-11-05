@@ -4,16 +4,16 @@ class Player {
         this.y = 375;
         this.width = 70;
         this.height = 70;
-        this.image = loadImage('assets/images/player.png');
-        this.jumpSound = loadSound('assets/sounds/player-jump.mp3');
+        this.image = loadImage('./assets/images/barrel.png');
+        //this.jumpSound = loadSound('./assets/sounds/player-jump.mp3');
         this.jump = false;
     }
 
-    draw() {
+    display() {
         stroke(0);
         strokeWeight(2);
         fill(255, 255, 255);
-        image(geralt, this.x, this.y, pWidth, this.height);
+        image(this.image, this.x, this.y, this.width, this.height);
     }
 
     setup() {
@@ -51,7 +51,7 @@ class Player {
     }
 
     jump() {
-        this.jumpSound.play();
+        //this.jumpSound.play();
         this.jump = true;
     }
 

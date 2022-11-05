@@ -1,16 +1,16 @@
-class Background {
+export class StartMenu {
   constructor() {
-    this.image = loadImage('assets/images/landscape.png');
-    this.music = loadSound('assets/sounds/start-music.mp3');
+    this.image = loadImage('./assets/images/landscape.png');
+    //this.music = loadSound('/assets/sounds/start-music.mp3');
     this.proceed = false;
   }
 
-  draw() {
+  print() {
     //Backround
-    image(this.image, CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2, CANVAS_WIDTH, CANVAS_HEIGHT);
+    image(this.image, 100 / 2, 100 / 2, 100, 100);
 
     //Music
-    this.music.play();
+    //this.music.play();
     
     //Game title
     textFont();
@@ -21,10 +21,6 @@ class Background {
     text('Title');
 
     //Buttons
-  }
-
-  setup() {
-
   }
 
   //Getters

@@ -1,21 +1,12 @@
+//Imports
+import StartMenu from "/scenes/StartMenu.js";
+import Game from "/scenes/StartMenu.js";
+
 //game control
-var stage = 1; //which function to run
+var stage = 0; //which function to run
 //use draw to switch between stages
 
-//player
-var p1x = 400;//player variables 
-var p1y = 375;
-var pWidth = 70;
-var pHeight = 70;
-
-//boxes or platforms 
-var b1x = 200; //box 1 variables
-var b1y = 300;
-var bWidth = 200;
-var bHeight = 40;
-
 //gravity for jumps etc
-var jump = false;
 var direction = 1; //δυναμη βαρυτητας στον αξονα y
 var velocity = 2; //ταχυτητα
 var jumpHeight = 15; //ποσο ψηλα
@@ -25,38 +16,30 @@ var maxHeight = 50; //height cap
 var jumpCounter = 0; // keeps track of how much we are jumping ΙΣΩΣ ΕΙΝΑΙ ΧΡΗΣΙΜΟ ΑΜΑ ΤΟΥ ΒΑΛΟΥΜΕ DOUBLE JUMP!!!!!
 
 //multimedia
-var geralt;
-var platform;
 var landscape;
-var pl;
 
-
-//setup
 function setup() {
   createCanvas(800, 500);
   rectMode(CENTER);
   textAlign(CENTER);
   imageMode(CENTER);
+}
 
-  pl = new Player();
-}//close setup
-
-
-/////////////////////////////////////////draw
 function draw() {
-  //call functions
   keyPressed();
   keyTyped();
   gravity();
 
-  if (stage == 1) {
-    game();
-  }
+  game();
 
-}//close draw
+}
 
+function preload() {
+  geralt = loadImage('geralt_of_rivia.png');
+  platform = loadImage('platform_shadow.png');
+  landscape = loadImage('background1.png');
+}
 
-//////////////////////////////////////game
 function game() {
   //background color
   background(150, 90, 115) //purple
@@ -81,7 +64,11 @@ function game() {
   image(platform, b1x, b1y, bWidth, bHeight);
 
   ////////////////////////////////////draw player
-  pl.display();
+  stroke(0);
+  strokeWeight(2);
+  fill(255, 255, 255);
+  //rect(p1x, p1y, pWidth, pHeight);
+  image(geralt, p1x, p1y, pWidth, pHeight);
 
 
   /////////////////////////////////////////collisions
@@ -92,12 +79,10 @@ function game() {
 
   }
 
+}
 
-
-}//close game
-
-//////////////////////////////////////gravity
 function gravity() {
+
   if (p1y >= minHeight && jump == false) {
     //stopped falling
     p1y = p1y; //stay at ground
@@ -124,35 +109,31 @@ function gravity() {
   else {
     velocity = fallingspeed;
   }
-}//end gravity
+
+
+}
 
 ///////////////////////νουμερα και γραμματα keytyped
 ///////////////////////ενω space κλπ θελουν keypresssed
-
 function keyPressed() {
+
   if (keyIsDown(LEFT_ARROW)) {
-    pl.moveLeft();//πηγαινε αριστερα
+    p1x = p1x - 5;//πηγαινε αριστερα
   }
 
   if (keyIsDown(RIGHT_ARROW)) {
-    pl.moveRight();//πηγαινε δεξια
+    p1x = p1x + 5;//πηγαινε δεξια
   }
 
-}//end left/right
-
+}
 
 function keyTyped() {
   if (key === 'a') {
-    pl.jump();
+    jump = true;
   }
   else {
-    pl.noJump();
+    jump = false;
   }
-}//end jump
-
-
-function preload() {
-  geralt = loadImage('./assets/images/barrel.png');
-  platform = loadImage('./assets/images/wagon.png');
-  landscape = loadImage('./assets/images/landscape.png');
 }
+
+
