@@ -1,12 +1,9 @@
-//Imports
-import StartMenu from "/scenes/StartMenu.js";
-import Game from "/scenes/StartMenu.js";
-
 //game control
-var stage = 0; //which function to run
+var stage = 1; //which function to run
 //use draw to switch between stages
 
 //gravity for jumps etc
+var jump = false;
 var direction = 1; //δυναμη βαρυτητας στον αξονα y
 var velocity = 2; //ταχυτητα
 var jumpHeight = 15; //ποσο ψηλα
@@ -16,34 +13,41 @@ var maxHeight = 50; //height cap
 var jumpCounter = 0; // keeps track of how much we are jumping ΙΣΩΣ ΕΙΝΑΙ ΧΡΗΣΙΜΟ ΑΜΑ ΤΟΥ ΒΑΛΟΥΜΕ DOUBLE JUMP!!!!!
 
 //multimedia
-var landscape;
+var land;
+var pl;
+var cr;
 
+//setup
 function setup() {
   createCanvas(800, 500);
   rectMode(CENTER);
   textAlign(CENTER);
   imageMode(CENTER);
-}
 
+  land = new Landscape();
+  pl = new Player();
+  cr = new Crate();
+}//close setup
+
+
+/////////////////////////////////////////draw
 function draw() {
+  //call functions
   keyPressed();
   keyTyped();
   gravity();
 
-  game();
+  if (stage == 1) {
+    game();
+  }
 
-}
+}//close draw
 
-function preload() {
-  geralt = loadImage('geralt_of_rivia.png');
-  platform = loadImage('platform_shadow.png');
-  landscape = loadImage('background1.png');
-}
 
+//////////////////////////////////////game
 function game() {
   //background color
-  background(150, 90, 115) //purple
-  image(landscape, width / 2, height / 2, width, height);
+  land.display();
 
   //patwma/xwma
   noStroke();
@@ -57,45 +61,37 @@ function game() {
   rect(width / 2, height / 2, width, height);
 
   ////////////////////////////////////draw box
-  stroke(0);
-  strokeWeight(10);
-  fill(180, 55, 0);
-  //rect(b1x, b1y, bWidth, bHeight);
-  image(platform, b1x, b1y, bWidth, bHeight);
+  cr.display();
 
-  ////////////////////////////////////draw player
-  stroke(0);
-  strokeWeight(2);
-  fill(255, 255, 255);
-  //rect(p1x, p1y, pWidth, pHeight);
-  image(geralt, p1x, p1y, pWidth, pHeight);
+  ////////////////////////////////////draw pl
+  pl.display();
 
 
   /////////////////////////////////////////collisions
-  if (p1x >= b1x - bWidth / 2 && p1x <= b1x + bWidth / 2 && p1y + bHeight >= b1y - bHeight / 2 && p1y + pHeight <= b1y + bHeight / 2 && jump == false) {
-    p1y = p1y;
+  if (pl.getX() >= cr.getX() - cr.getWidth() / 2 && pl.getX() <= cr.getX() + cr.getWidth() / 2 && pl.getY() + cr.getHeight() >= cr.getY() - cr.getHeight() / 2 && pl.getY() + pHeight <= cr.getY() + cr.getHeight() / 2 && jump == false) {
     velocity = 0;
     jumpCounter = 0;
-
   }
 
-}
 
+
+}//close game
+
+//////////////////////////////////////gravity
 function gravity() {
-
-  if (p1y >= minHeight && jump == false) {
+  if (pl.getY() >= minHeight && jump == false) {
     //stopped falling
-    p1y = p1y; //stay at ground
+    pl.setY(pl.getY()); //stay at ground
     jumpCounter = 0; //reset counter
   }
   else {
-    p1y = p1y + (direction * velocity); //gravity makes you fall wow!
+    pl.setY(pl.getY() + (direction * velocity)); //gravity makes you fall wow!
   }
 
   if (jump == true) {
-    if (p1y <= maxHeight || jumpCounter > jumpHeight) {
-      if (p1y >= minHeight) {
-        p1y = minHeight; // stay at ground level, dont fall down 
+    if (pl.getY() <= maxHeight || jumpCounter > jumpHeight) {
+      if (pl.getY() >= minHeight) {
+        pl.setY(minHeight); // stay at ground level, dont fall down 
       }
       else {
         velocity = fallingspeed;
@@ -109,31 +105,28 @@ function gravity() {
   else {
     velocity = fallingspeed;
   }
-
-
-}
+}//end gravity
 
 ///////////////////////νουμερα και γραμματα keytyped
 ///////////////////////ενω space κλπ θελουν keypresssed
-function keyPressed() {
 
+function keyPressed() {
   if (keyIsDown(LEFT_ARROW)) {
-    p1x = p1x - 5;//πηγαινε αριστερα
+    pl.moveLeft();//πηγαινε αριστερα
   }
 
   if (keyIsDown(RIGHT_ARROW)) {
-    p1x = p1x + 5;//πηγαινε δεξια
+    pl.moveRight();//πηγαινε δεξια
   }
 
-}
+}//end left/right
+
 
 function keyTyped() {
   if (key === 'a') {
-    jump = true;
+    pl.jump();
   }
   else {
-    jump = false;
+    pl.noJump();
   }
-}
-
-
+}//end jump

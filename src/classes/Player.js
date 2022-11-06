@@ -6,19 +6,24 @@ class Player {
         this.height = 70;
         this.image = loadImage('./assets/images/barrel.png');
         //this.jumpSound = loadSound('./assets/sounds/player-jump.mp3');
-        this.jump = false;
+        this.j = false;
+        this.direction = 1;
+        this.velocity = 2;
+        this.jumpHeight = 15;
+        this.fallingSpeed = 2;
+        this.minHeight = 375;
+        this.maxHeight = 50;
+        this.jumpCounter = 0;
     }
 
     display() {
         stroke(0);
         strokeWeight(2);
         fill(255, 255, 255);
+        rect(this.x, this.y, this.width, this.height);
         image(this.image, this.x, this.y, this.width, this.height);
     }
 
-    setup() {
-
-    }
 
     //Getters
     getX() {
@@ -38,32 +43,74 @@ class Player {
     }
 
     getJump() {
-        return this.jump;
+        return this.j;
+    }
+
+    //Setters
+    setX(x) {
+        this.x = x;
+    }
+
+    setY(y) {
+        this.y = y;
+    }
+
+    setVelocity(velocity) {
+        this.velocity = velocity;
+    }
+
+    setJumpCounter(jumpCounter) {
+        this.jumpCounter = jumpCounter;
     }
 
     //Moves
     moveLeft() {
-        this.x = this.x - 5;
+        if (this.x + this.width / 2 >= 5) {
+            this.x = this.x - 5;
+        }
     }
 
     moveRight() {
-        this.x = this.x + 5;
+        if (this.x + this.width / 2 <= 800 - 5) {
+            this.x = this.x + 5;
+        }
     }
 
     jump() {
         //this.jumpSound.play();
-        this.jump = true;
+        this.j = true;
     }
 
     noJump() {
-        this.jump = false;
+        this.j = false;
     }
 
-    //Player hits Crate
-    hits(c) {
-        if (this.x >= c.getX() - c.getWidth() / 2 && this.x <= c.getX() + c.getWidth() / 2 && this.y + c.getWidth() >= c.getY() - c.getWidth() / 2 && this.y + this.height <= c.getY() + c.getWidth() / 2 && jump == false) {
-            return true;
+    gravity() {
+        if (this.y >= this.minHeight && this.j == false) {
+            //stopped falling
+            this.y = this.y; //stay at ground
+            this.jumpCounter = 0; //reset counter
         }
-        return false;
+        else {
+            this.y = this.y + (this.direction * this.velocity);
+        }
+
+        if (this.j == true) {
+            if (this.y <= this.maxHeight || this.jumpCounter > this.jumpHeight) {
+                if (this.y >= this.minHeight) {
+                    this.y = this.minHeight; // stay at ground level, dont fall down 
+                }
+                else {
+                    this.velocity = this.fallingSpeed;
+                }
+            }
+            else {
+                this.velocity = -this.jumpHeight;
+                this.jumpCounter = this.jumpCounter + 1;
+            }
+        }
+        else {
+            this.velocity = this.fallingSpeed;
+        }
     }
 }

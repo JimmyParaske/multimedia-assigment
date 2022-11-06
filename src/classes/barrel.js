@@ -1,4 +1,4 @@
-export default class Barrel {
+class Barrel {
     constructor() {
         this.x = 200;
         this.y = 300;
@@ -7,8 +7,11 @@ export default class Barrel {
         this.image = loadImage('./assets/images/barrel.png');
     }
 
-    draw() {
-        image(this.image,this.x,this.y,this.width,this.height);
+    display() {
+        stroke(0);
+        strokeWeight(10);
+        fill(180, 55, 0);
+        image(this.image, this.x, this.y, this.width, this.height);
     }
 
     getX(){

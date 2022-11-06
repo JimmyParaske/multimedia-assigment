@@ -2,36 +2,11 @@
 var stage = 1; //which function to run
 //use draw to switch between stages
 
-//player
-var p1x = 400;//player variables 
-var p1y = 375;
-var pWidth = 70;
-var pHeight = 70;
-
-//boxes or platforms 
-var b1x = 200; //box 1 variables
-var b1y = 300;
-var bWidth = 200;
-var bHeight = 40;
-
-//gravity for jumps etc
-var jump = false;
-var direction = 1; //δυναμη βαρυτητας στον αξονα y
-var velocity = 2; //ταχυτητα
-var jumpHeight = 15; //ποσο ψηλα
-var fallingspeed = 2; //το ιδιο με velocity εφοσον είμαστε στην γη
-var minHeight = 375 //για να μην πεφτει κατω απο τον χαρτη 
-var maxHeight = 50; //height cap
-var jumpCounter = 0; // keeps track of how much we are jumping ΙΣΩΣ ΕΙΝΑΙ ΧΡΗΣΙΜΟ ΑΜΑ ΤΟΥ ΒΑΛΟΥΜΕ DOUBLE JUMP!!!!!
-
 //multimedia
-var geralt;
-var platform;
 var landscape;
 var pl;
+var cr;
 
-
-//setup
 function setup() {
   createCanvas(800, 500);
   rectMode(CENTER);
@@ -39,24 +14,21 @@ function setup() {
   imageMode(CENTER);
 
   pl = new Player();
-}//close setup
+  cr = new Crate();
+}
 
-
-/////////////////////////////////////////draw
 function draw() {
   //call functions
   keyPressed();
   keyTyped();
-  gravity();
+  pl.gravity();
 
   if (stage == 1) {
     game();
   }
 
-}//close draw
+}
 
-
-//////////////////////////////////////game
 function game() {
   //background color
   background(150, 90, 115) //purple
@@ -73,58 +45,19 @@ function game() {
   strokeWeight(5);
   rect(width / 2, height / 2, width, height);
 
-  ////////////////////////////////////draw box
-  stroke(0);
-  strokeWeight(10);
-  fill(180, 55, 0);
-  //rect(b1x, b1y, bWidth, bHeight);
-  image(platform, b1x, b1y, bWidth, bHeight);
-
   ////////////////////////////////////draw player
   pl.display();
 
+  ////////////////////////////////////draw box
+  cr.display();
 
-  /////////////////////////////////////////collisions
-  if (p1x >= b1x - bWidth / 2 && p1x <= b1x + bWidth / 2 && p1y + bHeight >= b1y - bHeight / 2 && p1y + pHeight <= b1y + bHeight / 2 && jump == false) {
-    p1y = p1y;
-    velocity = 0;
-    jumpCounter = 0;
-
-  }
-
-
-
-}//close game
-
-//////////////////////////////////////gravity
-function gravity() {
-  if (p1y >= minHeight && jump == false) {
-    //stopped falling
-    p1y = p1y; //stay at ground
-    jumpCounter = 0; //reset counter
-  }
-  else {
-    p1y = p1y + (direction * velocity); //gravity makes you fall wow!
-  }
-
-  if (jump == true) {
-    if (p1y <= maxHeight || jumpCounter > jumpHeight) {
-      if (p1y >= minHeight) {
-        p1y = minHeight; // stay at ground level, dont fall down 
-      }
-      else {
-        velocity = fallingspeed;
-      }
-    }
-    else {
-      velocity = -jumpHeight;
-      jumpCounter = jumpCounter + 1;
-    }
-  }
-  else {
-    velocity = fallingspeed;
-  }
-}//end gravity
+  /////////////////////////////////////////collisions  
+  //if ((pl.getX() + pl.getWidth() / 2 >= cr.getX() - cr.getWidth() / 2) && (pl.getX() - pl.getWidth() / 2 <= cr.getX() + cr.getWidth() / 2) && (pl.getY() + pl.getHeight() / 2 >= cr.getY() - cr.getHeight() / 2) && (pl.getY() - pl.getHeight() / 2 <= cr.getY() + cr.getHeight() / 2) && (pl.getJump() == false)) {
+    //pl.setY(pl.getY());
+    //pl.setVelocity(0);
+    //pl.setJumpCounter(0);
+  //}
+}
 
 ///////////////////////νουμερα και γραμματα keytyped
 ///////////////////////ενω space κλπ θελουν keypresssed
@@ -138,8 +71,7 @@ function keyPressed() {
     pl.moveRight();//πηγαινε δεξια
   }
 
-}//end left/right
-
+}
 
 function keyTyped() {
   if (key === 'a') {
@@ -152,7 +84,5 @@ function keyTyped() {
 
 
 function preload() {
-  geralt = loadImage('./assets/images/barrel.png');
-  platform = loadImage('./assets/images/wagon.png');
   landscape = loadImage('./assets/images/landscape.png');
 }

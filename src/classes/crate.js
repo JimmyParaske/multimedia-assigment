@@ -4,12 +4,17 @@ class Crate {
         this.y = 300;
         this.width = 39;
         this.height = 35;
-        this.image = loadImage('assets/images/crate.png');
+        this.image = loadImage('./assets/images/crate.png');
     }
 
-    draw() {
+    display() {
+        stroke(0);
+        strokeWeight(2);
+        fill(255, 255, 255);
+        rect(this.x, this.y, this.width, this.height);
         image(this.image, this.x, this.y, this.width, this.height);
     }
+
 
     //Getters
     getX() {
