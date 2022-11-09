@@ -1,7 +1,7 @@
 class Player {
     constructor() {
-        this.x = 400;
-        this.y = 375;
+        this.x = 300;
+        this.y = 470;
         this.width = 70;
         this.height = 70;
         this.image = loadImage('./assets/images/barrel.png');
@@ -11,7 +11,7 @@ class Player {
         this.velocity = 2;
         this.jumpHeight = 15;
         this.fallingSpeed = 2;
-        this.minHeight = 375;
+        this.minHeight = 470;
         this.maxHeight = 50;
         this.jumpCounter = 0;
     }
@@ -65,15 +65,11 @@ class Player {
 
     //Moves
     moveLeft() {
-        if (this.x + this.width / 2 >= 5) {
-            this.x = this.x - 5;
-        }
+        this.x = this.x - 5;
     }
 
     moveRight() {
-        if (this.x + this.width / 2 <= 800 - 5) {
-            this.x = this.x + 5;
-        }
+        this.x = this.x + 5;
     }
 
     jump() {

@@ -1,7 +1,7 @@
 class Crate {
-    constructor() {
-        this.x = 200;
-        this.y = 300;
+    constructor(x,y) {
+        this.x = x;
+        this.y = y;
         this.width = 39;
         this.height = 35;
         this.image = loadImage('./assets/images/crate.png');
@@ -12,7 +12,7 @@ class Crate {
         strokeWeight(2);
         fill(255, 255, 255);
         rect(this.x, this.y, this.width, this.height);
-        image(this.image, this.x, this.y, this.width, this.height);
+        image(this.image, this.x, this.y, this.width*2, this.height*2);
     }
 
 
