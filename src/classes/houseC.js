@@ -7,7 +7,7 @@ class HouseC {
         this.image = loadImage('assets/images/house-c.png');
     }
 
-    draw() {
+    display() {
         image(this.image,this.x,this.y,this.width,this.height);
     }
 }

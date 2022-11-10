@@ -8,10 +8,6 @@ class Crate {
     }
 
     display() {
-        stroke(0);
-        strokeWeight(2);
-        fill(255, 255, 255);
-        rect(this.x, this.y, this.width, this.height);
         image(this.image, this.x, this.y, this.width*2, this.height*2);
     }
 

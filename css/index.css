@@ -1,0 +1,72 @@
+.header {
+    background-color: #5680e9;
+    /* background χρωμα header και περιεχομενων του, margins ωστε αριστερα δεξια να ειναι μπλε και πανω ωστε να ειναι μπλε και πιο ψηλα το λογοτυπο επισης */
+    text-align: center;
+    margin-top: -50px;
+    margin-left: -10px;
+    margin-right: -10px;
+}
+
+.menu {
+    font-family: Arial, Helvetica, sans-serif;
+    /* font για nav οπως και display block αντι για inline padding ωστε να , background color για να εχει αντιθεση με το Png λογοτυπο και line height για να ειναι λιγο πιο κατω απο το λογοτυπο. το sticky ειναι για να μενει το μενου στην σελιδα μεσα οταν κανεις scroll down  */
+    display: block;
+    padding: 8px;
+    background-color: #84ceeb;
+    float: none;
+    line-height: 33px;
+    position: sticky;
+    top: 0;
+    width: 100%;
+
+}
+
+.menu a {
+
+    color: black;
+    /* χρωμα για κομπια nav font size αλλα και padding ωστε να ειναι ομοιομορφα και μοιρασμενα ωραια μεσα στην σελιδα με κενα μεταξυ τους */
+    font-size: 20px;
+    text-decoration: none;
+    padding: 14px 16px;
+    font-weight: bold;
+
+
+}
+
+.menu a:visited {
+
+    text-decoration: none;
+    /* οταν το εχεις επισκεφθει το λινκ δεν γινεται τιποτα */
+}
+
+.menu a:hover {
+
+    background-color: #2ea8d9;
+    /* οταν κανεις hover γινεται πιο σκουρο το τετραγωνο κουμπι nav */
+
+}
+
+.menu a:active {
+
+    color: grey;
+    /* οταν πατας το λινκ θα γινεται στιγμιαια γκρι */
+}
+
+
+.menu .active {
+    background-color: #2ea8d9;
+    /* το χρωμα του τωρινου nav button */
+}
+
+.button {
+    border: none;
+    color: white;
+    background-color: #4CAF50;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}

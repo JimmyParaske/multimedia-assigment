@@ -1,24 +1,23 @@
 class Player {
     constructor() {
-        this.x = 300;
-        this.y = 470;
+        this.x = 400;
+        this.y = 465;
         this.width = 70;
         this.height = 70;
         this.image = loadImage('./assets/images/barrel.png');
         //this.jumpSound = loadSound('./assets/sounds/player-jump.mp3');
+        this.speed = 5;
         this.j = false;
         this.direction = 1;
         this.velocity = 2;
-        this.jumpHeight = 15;
-        this.fallingSpeed = 2;
-        this.minHeight = 470;
+        this.jumpHeight = 10;
+        this.fallingSpeed = 4;
+        this.minHeight = 465;
         this.maxHeight = 50;
         this.jumpCounter = 0;
     }
 
     display() {
-        stroke(0);
-        strokeWeight(2);
         fill(255, 255, 255);
         rect(this.x, this.y, this.width, this.height);
         image(this.image, this.x, this.y, this.width, this.height);
@@ -65,11 +64,11 @@ class Player {
 
     //Moves
     moveLeft() {
-        this.x = this.x - 5;
+        this.x = this.x - this.speed;
     }
 
     moveRight() {
-        this.x = this.x + 5;
+        this.x = this.x + this.speed;
     }
 
     jump() {

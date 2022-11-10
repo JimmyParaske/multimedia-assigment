@@ -7,7 +7,7 @@ class Wagon {
         this.image = loadImage('assets/images/wagon.png');
     }
 
-    draw() {
+    display() {
         image(this.image,this.x,this.y,this.width,this.height);
     }
 }

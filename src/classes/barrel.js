@@ -8,9 +8,6 @@ class Barrel {
     }
 
     display() {
-        stroke(0);
-        strokeWeight(10);
-        fill(180, 55, 0);
         image(this.image, this.x, this.y, this.width*2, this.height*2);
     }
 
