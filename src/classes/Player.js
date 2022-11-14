@@ -118,27 +118,17 @@ class Player {
         /* KATI EXW KANEI KAI FREEZAREI AMA PAS ARISTERA H DEKSIA H PATHSEIS ALLO PLHKTRO TO JUMP */
         /* DHLADH KAPOY KRATAEI TO THIS.Y = THIS.Y ENW DEN PREPEI */
     
+        this.velocity  += this.fallingSpeed
+        this.y += this.velocity
         
-        this.velocity  += this.fallingSpeed;
-        this.y += this.velocity;
-        
-
-        if(this.y>=this.minHeight && this.j == false) {
-
-            if(this.y = this.minHeight){
-                this.velocity = 0
-                this.y = this.minHeight;
-            }
-            else{
-                this.velocity = 0
-                this.y = this.y;
-            }   
-            this.jumpCounter = 0;
+        if(this.y>this.minHeight) {
+            this.velocity = 0
+            this.y = this.minHeight
             if (keyIsDown(UP_ARROW)) {
-                this.velocity += this.jumpHeight;
-            
-            }   
+                this.velocity += this.jumpHeight
+            } 
         }
+        
         
             
         /* H SYNTHIKH IF(THIS.J == TRUE DEN EINAI ETOIMH) !!!!!!!!!!!!!!!! */
@@ -147,34 +137,6 @@ class Player {
         //this.jump();
         
 
-        if(this.j == true){
-            //this.jumpHeight= -25;
-            if (this.y <= this.maxHeight || this.jumpCounter > abs(this.jumpHeight)) {
-                if (this.y >= this.minHeight) {
-                    this.y = this.minHeight; // stay at ground level, dont fall down 
-                    this.velocity =0;
-                }
-                else{
-                   
-                    this.velocity  += this.fallingSpeed;
-                }
-            }
-            else{
-                if (keyIsDown(UP_ARROW)) {
-                    this.velocity += this.jumpHeight;
-                
-                }   
-                this.jumpCounter = this.jumpCounter + 1;
-
-            }
-
-
-
-        }
-        else{
-
-            this.velocity  += this.fallingSpeed;
-        }
-
+    
     }
 }
