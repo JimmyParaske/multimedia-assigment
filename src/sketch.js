@@ -49,7 +49,9 @@ function setup() {
 function draw() {
   //call functions
   keyPressed();
+  keyReleased();
   pl.gravity();
+  
 
   // Background
   land.setStage(stage);
@@ -69,11 +71,16 @@ function game(stage) {
     sign.display();
 
     // Collisions  
-    //if ((pl.getX() + pl.getWidth() / 2 >= crate1.getX() - crate1.getWidth() / 2) && (pl.getX() - pl.getWidth() / 2 <= crate1.getX() + crate1.getWidth() / 2) && (pl.getY() + pl.getHeight() / 2 >= crate1.getY() - crate1.getHeight() / 2) && (pl.getY() - pl.getHeight() / 2 <= crate1.getY() + crate1.getHeight() / 2) && (pl.getJump() == false)) {
-    //pl.setY(pl.getY());
-    //pl.setVelocity(0);
-    //pl.setJumpCounter(0);
-    //}
+    if ((pl.getX() + pl.getWidth() / 2 >= crate1.getX() - crate1.getWidth() / 2) && (pl.getX() - pl.getWidth() / 2 <= crate1.getX() + crate1.getWidth() / 2) && (pl.getY() + pl.getHeight() / 2 >= crate1.getY() - crate1.getHeight() / 2) && (pl.getY() - pl.getHeight() / 2 <= crate1.getY() + crate1.getHeight() / 2) && (pl.getJump() == false)) {
+      //pl.setY(pl.getY());
+      //pl.setVelocity(0);
+      //pl.setJumpCounter(0);
+    }
+
+
+    
+
+
 
     // Breaks
   } else if (stage == 2) {
@@ -97,7 +104,7 @@ function game(stage) {
 // Moves
 function keyPressed() {
   // Left
-  if (keyIsDown(65)) {
+  if (keyIsDown(LEFT_ARROW)) {
     if ((pl.getX() - pl.getWidth() / 2 >= 5) || (!(stage == 1) && (pl.getX() >= 5))) {
       pl.moveLeft();
     } else if (!(stage == 1)) {
@@ -107,7 +114,7 @@ function keyPressed() {
   }
 
   // Right
-  if (keyIsDown(68)) {
+  if (keyIsDown(RIGHT_ARROW)) {
     if ((pl.getX() + pl.getWidth() / 2 <= (width - 5)) || (!(stage == 3) && (pl.getX() <= (width - 5)))) {
       pl.moveRight();
     } else if (!(stage == 3)) {
@@ -116,11 +123,23 @@ function keyPressed() {
     }
   }
 
+  // AUTO OUSIASTIKA EINAI TRUE OSO PATAME TO KOUMPI ALLA EINAI LATHOS DIOTI TWRA TO PATAS MIA FORA KAI PHGAINEI PANW 
+  // ARA PREPEI NA GINETAI MIA FORA OXI OSO PATAS TO PANW VELOS!!!!!!!!!!!!!!!!!
+
   // Jump
-  if (key === ' ') {
-    pl.jump();
+  if (keyCode === UP_ARROW) {
+    //pl.jump();
   }
-  else {
-    pl.noJump();
-  }
+  
+  
+
 }
+
+
+function keyReleased(){
+
+  if (keyCode === UP_ARROW) {
+    //pl.noJump();
+  }
+
+} 

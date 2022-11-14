@@ -9,9 +9,9 @@ class Player {
         this.speed = 5;
         this.j = false;
         this.direction = 1;
-        this.velocity = 2;
-        this.jumpHeight = 10;
-        this.fallingSpeed = 4;
+        this.velocity = 0;
+        this.jumpHeight = -15;
+        this.fallingSpeed = 0.5;
         this.minHeight = 465;
         this.maxHeight = 50;
         this.jumpCounter = 0;
@@ -77,10 +77,11 @@ class Player {
     }
 
     noJump() {
+        
         this.j = false;
     }
 
-    gravity() {
+    /*gravity() {
         if (this.y >= this.minHeight && this.j == false) {
             //stopped falling
             this.y = this.y; //stay at ground
@@ -107,5 +108,73 @@ class Player {
         else {
             this.velocity = this.fallingSpeed;
         }
+    } */
+
+
+    /* MPOROUME AMA EINAI NA TO KALOUME MESW THS JUMP KAI MESA STIS IF NA VAZOUME SAN SYNTHIKH TO JUMP TRUE/FALSE EPISHS!!!! */
+
+    gravity(){
+
+        /* KATI EXW KANEI KAI FREEZAREI AMA PAS ARISTERA H DEKSIA H PATHSEIS ALLO PLHKTRO TO JUMP */
+        /* DHLADH KAPOY KRATAEI TO THIS.Y = THIS.Y ENW DEN PREPEI */
+    
+        
+        this.velocity  += this.fallingSpeed;
+        this.y += this.velocity;
+        
+
+        if(this.y>=this.minHeight && this.j == false) {
+
+            if(this.y = this.minHeight){
+                this.velocity = 0
+                this.y = this.minHeight;
+            }
+            else{
+                this.velocity = 0
+                this.y = this.y;
+            }   
+            this.jumpCounter = 0;
+            if (keyIsDown(UP_ARROW)) {
+                this.velocity += this.jumpHeight;
+            
+            }   
+        }
+        
+            
+        /* H SYNTHIKH IF(THIS.J == TRUE DEN EINAI ETOIMH) !!!!!!!!!!!!!!!! */
+
+        /* EXW VALEI OTAN GINETAI TRUE NA PHDAEI PIO PSHLA GIA NA KATALAVNW POTE GINETAI TRUE KAI PWS/ME TI KOUMPI/SYNDIASMO GINETAI TRUE!!! */
+        //this.jump();
+        
+
+        if(this.j == true){
+            //this.jumpHeight= -25;
+            if (this.y <= this.maxHeight || this.jumpCounter > abs(this.jumpHeight)) {
+                if (this.y >= this.minHeight) {
+                    this.y = this.minHeight; // stay at ground level, dont fall down 
+                    this.velocity =0;
+                }
+                else{
+                   
+                    this.velocity  += this.fallingSpeed;
+                }
+            }
+            else{
+                if (keyIsDown(UP_ARROW)) {
+                    this.velocity += this.jumpHeight;
+                
+                }   
+                this.jumpCounter = this.jumpCounter + 1;
+
+            }
+
+
+
+        }
+        else{
+
+            this.velocity  += this.fallingSpeed;
+        }
+
     }
 }
