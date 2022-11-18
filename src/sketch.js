@@ -1,11 +1,13 @@
 // Game control
 var stage = 1;
-
+let geraltImg;
 // Classes
 var land;
 var pl;
+let geralt;
 // Stage 1
 var crate1;
+var crate;
 var barrel1;
 var barrel2;
 var sign;
@@ -17,6 +19,11 @@ var crate4;
 // Stage 3
 var well;
 
+function preload(){
+
+ geraltImg = loadImage('./assets/images/geralt_of_rivia.png');
+}
+
 function setup() {
   // Setup
   createCanvas(900, 576);
@@ -27,11 +34,27 @@ function setup() {
   // Background
   land = new Landscape();
 
+  world.gravity.y=10;
+  //floor
+  floor= createSprite(450,515,900,10);
+  floor.collider = 'static'
+  // na exafanizetai
+  //floor.visible = false;
+
   // Player
-  pl = new Player();
+  //pl = new Player();
+  geralt = createSprite(400,465,80,80);
+  geraltImg.resize(88,80);
+  geralt.addImage(geraltImg);
+ 
+
 
   // Stage 1
   crate1 = new Crate(59, 470);
+  crate =  createSprite(59,470, 78, 70);
+  crate.collider = 'static';
+
+ 
   barrel1 = new Barrel(470, 475);
   barrel2 = new Barrel(530, 475);
   sign = new Sign(710, 402);
@@ -47,11 +70,15 @@ function setup() {
 }
 
 function draw() {
+  
   //call functions
   keyPressed();
   keyReleased();
-  pl.gravity();
+  //pl.gravity();
   
+
+  //!!!!!!!!!!emfanizei exafanizei ta sprites!!!!
+  //drawSprites();
 
   // Background
   land.setStage(stage);
@@ -61,7 +88,7 @@ function draw() {
 }
 
 function game(stage) {
-  pl.display();
+  //pl.display();
 
   if (stage == 1) {
     // Draw classes
@@ -71,16 +98,28 @@ function game(stage) {
     sign.display();
 
     // Collisions  
-    if ((pl.getX() + pl.getWidth() / 2 >= crate1.getX() - crate1.getWidth() / 2) && (pl.getX() - pl.getWidth() / 2 <= crate1.getX() + crate1.getWidth() / 2) && (pl.getY() + pl.getHeight() / 2 >= crate1.getY() - crate1.getHeight() / 2) && (pl.getY() - pl.getHeight() / 2 <= crate1.getY() + crate1.getHeight() / 2) && (pl.getJump() == false)) {
+    //if ((pl.getX() + pl.getWidth() / 2 >= crate1.getX() - crate1.getWidth() / 2) && (pl.getX() - pl.getWidth() / 2 <= crate1.getX() + crate1.getWidth() / 2) && (pl.getY() + pl.getHeight() / 2 >= crate1.getY() - crate1.getHeight() / 2) && (pl.getY() - pl.getHeight() / 2 <= crate1.getY() + crate1.getHeight() / 2) && (pl.getJump() == false)) {
       //pl.setY(pl.getY());
       //pl.setVelocity(0);
       //pl.setJumpCounter(0);
+    //}
+
+
+    //geralt movement
+    /*if (kb.pressing('ArrowLeft')) {
+      geralt.vel.x = -4;
     }
-
-
+    else {
+      geralt.vel.x = 0;
+    }
     
-
-
+    if (kb.pressing('ArrowRight')) {
+      geralt.vel.x = +4;
+    }
+    else {
+      geralt.vel.x = 0;
+    }
+    */
 
     // Breaks
   } else if (stage == 2) {
@@ -103,8 +142,23 @@ function game(stage) {
 
 // Moves
 function keyPressed() {
+
+//geralt movement
+
+  if(keyIsDown(LEFT_ARROW)){
+
+    geralt.vel.x = -5;
+  }
+  else if(keyIsDown(RIGHT_ARROW)){
+    geralt.vel.x = +5;
+  }
+  else{
+    geralt.vel.x = 0;
+  }
+
+  
   // Left
-  if (keyIsDown(LEFT_ARROW)) {
+  /*if (keyIsDown(LEFT_ARROW)) {
     if ((pl.getX() - pl.getWidth() / 2 >= 5) || (!(stage == 1) && (pl.getX() >= 5))) {
       pl.moveLeft();
     } else if (!(stage == 1)) {
@@ -131,15 +185,17 @@ function keyPressed() {
     //pl.jump();
   }
   
-  
+  */
 
 }
 
 
 function keyReleased(){
 
-  if (keyCode === UP_ARROW) {
+
+/*  if (keyCode === UP_ARROW) {
     //pl.noJump();
   }
 
+  */
 } 
