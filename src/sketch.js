@@ -1,6 +1,9 @@
 // Game control
 var stage = 1;
 let geraltImg;
+let hop=-8;
+let fallingSpeed = 0.1;
+let minHeight=465
 // Classes
 var land;
 var pl;
@@ -75,7 +78,8 @@ function draw() {
   keyPressed();
   keyReleased();
   //pl.gravity();
-  
+  jump(geralt);
+  geralt.vel.y += fallingSpeed;
 
   //!!!!!!!!!!emfanizei exafanizei ta sprites!!!!
   //drawSprites();
@@ -199,3 +203,23 @@ function keyReleased(){
 
   */
 } 
+
+
+
+//geralt jump
+
+function jump(sprite){
+
+  sprite.vel.y += fallingSpeed;
+  sprite.y += sprite.vel.y;
+
+  if(sprite.y > minHeight){
+    sprite.vel.y=0;
+    sprite.y = minHeight;
+  
+    if(keyIsDown(DOWN_ARROW)){
+
+      sprite.vel.y= hop;
+    }
+  }
+}
