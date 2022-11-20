@@ -2,8 +2,8 @@
 var stage = 1;
 let geraltImg;
 let hop=-8;
-let fallingSpeed = 0.1;
-let minHeight=465
+let fallingSpeed = 0.2;
+let minHeight=465;
 // Classes
 var land;
 var pl;
@@ -24,7 +24,8 @@ var well;
 
 function preload(){
 
- geraltImg = loadImage('./assets/images/geralt_of_rivia.png');
+  geraltImg = loadImage('./assets/images/geralt_of_rivia.png');
+  crateImg = loadImage('./assets/images/crate_cropped.png');
 }
 
 function setup() {
@@ -36,6 +37,10 @@ function setup() {
 
   // Background
   land = new Landscape();
+
+  //camera
+  //camera.x=100;
+  camera.y=100;
 
   //world gravity
   world.gravity.y=10;
@@ -71,6 +76,8 @@ function setup() {
   crate1 = new Crate(59, 470);
   crate =  createSprite(59,470, 78, 70);
   crate.collider = 'static';
+  crateImg.resize(83,74);
+  crate.addImage(crateImg);
   
 
   jumpingAssets.add(crate);
@@ -92,12 +99,18 @@ function setup() {
 function draw() {
   
   //call functions
+  //camera
+  //camera.x=400;
+  camera.y=290;
+  camera.on();
   keyPressed();
   keyReleased();
+  
   //pl.gravity();
   jump(geralt);
-  geralt.vel.y += fallingSpeed;
-
+  
+	//camera.y = geralt.y;
+  camera.x=geralt.x;
   //!!!!!!!!!!emfanizei exafanizei ta sprites!!!!
   //drawSprites();
 
@@ -106,6 +119,7 @@ function draw() {
   land.display();
 
   game(stage);
+  camera.off();
 }
 
 function game(stage) {
@@ -169,9 +183,14 @@ function keyPressed() {
   if(keyIsDown(LEFT_ARROW)){
 
     geralt.vel.x = -5;
+
+    /*if(geralt.x>400){
+      camera.x += -5;
+    }*/
   }
   else if(keyIsDown(RIGHT_ARROW)){
     geralt.vel.x = +5;
+    /*camera.x += +5;*/
   }
   else{
     geralt.vel.x = 0;
@@ -243,9 +262,10 @@ function jump(sprite){
   
 
   //EDW THELEI SPRITE GROUPS GIA PLATFORMS BARRELS CRATES KLP
+  // EINAI LIGO BUGGY AMA TA VALW SE ENA GROUP OPOTE PROS TO PARON TO KATHE ENA SE KSEXWRISTO IF !!!!
 
-  if(sprite.collided(jumpingAssets)){
-    //sprite.vel.y=0;
+  if(sprite.colliding(crate)){
+    sprite.vel.y=0;
     //sprite.y = 393;
   
     if(keyIsDown(UP_ARROW)){
@@ -253,5 +273,8 @@ function jump(sprite){
       sprite.vel.y= hop;
     }
 
-  }
+  } 
+
+ 
+
 }
