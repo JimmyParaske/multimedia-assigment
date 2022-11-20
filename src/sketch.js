@@ -37,6 +37,7 @@ function setup() {
   // Background
   land = new Landscape();
 
+  //world gravity
   world.gravity.y=10;
   //floor
   floor= createSprite(450,515,900,10);
@@ -44,9 +45,23 @@ function setup() {
   // na exafanizetai
   //floor.visible = false;
 
+  //block
+  //block=createSprite(400,300,900,10);
+  //block.collider='static'; 
+
+  //jumping assets group
+  jumpingAssets = new Group();
+ 
+
   // Player
   //pl = new Player();
   geralt = createSprite(400,465,80,80);
+
+  //για να ειναι το σωστο collider και να μην χτυπαει στο κενο πριν το κεφαλι του geralt;
+  //geralt.setCollider("rectangle",0,0,80,80);
+
+  //για να μην κανει rotate ο geralt 
+  geralt.rotationLock = true;
   geraltImg.resize(88,80);
   geralt.addImage(geraltImg);
  
@@ -56,7 +71,9 @@ function setup() {
   crate1 = new Crate(59, 470);
   crate =  createSprite(59,470, 78, 70);
   crate.collider = 'static';
+  
 
+  jumpingAssets.add(crate);
  
   barrel1 = new Barrel(470, 475);
   barrel2 = new Barrel(530, 475);
@@ -210,16 +227,31 @@ function keyReleased(){
 
 function jump(sprite){
 
-  sprite.vel.y += fallingSpeed;
-  sprite.y += sprite.vel.y;
-
-  if(sprite.y > minHeight){
-    sprite.vel.y=0;
-    sprite.y = minHeight;
   
-    if(keyIsDown(DOWN_ARROW)){
+    sprite.vel.y += fallingSpeed;
+    sprite.y += sprite.vel.y;
+
+    if(sprite.y > minHeight){
+      sprite.vel.y=0;
+      sprite.y = minHeight;
+    
+      if(keyIsDown(UP_ARROW)){
+
+        sprite.vel.y= hop;
+      }
+    }
+  
+
+  //EDW THELEI SPRITE GROUPS GIA PLATFORMS BARRELS CRATES KLP
+
+  if(sprite.collided(jumpingAssets)){
+    //sprite.vel.y=0;
+    //sprite.y = 393;
+  
+    if(keyIsDown(UP_ARROW)){
 
       sprite.vel.y= hop;
     }
+
   }
 }
