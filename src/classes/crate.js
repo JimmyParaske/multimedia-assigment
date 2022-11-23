@@ -1,31 +1,35 @@
 class Crate {
     constructor(x,y) {
-        this.x = x;
-        this.y = y;
-        this.width = 39;
-        this.height = 35;
         this.image = loadImage('./assets/images/crate.png');
+
+        this.sprite = createSprite(this.image, x, y, 39, 35);
+
+        this.sprite.collider = 'static';
     }
 
     display() {
-        image(this.image, this.x, this.y, this.width*2, this.height*2);
+        this.image.resize(this.sprite.width*2,this.sprite.height*2); //TODO
     }
 
 
     //Getters
     getX() {
-        return this.x;
+        return this.sprite.x;
     }
 
     getY() {
-        return this.y;
+        return this.sprite.y;
     }
 
     getWidth() {
-        return this.width;
+        return this.sprite.width;
     }
 
     getHeigth() {
-        return this.height;
+        return this.sprite.height;
+    }
+
+    getSprite() {
+        return this.sprite;
     }
 }

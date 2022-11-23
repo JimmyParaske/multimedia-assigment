@@ -1,9 +1,10 @@
 // Game control
-var stage = 1;
+var worldGravity = 10;
 
 // Classes
 var land;
 var pl;
+
 // Stage 1
 var crate1;
 var barrel1;
@@ -27,6 +28,10 @@ function setup() {
   // Background
   land = new Landscape();
 
+  // Camera
+  camera.x = 100;
+  camera.y = 100;
+
   // Player
   pl = new Player();
 
@@ -47,80 +52,69 @@ function setup() {
 }
 
 function draw() {
-  //call functions
+  // Call functions
   keyPressed();
-  pl.gravity();
 
   // Background
-  land.setStage(stage);
+  land.setStage(1);
   land.display();
 
-  game(stage);
+  game();
 }
 
-function game(stage) {
+function game() {
+  camera.y = 290;
+  camera.on();
+  camera.x = pl.getX();
+
   pl.display();
+  crate1.display();
+  crate2.display();
+  crate3.display();
+  crate4.display();
 
-  if (stage == 1) {
-    // Draw classes
-    crate1.display();
-    barrel1.display();
-    barrel2.display();
-    sign.display();
+  // Jumping assets group
+  //jumpingAssets = new Group();
+  //jumpingAssets.add(crate);
 
-    // Collisions  
-    //if ((pl.getX() + pl.getWidth() / 2 >= crate1.getX() - crate1.getWidth() / 2) && (pl.getX() - pl.getWidth() / 2 <= crate1.getX() + crate1.getWidth() / 2) && (pl.getY() + pl.getHeight() / 2 >= crate1.getY() - crate1.getHeight() / 2) && (pl.getY() - pl.getHeight() / 2 <= crate1.getY() + crate1.getHeight() / 2) && (pl.getJump() == false)) {
-    //pl.setY(pl.getY());
-    //pl.setVelocity(0);
-    //pl.setJumpCounter(0);
-    //}
-
-    // Breaks
-  } else if (stage == 2) {
-    // Draw classes
-    lamp.display();
-    crate4.display();
-    crate3.display();
-    crate2.display();
-
-    // Collisions  
-
-    // Breaks
-  } else if (stage == 3) {
-    // Draw classes
-    well.display();
-
-    // Collisions  
-  }
+  camera.off();
 }
 
 // Moves
 function keyPressed() {
   // Left
-  if (keyIsDown(65)) {
-    if ((pl.getX() - pl.getWidth() / 2 >= 5) || (!(stage == 1) && (pl.getX() >= 5))) {
+  if (keyIsDown(LEFT_ARROW)) {
+    if ((pl.getX() - pl.getWidth() / 2 >= 5) && (pl.getX() >= 5)) {
       pl.moveLeft();
-    } else if (!(stage == 1)) {
-      stage -= 1;
-      pl.setX(width);
     }
   }
 
   // Right
-  if (keyIsDown(68)) {
-    if ((pl.getX() + pl.getWidth() / 2 <= (width - 5)) || (!(stage == 3) && (pl.getX() <= (width - 5)))) {
+  else if (keyIsDown(RIGHT_ARROW)) {
+    if ((pl.getX() + pl.getWidth() / 2 <= (width - 5)) && (pl.getX() <= (width - 5))) {
       pl.moveRight();
-    } else if (!(stage == 3)) {
-      stage += 1;
-      pl.setX(0);
     }
   }
 
-  // Jump
-  if (key === ' ') {
-    pl.jump();
-  }
   else {
-    pl.noJump();
+    pl.stay();
   }
+
+  // Jump
+  pl.jump();
+
+  //EDW THELEI SPRITE GROUPS GIA PLATFORMS BARRELS CRATES KLP
+  // EINAI LIGO BUGGY AMA TA VALW SE ENA GROUP OPOTE PROS TO PARON TO KATHE ENA SE KSEXWRISTO IF !!!!
+
+  // Collision 
+  // if(sprite.colliding(crate)){
+  //   sprite.vel.y=0;
+  //   //sprite.y = 393;
+
+  //   if(keyIsDown(UP_ARROW)){
+
+  //     sprite.vel.y= hop;
+  //   }
+
+  // }
 }

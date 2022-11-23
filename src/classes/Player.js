@@ -1,111 +1,83 @@
 class Player {
     constructor() {
-        this.x = 400;
-        this.y = 465;
-        this.width = 70;
-        this.height = 70;
-        this.image = loadImage('./assets/images/barrel.png');
-        //this.jumpSound = loadSound('./assets/sounds/player-jump.mp3');
+        this.image = loadImage('./assets/images/player.png');
+
+        this.sprite = createSprite(this.image, 400, 465, 70, 70);
+
+        this.sprite.rotationLock = true;
+        //για να ειναι το σωστο collider και να μην χτυπαει στο κενο πριν το κεφαλι του geralt;
+        //geralt.setCollider("rectangle",0,0,80,80);
+
         this.speed = 5;
-        this.j = false;
-        this.direction = 1;
-        this.velocity = 2;
-        this.jumpHeight = 10;
-        this.fallingSpeed = 4;
+        this.jumpHeight = -8;
+        this.fallingSpeed = 0.2;
         this.minHeight = 465;
         this.maxHeight = 50;
-        this.jumpCounter = 0;
     }
 
     display() {
-        fill(255, 255, 255);
-        rect(this.x, this.y, this.width, this.height);
-        image(this.image, this.x, this.y, this.width, this.height);
+        this.image.resize(88, 80); //TODO
     }
-
 
     //Getters
     getX() {
-        return this.x;
+        return this.sprite.x;
     }
 
     getY() {
-        return this.y;
+        return this.sprite.y;
     }
 
     getWidth() {
-        return this.width;
+        return this.sprite.width;
     }
 
     getHeigth() {
-        return this.height;
+        return this.sprite.height;
     }
 
-    getJump() {
-        return this.j;
+    getSprite() {
+        return this.sprite;
     }
 
     //Setters
     setX(x) {
-        this.x = x;
+        this.sprite.x = x;
     }
 
     setY(y) {
-        this.y = y;
+        this.sprite.y = y;
     }
 
-    setVelocity(velocity) {
-        this.velocity = velocity;
-    }
-
-    setJumpCounter(jumpCounter) {
-        this.jumpCounter = jumpCounter;
-    }
+    // setVelY(int){
+    //     this.sprite.vel.y = int;
+    // }
 
     //Moves
     moveLeft() {
-        this.x = this.x - this.speed;
+        this.sprite.vel.x = -this.speed;
     }
 
     moveRight() {
-        this.x = this.x + this.speed;
+        this.sprite.vel.x = +this.speed;
+    }
+
+    stay() {
+        this.sprite.vel.x = 0;
     }
 
     jump() {
         //this.jumpSound.play();
-        this.j = true;
-    }
+        this.sprite.vel.y += this.fallingSpeed;
+        this.sprite.y += this.sprite.vel.y;
 
-    noJump() {
-        this.j = false;
-    }
+        if (this.sprite.y > this.minHeight) {
+            this.sprite.vel.y = 0;
+            this.sprite.y = this.minHeight;
 
-    gravity() {
-        if (this.y >= this.minHeight && this.j == false) {
-            //stopped falling
-            this.y = this.y; //stay at ground
-            this.jumpCounter = 0; //reset counter
-        }
-        else {
-            this.y = this.y + (this.direction * this.velocity);
-        }
-
-        if (this.j == true) {
-            if (this.y <= this.maxHeight || this.jumpCounter > this.jumpHeight) {
-                if (this.y >= this.minHeight) {
-                    this.y = this.minHeight; // stay at ground level, dont fall down 
-                }
-                else {
-                    this.velocity = this.fallingSpeed;
-                }
+            if (keyIsDown(UP_ARROW)) {
+                this.sprite.vel.y = this.jumpHeight;
             }
-            else {
-                this.velocity = -this.jumpHeight;
-                this.jumpCounter = this.jumpCounter + 1;
-            }
-        }
-        else {
-            this.velocity = this.fallingSpeed;
         }
     }
 }
