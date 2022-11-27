@@ -9,23 +9,36 @@ var land;
 var pl;
 let geralt;
 // Stage 1
-var crate1;
 var crate;
 var barrel1;
 var barrel2;
 var sign;
 // Stage 2
+var wagon;
 var lamp;
+var crate1;
 var crate2;
 var crate3;
-var crate4;
+var floor1;
+var floor2;
 // Stage 3
 var well;
+var platform1;
+var platform2;
 
 function preload(){
 
   geraltImg = loadImage('./assets/images/geralt_of_rivia.png');
   crateImg = loadImage('./assets/images/crate_cropped.png');
+  cratestackedImg = loadImage('./assets/images/crate_stacked.png');
+  barrelImg = loadImage('./assets/images/barrel.png');
+  signImg = loadImage('./assets/images/sign.png');
+  wagonImg = loadImage('./assets/images/wagon.png');
+  floorImg = loadImage('./assets/images/floor.png');
+  floorshortImg = loadImage('./assets/images/floor_short.png');
+  wellImg = loadImage('./assets/images/welltop.png');
+  platformImg = loadImage('./assets/images/platform.png');
+
 }
 
 function setup() {
@@ -40,13 +53,14 @@ function setup() {
 
   //camera
   //camera.x=100;
-  camera.y=100;
+  //camera.y=400;
 
   //world gravity
   world.gravity.y=10;
+  
   //floor
-  floor= createSprite(450,515,900,10);
-  floor.collider = 'static'
+  //floor= createSprite(450,515,900,10);
+  //floor.collider = 'static'
   // na exafanizetai
   //floor.visible = false;
 
@@ -59,12 +73,8 @@ function setup() {
  
 
   // Player
-  //pl = new Player();
-  geralt = createSprite(400,465,80,80);
-
-  //για να ειναι το σωστο collider και να μην χτυπαει στο κενο πριν το κεφαλι του geralt;
-  //geralt.setCollider("rectangle",0,0,80,80);
-
+  geralt = createSprite(1500,465,67,80);
+  //-500
   //για να μην κανει rotate ο geralt 
   geralt.rotationLock = true;
   geraltImg.resize(88,80);
@@ -73,8 +83,8 @@ function setup() {
 
 
   // Stage 1
-  crate1 = new Crate(59, 470);
-  crate =  createSprite(59,470, 78, 70);
+ 
+  crate =  createSprite(-840,470, 78, 70);
   crate.collider = 'static';
   crateImg.resize(83,74);
   crate.addImage(crateImg);
@@ -82,18 +92,73 @@ function setup() {
 
   jumpingAssets.add(crate);
  
-  barrel1 = new Barrel(470, 475);
-  barrel2 = new Barrel(530, 475);
-  sign = new Sign(710, 402);
+  barrel1 = createSprite(-435, 475, 45, 55);
+  barrel1.collider='static';
+  barrelImg.resize(55,60);
+  barrel1.addImage(barrelImg);
+
+  barrel2 = createSprite(-370, 475, 45, 55);
+  barrel2.collider = 'static';
+  barrel2.addImage(barrelImg);
+
+  sign = createSprite(-189, 405, 60, 85);
+  sign.collider = 'static';
+  signImg.resize(70,100);
+  sign.addImage(signImg);
+
 
   // Stage 2
-  lamp = new Lamp(503, 397);
-  crate2 = new Crate(627, 404);
-  crate3 = new Crate(592, 470);
-  crate4 = new Crate(659, 470);
+
+  wagon = createSprite(0,430);
+  wagon.collider = 'static';
+  wagon.diameter = 170;
+  wagonImg.resize(190,170);
+  wagon.addImage(wagonImg);
+
+  //!!!!!!!!!! AXREIASTO  !!!!!!!!!!!!!
+  //lamp = new Lamp(503, 397);
+
+
+  crate1 = createSprite(627, 404, 70, 65);
+  crate1.collider = 'static';
+  crate1.addImage(crateImg);
+
+  crate2 = createSprite(595, 470, 70, 65);
+  crate2.collider = 'static';
+  crate2.addImage(crateImg);
+
+  crate3 = createSprite(665, 470, 65, 65);
+  crate3.collider = 'static';
+  cratestackedImg.resize(70,70);
+  crate3.addImage(cratestackedImg);
+
+  floor1 = createSprite(844, 390, 145, 40);
+  floor1.collider = 'static';
+  floorImg.resize(160,39);
+  floor1.addImage(floorImg);
+
+  floor2 = createSprite(957, 325, 120, 40);
+  floor2.collider = 'static';
+  floorshortImg.resize(127,39);
+  floor2.addImage(floorshortImg);
 
   // Stage 3
-  well = new Well(311, 440);
+  well = createSprite(1205, 390, 110, 15);
+  well.collider = 'static';
+  well.visible = false;
+
+  platform1 = createSprite(1435, 330, 185, 20);
+  platform1.collider = 'static';
+  platform1.visible = false;
+
+
+  platform2 = createSprite(1690, 300, 185, 20);
+  platform2.collider = 'static';
+  platform2.visible = false;
+
+
+
+
 }
 
 function draw() {
@@ -101,7 +166,7 @@ function draw() {
   //call functions
   //camera
   //camera.x=400;
-  camera.y=290;
+  //camera.y=290;
   camera.on();
   keyPressed();
   keyReleased();
@@ -109,8 +174,10 @@ function draw() {
   //pl.gravity();
   jump(geralt);
   
+  
 	//camera.y = geralt.y;
-  camera.x=geralt.x;
+  camera.x=geralt.x+50;
+
   //!!!!!!!!!!emfanizei exafanizei ta sprites!!!!
   //drawSprites();
 
@@ -118,7 +185,7 @@ function draw() {
   land.setStage(stage);
   land.display();
 
-  game(stage);
+  //game(stage);
   camera.off();
 }
 
@@ -173,7 +240,7 @@ function game(stage) {
 
     // Collisions  
   }
-}
+} 
 
 // Moves
 function keyPressed() {
@@ -275,6 +342,146 @@ function jump(sprite){
 
   } 
 
+  if(sprite.colliding(barrel1)){
+    sprite.vel.y=0;
+    //sprite.y = 393;
+  
+    if(keyIsDown(UP_ARROW)){
+
+      sprite.vel.y= hop;
+    }
+
+  } 
  
+  if(sprite.colliding(barrel2)){
+    sprite.vel.y=0;
+    //sprite.y = 393;
+  
+    if(keyIsDown(UP_ARROW)){
+
+      sprite.vel.y= hop;
+    }
+
+  } 
+
+  if(sprite.colliding(sign)){
+    sprite.vel.y=0;
+    //sprite.y = 393;
+  
+    if(keyIsDown(UP_ARROW)){
+
+      sprite.vel.y= hop;
+    }
+
+  } 
+
+
+  if(sprite.colliding(wagon)){
+    sprite.vel.y=0;
+    //sprite.y = 393;
+  
+    if(keyIsDown(UP_ARROW)){
+
+      sprite.vel.y= hop;
+    }
+
+  }
+
+
+  if(sprite.colliding(crate1)){
+    sprite.vel.y=0;
+    //sprite.y = 393;
+  
+    if(keyIsDown(UP_ARROW)){
+
+      sprite.vel.y= hop;
+    }
+
+  }
+
+  if(sprite.colliding(crate2)){
+    sprite.vel.y=0;
+    //sprite.y = 393;
+  
+    if(keyIsDown(UP_ARROW)){
+
+      sprite.vel.y= hop;
+    }
+
+  }
+
+  if(sprite.colliding(crate3)){
+    sprite.vel.y=0;
+    //sprite.y = 393;
+  
+    if(keyIsDown(UP_ARROW)){
+
+      sprite.vel.y= hop;
+    }
+
+  }
+
+
+  if(sprite.colliding(floor1)){
+    sprite.vel.y=0;
+    //sprite.y = 393;
+  
+    if(keyIsDown(UP_ARROW)){
+
+      sprite.vel.y= hop;
+    }
+
+  }
+
+
+  if(sprite.colliding(floor2)){
+    sprite.vel.y=0;
+    //sprite.y = 393;
+  
+    if(keyIsDown(UP_ARROW)){
+
+      sprite.vel.y= hop;
+    }
+
+  }
+
+
+  if(sprite.colliding(well)){
+    sprite.vel.y=0;
+    //sprite.y = 393;
+  
+    if(keyIsDown(UP_ARROW)){
+
+      sprite.vel.y= hop;
+    }
+
+  }
+
+
+  if(sprite.colliding(platform1)){
+    sprite.vel.y=0;
+    //sprite.y = 393;
+  
+    if(keyIsDown(UP_ARROW)){
+
+      sprite.vel.y= hop;
+    }
+
+  }
+
+
+
+  if(sprite.colliding(platform2)){
+    sprite.vel.y=0;
+    //sprite.y = 393;
+  
+    if(keyIsDown(UP_ARROW)){
+
+      sprite.vel.y= hop;
+    }
+
+  }
+
+
 
 }
