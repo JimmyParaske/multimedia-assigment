@@ -73,12 +73,13 @@ function setup() {
  
 
   // Player
-  geralt = createSprite(1500,465,67,80);
+  geralt = createSprite(-500,465,67,80);
   //-500
   //για να μην κανει rotate ο geralt 
   geralt.rotationLock = true;
   geraltImg.resize(88,80);
   geralt.addImage(geraltImg);
+  
  
 
 
@@ -86,34 +87,39 @@ function setup() {
  
   crate =  createSprite(-840,470, 78, 70);
   crate.collider = 'static';
-  crateImg.resize(83,74);
-  crate.addImage(crateImg);
+  //crateImg.resize(83,74);
+  //crate.addImage(crateImg);
+  crate.visible = false;
   
 
   jumpingAssets.add(crate);
  
   barrel1 = createSprite(-435, 475, 45, 55);
   barrel1.collider='static';
-  barrelImg.resize(55,60);
-  barrel1.addImage(barrelImg);
+  //barrelImg.resize(55,60);
+  //barrel1.addImage(barrelImg);
+  barrel1.visible = false;
 
   barrel2 = createSprite(-370, 475, 45, 55);
   barrel2.collider = 'static';
-  barrel2.addImage(barrelImg);
+  //barrel2.addImage(barrelImg);
+  barrel2.visible = false;
 
   sign = createSprite(-189, 405, 60, 85);
   sign.collider = 'static';
-  signImg.resize(70,100);
-  sign.addImage(signImg);
+  //signImg.resize(70,100);
+  //sign.addImage(signImg);
+  sign.visible=false;
 
 
   // Stage 2
 
   wagon = createSprite(0,430);
   wagon.collider = 'static';
-  wagon.diameter = 170;
-  wagonImg.resize(190,170);
-  wagon.addImage(wagonImg);
+  wagon.diameter = 155;
+  //wagonImg.resize(190,170);
+  //wagon.addImage(wagonImg);
+  wagon.visible = false;
 
   //!!!!!!!!!! AXREIASTO  !!!!!!!!!!!!!
   //lamp = new Lamp(503, 397);
@@ -121,26 +127,31 @@ function setup() {
 
   crate1 = createSprite(627, 404, 70, 65);
   crate1.collider = 'static';
-  crate1.addImage(crateImg);
+  //crate1.addImage(crateImg);
+  crate1.visible = false;
 
   crate2 = createSprite(595, 470, 70, 65);
   crate2.collider = 'static';
-  crate2.addImage(crateImg);
+  //crate2.addImage(crateImg);
+  crate2.visible = false;
 
   crate3 = createSprite(665, 470, 65, 65);
   crate3.collider = 'static';
-  cratestackedImg.resize(70,70);
-  crate3.addImage(cratestackedImg);
+  //cratestackedImg.resize(70,70);
+  //crate3.addImage(cratestackedImg);
+  crate3.visible = false;
 
   floor1 = createSprite(844, 390, 145, 40);
   floor1.collider = 'static';
-  floorImg.resize(160,39);
-  floor1.addImage(floorImg);
+  //floorImg.resize(160,39);
+  //floor1.addImage(floorImg);
+  floor1.visible = false;
 
   floor2 = createSprite(957, 325, 120, 40);
   floor2.collider = 'static';
-  floorshortImg.resize(127,39);
-  floor2.addImage(floorshortImg);
+  //floorshortImg.resize(127,39);
+  //floor2.addImage(floorshortImg);
+  floor2.visible = false;
 
   // Stage 3
   well = createSprite(1205, 390, 110, 15);
@@ -167,18 +178,39 @@ function draw() {
   //camera
   //camera.x=400;
   //camera.y=290;
+  
   camera.on();
+
+  if( geralt.x <= -500){
+
+    camera.x= -450;
+  }
+  if(geralt.x >= 1300){
+
+    camera.x= 1350;
+  }
   keyPressed();
   keyReleased();
   
+
+  //BOUNDARIES FOR PLAYER
+  if(geralt.x <= -855){
+    geralt.x=-855;
+  }
+  if(geralt.x >=1750){
+    geralt.x = 1750;
+  }
+
   //pl.gravity();
   jump(geralt);
   
   
-	//camera.y = geralt.y;
-  camera.x=geralt.x+50;
+	//camera.y = geralt.y;{
+  if(geralt.x >= -500 && geralt.x <= 1300){
+    camera.x=geralt.x+50;
+  }
 
-  //!!!!!!!!!!emfanizei exafanizei ta sprites!!!!
+    //!!!!!!!!!!emfanizei exafanizei ta sprites!!!!
   //drawSprites();
 
   // Background
