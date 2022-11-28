@@ -23,8 +23,11 @@ var floor1;
 var floor2;
 // Stage 3
 var well;
-var platform1;
-var platform2;
+var platform1a;
+var platform1b;
+var platform2a;
+var platform2b;
+
 
 function preload(){
 
@@ -36,8 +39,11 @@ function preload(){
   wagonImg = loadImage('./assets/images/wagon.png');
   floorImg = loadImage('./assets/images/floor.png');
   floorshortImg = loadImage('./assets/images/floor_short.png');
-  wellImg = loadImage('./assets/images/welltop.png');
+  wellImg = loadImage('./assets/images/well.png');
+  welltopImg = loadImage('./assets/images/welltop.png');
   platformImg = loadImage('./assets/images/platform.png');
+  platform1Img = loadImage('./assets/images/platform1.png');
+  platform2Img = loadImage('./assets/images/platform2.png');
 
 }
 
@@ -73,8 +79,8 @@ function setup() {
  
 
   // Player
-  geralt = createSprite(-500,465,67,80);
-  //-500
+  geralt = createSprite(1100,465,67,80);
+  //-3200
   //για να μην κανει rotate ο geralt 
   geralt.rotationLock = true;
   geraltImg.resize(88,80);
@@ -83,43 +89,41 @@ function setup() {
  
 
 
-  // Stage 1
+  // Stage 2
  
   crate =  createSprite(-840,470, 78, 70);
   crate.collider = 'static';
-  //crateImg.resize(83,74);
-  //crate.addImage(crateImg);
-  crate.visible = false;
-  
+  crateImg.resize(83,74);
+  crate.addImage(crateImg);
+ 
 
-  jumpingAssets.add(crate);
  
   barrel1 = createSprite(-435, 475, 45, 55);
   barrel1.collider='static';
-  //barrelImg.resize(55,60);
-  //barrel1.addImage(barrelImg);
-  barrel1.visible = false;
+  barrelImg.resize(55,60);
+  barrel1.addImage(barrelImg);
+  
 
   barrel2 = createSprite(-370, 475, 45, 55);
   barrel2.collider = 'static';
-  //barrel2.addImage(barrelImg);
-  barrel2.visible = false;
+  barrel2.addImage(barrelImg);
+  
 
   sign = createSprite(-189, 405, 60, 85);
   sign.collider = 'static';
-  //signImg.resize(70,100);
-  //sign.addImage(signImg);
-  sign.visible=false;
+  signImg.resize(70,100);
+  sign.addImage(signImg);
+  
 
 
-  // Stage 2
+  
 
   wagon = createSprite(0,430);
   wagon.collider = 'static';
   wagon.diameter = 155;
-  //wagonImg.resize(190,170);
-  //wagon.addImage(wagonImg);
-  wagon.visible = false;
+  wagonImg.resize(190,170);
+  wagon.addImage(wagonImg);
+  
 
   //!!!!!!!!!! AXREIASTO  !!!!!!!!!!!!!
   //lamp = new Lamp(503, 397);
@@ -127,47 +131,83 @@ function setup() {
 
   crate1 = createSprite(627, 404, 70, 65);
   crate1.collider = 'static';
-  //crate1.addImage(crateImg);
-  crate1.visible = false;
+  crate1.addImage(crateImg);
+  
 
   crate2 = createSprite(595, 470, 70, 65);
   crate2.collider = 'static';
-  //crate2.addImage(crateImg);
-  crate2.visible = false;
+  crate2.addImage(crateImg);
+ 
 
   crate3 = createSprite(665, 470, 65, 65);
   crate3.collider = 'static';
-  //cratestackedImg.resize(70,70);
-  //crate3.addImage(cratestackedImg);
-  crate3.visible = false;
+  cratestackedImg.resize(70,70);
+  crate3.addImage(cratestackedImg);
+  
 
   floor1 = createSprite(844, 390, 145, 40);
   floor1.collider = 'static';
-  //floorImg.resize(160,39);
-  //floor1.addImage(floorImg);
-  floor1.visible = false;
+  floorImg.resize(160,39);
+  floor1.addImage(floorImg);
+  
 
   floor2 = createSprite(957, 325, 120, 40);
   floor2.collider = 'static';
-  //floorshortImg.resize(127,39);
-  //floor2.addImage(floorshortImg);
-  floor2.visible = false;
+  floorshortImg.resize(127,39);
+  floor2.addImage(floorshortImg);
+  
 
-  // Stage 3
-  well = createSprite(1205, 390, 110, 15);
-  well.collider = 'static';
-  well.visible = false;
+  
+  well = createSprite(1205, 460, 110, 15);
+  well.collider = 'none';
+  wellImg.resize(100,100);
+  well.addImage(wellImg);
+  welltop = createSprite(1201, 415, 95, 15);
+  welltop.collider ='static';
+  welltopImg.resize(91,20);
+  welltop.addImage(welltopImg);
 
-  platform1 = createSprite(1435, 330, 185, 20);
-  platform1.collider = 'static';
-  platform1.visible = false;
+  
+
+  platform1a = createSprite(1435, 320, 185, 20);
+  platform1a.collider = 'static';
+  platform1a.visible = false;
+ 
+  
+  
+  platform1b = createSprite(1435, 405, 185, 20);
+  platform1b.collider= 'none';
+  platform1Img.resize(195,195);
+  platform1b.addImage(platform1Img);
 
 
-  platform2 = createSprite(1690, 300, 185, 20);
-  platform2.collider = 'static';
-  platform2.visible = false;
+  platform2a = createSprite(1690, 285, 185, 20);
+  platform2a.collider = 'static';
+ 
+  platform2b = createSprite(1690, 383, 185, 20);
+  platform2b.collider = 'none';
+  platform2Img.resize(195,235);
+  platform2b.addImage(platform2Img);
 
 
+  geralt.layer = 2;
+  crate.layer = 1;
+  barrel1.layer = 1;
+  barrel2.layer = 1;
+  sign.layer = 1;
+  wagon.layer = 1;
+  crate1.layer = 1;
+  crate2.layer = 1;
+  crate3.layer = 1;
+  floor1.layer = 1;
+  floor2.layer = 1;
+  well.layer = 1;
+  welltop.layer = 1;
+  platform1a.layer = 1;
+  platform1b.layer = 1;
+  platform2a.layer = 1;
+  platform2b.layer = 1;
+  
 
 
 }
@@ -181,32 +221,32 @@ function draw() {
   
   camera.on();
 
-  if( geralt.x <= -500){
+  if( geralt.x <= -3200){
 
-    camera.x= -450;
+    camera.x= -3150;
   }
-  if(geralt.x >= 1300){
+  if(geralt.x >= 4000){
 
-    camera.x= 1350;
+    camera.x= 4050;
   }
   keyPressed();
   keyReleased();
   
 
   //BOUNDARIES FOR PLAYER
-  if(geralt.x <= -855){
-    geralt.x=-855;
+  if(geralt.x <= -3550){
+    geralt.x=-3550;
   }
-  if(geralt.x >=1750){
-    geralt.x = 1750;
+  if(geralt.x >=4450){
+    geralt.x = 4450;
   }
 
   //pl.gravity();
   jump(geralt);
   
   
-	//camera.y = geralt.y;{
-  if(geralt.x >= -500 && geralt.x <= 1300){
+	//camera.y = geralt.y;
+  if(geralt.x >= -3200 && geralt.x <= 4000){
     camera.x=geralt.x+50;
   }
 
@@ -478,7 +518,7 @@ function jump(sprite){
   }
 
 
-  if(sprite.colliding(well)){
+  if(sprite.colliding(welltop)){
     sprite.vel.y=0;
     //sprite.y = 393;
   
@@ -490,7 +530,7 @@ function jump(sprite){
   }
 
 
-  if(sprite.colliding(platform1)){
+  if(sprite.colliding(platform1a)){
     sprite.vel.y=0;
     //sprite.y = 393;
   
@@ -503,7 +543,7 @@ function jump(sprite){
 
 
 
-  if(sprite.colliding(platform2)){
+  if(sprite.colliding(platform2a)){
     sprite.vel.y=0;
     //sprite.y = 393;
   

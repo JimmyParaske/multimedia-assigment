@@ -1,6 +1,6 @@
 class Landscape {
     constructor() {
-        this.image = loadImage('./assets/images/landscape.png');
+        this.image = loadImage('./assets/images/landscape_long.png');
         this.stage = 0;
     }
 
@@ -8,8 +8,8 @@ class Landscape {
       
 
         
-        image(this.image, width / 2, height / 2, width * 3, height);
-        
+        //image(this.image, width / 2, height / 2, width * 3, height);
+        image(this.image, width/2, height/2, width*9, height); 
         //perigramma
         noFill();//keno
         stroke(0);//mauro xrwma
