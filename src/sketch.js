@@ -9,11 +9,21 @@ var land;
 var pl;
 let geralt;
 // Stage 1
+var S1barrel1;
+var S1barrel2;
+var S1crate;
+var S1crate1;
+var S1crate2;
+var S1crate3;
+var S1wagon;
+var S1sign;
+var S1crate4;
+
+// Stage 2
 var crate;
 var barrel1;
 var barrel2;
 var sign;
-// Stage 2
 var wagon;
 var lamp;
 var crate1;
@@ -21,7 +31,6 @@ var crate2;
 var crate3;
 var floor1;
 var floor2;
-// Stage 3
 var well;
 var platform1a;
 var platform1b;
@@ -79,17 +88,110 @@ function setup() {
  
 
   // Player
-  geralt = createSprite(1100,465,67,80);
+  geralt = createSprite(3400,465,67,80);
   //-3200
   //για να μην κανει rotate ο geralt 
   geralt.rotationLock = true;
   geraltImg.resize(88,80);
   geralt.addImage(geraltImg);
+  geralt.layer = 2;
   
+ // !!!!!!!!!!!!!!!!!!!!!! STAGE 1 !!!!!!!!!!!!!!!!!!!! 
+
+
+  S1barrel1 = createSprite(-3550, 475, 45, 55);
+  S1barrel1.collider='static';
+  barrelImg.resize(55,60);
+  S1barrel1.addImage(barrelImg);
  
 
+  S1barrel2 = createSprite(-3500, 475, 45, 55);
+  S1barrel2.collider = 'static';
+  S1barrel2.addImage(barrelImg);
 
-  // Stage 2
+
+  S1crate =  createSprite(-3100,470, 78, 70);
+  S1crate.collider = 'static';
+  crateImg.resize(83,74);
+  S1crate.addImage(crateImg);
+
+
+  S1crate1 = createSprite(-2750, 404, 70, 65);
+  S1crate1.collider = 'static';
+  S1crate1.addImage(crateImg);
+  
+
+  S1crate2 = createSprite(-2785, 470, 70, 65);
+  S1crate2.collider = 'static';
+  S1crate2.addImage(crateImg);
+ 
+
+  S1crate3 = createSprite(-2715, 470, 65, 65);
+  S1crate3.collider = 'static';
+  cratestackedImg.resize(70,70);
+  S1crate3.addImage(cratestackedImg);
+
+
+  S1wagon = createSprite(-2100,430);
+  S1wagon.collider = 'static';
+  S1wagon.diameter = 155;
+  wagonImg.resize(190,170);
+  S1wagon.addImage(wagonImg);
+
+
+
+  S1sign = createSprite(-1800, 340, 60, 85);
+  S1sign.collider = 'static';
+  signImg.resize(70,100);
+  S1sign.addImage(signImg);
+  
+  S1crate4 =  createSprite(-1660,470, 78, 70);
+  S1crate4.collider = 'static';
+  crateImg.resize(83,74);
+  S1crate4.addImage(crateImg);
+
+
+
+
+  S1platform1a = createSprite(-1450, 320, 185, 20);
+  S1platform1a.collider = 'static';
+  S1platform1a.visible = false;
+ 
+  
+  S1platform1b = createSprite(-1450, 405, 185, 20);
+  S1platform1b.collider= 'none';
+  platform1Img.resize(195,195);
+  S1platform1b.addImage(platform1Img);
+
+
+  S1platform2a = createSprite(-1195, 285, 185, 20);
+  S1platform2a.collider = 'static';
+ 
+  S1platform2b = createSprite(-1195, 383, 185, 20);
+  S1platform2b.collider = 'none';
+  platform2Img.resize(195,235);
+  S1platform2b.addImage(platform2Img);
+
+
+  S1barrel1.layer = 1;
+  S1barrel2.layer = 1;
+  S1crate.layer = 1;
+  S1crate1.layer = 1;
+  S1crate2.layer = 1;
+  S1crate3.layer = 1;
+  S1wagon.layer = 1;
+  S1sign.layer = 1;
+  S1crate4.layer = 1;
+  S1platform1a.layer = 1;
+  S1platform1b.layer = 1;
+  S1platform2a.layer = 1;
+  S1platform2b.layer = 1;
+
+
+
+  // !!!!!!!!!!!!!!!!!!!!!! END STAGE 1 !!!!!!!!!!!!!!!!!!!
+
+  // !!!!!!!!!!!!!!! STAGE 2 !!!!!!!!!!!!!!!!!!!!!
  
   crate =  createSprite(-840,470, 78, 70);
   crate.collider = 'static';
@@ -174,7 +276,6 @@ function setup() {
   platform1a.visible = false;
  
   
-  
   platform1b = createSprite(1435, 405, 185, 20);
   platform1b.collider= 'none';
   platform1Img.resize(195,195);
@@ -189,8 +290,6 @@ function setup() {
   platform2Img.resize(195,235);
   platform2b.addImage(platform2Img);
 
-
-  geralt.layer = 2;
   crate.layer = 1;
   barrel1.layer = 1;
   barrel2.layer = 1;
@@ -208,6 +307,95 @@ function setup() {
   platform2a.layer = 1;
   platform2b.layer = 1;
   
+// !!!!!!!!!!!!!!!!!! END STAGE 2 !!!!!!!!!!!!!!!!!!!!!!
+ 
+
+//!!!!!!!!!!!!!!! STAGE 3 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+  S2crate1 = createSprite(1910, 404, 70, 65);
+  S2crate1.collider = 'static';
+  S2crate1.addImage(crateImg);
+  
+
+  S2crate2 = createSprite(1880, 470, 70, 65);
+  S2crate2.collider = 'static';
+  S2crate2.addImage(crateImg);
+ 
+
+  S2crate3 = createSprite(1945, 470, 65, 65);
+  S2crate3.collider = 'static';
+  cratestackedImg.resize(70,70);
+  S2crate3.addImage(cratestackedImg);
+
+
+
+  S2well = createSprite(2750, 460, 110, 15);
+  S2well.collider = 'none';
+  wellImg.resize(100,100);
+  S2well.addImage(wellImg);
+  S2welltop = createSprite(2750, 415, 95, 15);
+  S2welltop.collider ='static';
+  welltopImg.resize(91,20);
+  //S2welltop.addImage(welltopImg);
+  S2welltop.visible = false;
+
+
+   
+  S2barrel1 = createSprite(3300, 475, 45, 55);
+  S2barrel1.collider='static';
+  barrelImg.resize(55,60);
+  S2barrel1.addImage(barrelImg);
+  
+
+  S2barrel2 = createSprite(3360, 475, 45, 55);
+  S2barrel2.collider = 'static';
+  S2barrel2.addImage(barrelImg);
+
+
+  S2floor1 = createSprite(3655, 345, 145, 40);
+  S2floor1.collider = 'static';
+  floorImg.resize(160,39);
+  S2floor1.addImage(floorImg);
+
+
+
+  S2platform1a = createSprite(4030, 320, 185, 20);
+  S2platform1a.collider = 'static';
+  S2platform1a.visible = false;
+ 
+  
+  S2platform1b = createSprite(4030, 405, 185, 20);
+  S2platform1b.collider= 'none';
+  platform1Img.resize(195,195);
+  S2platform1b.addImage(platform1Img);
+
+
+  S2platform2a = createSprite(4275, 285, 185, 20);
+  S2platform2a.collider = 'static';
+ 
+  S2platform2b = createSprite(4275, 383, 185, 20);
+  S2platform2b.collider = 'none';
+  platform2Img.resize(195,235);
+  S2platform2b.addImage(platform2Img);
+
+
+  S2crate1.layer = 1;
+  S2crate2.layer = 1;
+  S2crate3.layer = 1;
+  S2well.layer = 1;
+  S2welltop.layer = 1;
+  S2barrel1.layer = 1;
+  S2barrel2.layer = 1;
+  S2floor1.layer = 1;
+  S2platform1a.layer = 1;
+  S2platform1b.layer = 1;
+  S2platform2a.layer = 1;
+  S2platform2b.layer = 1;
+
+
+
+// !!!!!!!!!!!!!!!!!!!!!!!!! END STAGE 3 !!!!!!!!!!!!!!!!!!!
 
 
 }
@@ -544,6 +732,257 @@ function jump(sprite){
 
 
   if(sprite.colliding(platform2a)){
+    sprite.vel.y=0;
+    //sprite.y = 393;
+  
+    if(keyIsDown(UP_ARROW)){
+
+      sprite.vel.y= hop;
+    }
+
+  }
+
+  if(sprite.colliding(S1barrel1)){
+    sprite.vel.y=0;
+    //sprite.y = 393;
+  
+    if(keyIsDown(UP_ARROW)){
+
+      sprite.vel.y= hop;
+    }
+
+  }
+
+
+
+  if(sprite.colliding(S1barrel2)){
+    sprite.vel.y=0;
+    //sprite.y = 393;
+  
+    if(keyIsDown(UP_ARROW)){
+
+      sprite.vel.y= hop;
+    }
+
+  }
+
+
+
+  if(sprite.colliding(S1crate)){
+    sprite.vel.y=0;
+    //sprite.y = 393;
+  
+    if(keyIsDown(UP_ARROW)){
+
+      sprite.vel.y= hop;
+    }
+
+  }
+
+
+
+  if(sprite.colliding(S1crate1)){
+    sprite.vel.y=0;
+    //sprite.y = 393;
+  
+    if(keyIsDown(UP_ARROW)){
+
+      sprite.vel.y= hop;
+    }
+
+  }
+
+
+
+  if(sprite.colliding(S1crate2)){
+    sprite.vel.y=0;
+    //sprite.y = 393;
+  
+    if(keyIsDown(UP_ARROW)){
+
+      sprite.vel.y= hop;
+    }
+
+  }
+
+
+
+  if(sprite.colliding(S1crate3)){
+    sprite.vel.y=0;
+    //sprite.y = 393;
+  
+    if(keyIsDown(UP_ARROW)){
+
+      sprite.vel.y= hop;
+    }
+
+  }
+
+
+
+
+  if(sprite.colliding(S1wagon)){
+    sprite.vel.y=0;
+    //sprite.y = 393;
+  
+    if(keyIsDown(UP_ARROW)){
+
+      sprite.vel.y= hop;
+    }
+
+  }
+
+
+  if(sprite.colliding(S1sign)){
+    sprite.vel.y=0;
+    //sprite.y = 393;
+  
+    if(keyIsDown(UP_ARROW)){
+
+      sprite.vel.y= hop;
+    }
+
+  }
+
+
+  if(sprite.colliding(S1crate4)){
+    sprite.vel.y=0;
+    //sprite.y = 393;
+  
+    if(keyIsDown(UP_ARROW)){
+
+      sprite.vel.y= hop;
+    }
+
+  }
+
+  if(sprite.colliding(S1platform1a)){
+    sprite.vel.y=0;
+    //sprite.y = 393;
+  
+    if(keyIsDown(UP_ARROW)){
+
+      sprite.vel.y= hop;
+    }
+
+  }
+
+
+  if(sprite.colliding(S1platform2a)){
+    sprite.vel.y=0;
+    //sprite.y = 393;
+  
+    if(keyIsDown(UP_ARROW)){
+
+      sprite.vel.y= hop;
+    }
+
+  }
+
+
+
+  if(sprite.colliding(S2crate1)){
+    sprite.vel.y=0;
+    //sprite.y = 393;
+  
+    if(keyIsDown(UP_ARROW)){
+
+      sprite.vel.y= hop;
+    }
+
+  }
+
+
+  if(sprite.colliding(S2crate2)){
+    sprite.vel.y=0;
+    //sprite.y = 393;
+  
+    if(keyIsDown(UP_ARROW)){
+
+      sprite.vel.y= hop;
+    }
+
+  }
+
+
+
+  if(sprite.colliding(S2crate3)){
+    sprite.vel.y=0;
+    //sprite.y = 393;
+  
+    if(keyIsDown(UP_ARROW)){
+
+      sprite.vel.y= hop;
+    }
+
+  }
+
+
+  if(sprite.colliding(S2welltop)){
+    sprite.vel.y=0;
+    //sprite.y = 393;
+  
+    if(keyIsDown(UP_ARROW)){
+
+      sprite.vel.y= hop;
+    }
+
+  }
+
+
+
+  if(sprite.colliding(S2barrel1)){
+    sprite.vel.y=0;
+    //sprite.y = 393;
+  
+    if(keyIsDown(UP_ARROW)){
+
+      sprite.vel.y= hop;
+    }
+
+  }
+
+
+
+  if(sprite.colliding(S2barrel2)){
+    sprite.vel.y=0;
+    //sprite.y = 393;
+  
+    if(keyIsDown(UP_ARROW)){
+
+      sprite.vel.y= hop;
+    }
+
+  }
+
+
+
+  if(sprite.colliding(S2floor1)){
+    sprite.vel.y=0;
+    //sprite.y = 393;
+  
+    if(keyIsDown(UP_ARROW)){
+
+      sprite.vel.y= hop;
+    }
+
+  }
+
+
+
+  if(sprite.colliding(S2platform1a)){
+    sprite.vel.y=0;
+    //sprite.y = 393;
+  
+    if(keyIsDown(UP_ARROW)){
+
+      sprite.vel.y= hop;
+    }
+
+  }
+
+ 
+  if(sprite.colliding(S2platform2a)){
     sprite.vel.y=0;
     //sprite.y = 393;
   
