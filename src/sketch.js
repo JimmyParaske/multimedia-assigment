@@ -8,6 +8,7 @@ let minHeight=465;
 var land;
 var pl;
 let geralt;
+let idle;
 // Stage 1
 var S1barrel1;
 var S1barrel2;
@@ -41,6 +42,7 @@ var platform2b;
 function preload(){
 
   geraltImg = loadImage('./assets/images/geralt_of_rivia.png');
+  //geralt_sheet = loadSpriteSheet('./assets/images/SteamMan_idle.png', 192, 48, 4);
   crateImg = loadImage('./assets/images/crate_cropped.png');
   cratestackedImg = loadImage('./assets/images/crate_stacked.png');
   barrelImg = loadImage('./assets/images/barrel.png');
@@ -88,14 +90,17 @@ function setup() {
  
 
   // Player
-  geralt = createSprite(3400,465,67,80);
+  geralt = createSprite(-3200,465,67,80);
   //-3200
   //για να μην κανει rotate ο geralt 
   geralt.rotationLock = true;
   geraltImg.resize(88,80);
   geralt.addImage(geraltImg);
+  //geralt.addAnimation('idle', './assets/images/SteamMan_idle.png', 4);
   geralt.layer = 2;
   
+  //idle = loadAnimation('./assets/images/SteamMan_idle.png',{size: [192,48], frames: 4});
+
  // !!!!!!!!!!!!!!!!!!!!!! STAGE 1 !!!!!!!!!!!!!!!!!!!! 
 
 
@@ -371,10 +376,10 @@ function setup() {
   S2platform1b.addImage(platform1Img);
 
 
-  S2platform2a = createSprite(4275, 285, 185, 20);
+  S2platform2a = createSprite(4295, 285, 185, 20);
   S2platform2a.collider = 'static';
  
-  S2platform2b = createSprite(4275, 383, 185, 20);
+  S2platform2b = createSprite(4295, 383, 185, 20);
   S2platform2b.collider = 'none';
   platform2Img.resize(195,235);
   S2platform2b.addImage(platform2Img);
@@ -408,6 +413,7 @@ function draw() {
   //camera.y=290;
   
   camera.on();
+ 
 
   if( geralt.x <= -3200){
 
@@ -510,6 +516,7 @@ function keyPressed() {
   if(keyIsDown(LEFT_ARROW)){
 
     geralt.vel.x = -5;
+    
 
     /*if(geralt.x>400){
       camera.x += -5;
@@ -517,10 +524,12 @@ function keyPressed() {
   }
   else if(keyIsDown(RIGHT_ARROW)){
     geralt.vel.x = +5;
+    
     /*camera.x += +5;*/
   }
   else{
     geralt.vel.x = 0;
+  
   }
 
   
