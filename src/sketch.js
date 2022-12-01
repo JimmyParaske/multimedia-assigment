@@ -7,8 +7,13 @@ let minHeight=465;
 // Classes
 var land;
 var pl;
-let geralt;
-let idle;
+var geralt;
+var enemy1;
+var enemy2;
+var enemy3;
+var enemy4;
+var enemy5;
+
 // Stage 1
 var S1barrel1;
 var S1barrel2;
@@ -39,6 +44,9 @@ var platform2a;
 var platform2b;
 
 
+var geralt_sheet;
+var idle_animation;
+
 function preload(){
 
   geraltImg = loadImage('./assets/images/geralt_of_rivia.png');
@@ -56,18 +64,26 @@ function preload(){
   platform1Img = loadImage('./assets/images/platform1.png');
   platform2Img = loadImage('./assets/images/platform2.png');
 
+  enemyImg = loadImage('./assets/images/sprite_0.png');
+  enemy2Img = loadImage('./assets/images/sprite_enemy_0_reverted.png');
+
+  //geralt_sheet = loadSpriteSheet('./assets/images/SteamMan_idle.png', 48, 48, 4);
+  //idle_animation = loadAnimation(geralt_sheet);
 }
 
 function setup() {
   // Setup
   createCanvas(900, 576);
+  //idle_walk = loadAnimation('./assets/images/SteamMan_idle.png', {size: [192,48], frames: 4});
+  
   rectMode(CENTER);
   textAlign(CENTER);
   imageMode(CENTER);
 
   // Background
   land = new Landscape();
-
+  
+  
   //camera
   //camera.x=100;
   //camera.y=400;
@@ -90,7 +106,7 @@ function setup() {
  
 
   // Player
-  geralt = createSprite(-3200,465,67,80);
+  geralt = createSprite(2100,465,67,80);
   //-3200
   //για να μην κανει rotate ο geralt 
   geralt.rotationLock = true;
@@ -99,6 +115,37 @@ function setup() {
   //geralt.addAnimation('idle', './assets/images/SteamMan_idle.png', 4);
   geralt.layer = 2;
   
+
+  enemy1 = createSprite(-2400,465,55,100);
+  enemy1.rotationLock = true;
+  enemyImg.resize(200,220);
+  enemy1.addImage(enemyImg);
+  enemy1.layer = 2;
+
+  enemy2 = createSprite(-1200,465,55,100);
+  enemy2.rotationLock = true;
+  enemyImg.resize(200,220);
+  enemy2.addImage(enemyImg);
+  enemy2.layer = 2;
+
+  enemy3 = createSprite(300,465,55,100);
+  enemy3.rotationLock = true;
+  enemy2Img.resize(130, 130);
+  enemy3.addImage(enemy2Img);
+  enemy3.layer = 2;
+
+  enemy4 = createSprite(2300,465,55,100);
+  enemy4.rotationLock = true;
+  enemyImg.resize(200,220);
+  enemy4.addImage(enemyImg);
+  enemy4.layer = 2;
+
+  enemy5 = createSprite(2800,465,55,100);
+  enemy5.rotationLock = true;
+  enemy2Img.resize(130, 130);
+  enemy5.addImage(enemy2Img);
+  enemy5.layer = 2;
+
   //idle = loadAnimation('./assets/images/SteamMan_idle.png',{size: [192,48], frames: 4});
 
  // !!!!!!!!!!!!!!!!!!!!!! STAGE 1 !!!!!!!!!!!!!!!!!!!! 
@@ -402,17 +449,24 @@ function setup() {
 
 // !!!!!!!!!!!!!!!!!!!!!!!!! END STAGE 3 !!!!!!!!!!!!!!!!!!!
 
+  //idle_walk.layer = 2;
+
 
 }
 
 function draw() {
   
+  //clear()
   //call functions
   //camera
   //camera.x=400;
   //camera.y=290;
-  
+ 
+
   camera.on();
+  //animation(idle_animation, -3200, 465);
+  //image(idle_walk.spriteSheet, -3200, 400, 5000, 1500)
+
  
 
   if( geralt.x <= -3200){
@@ -425,7 +479,7 @@ function draw() {
   }
   keyPressed();
   keyReleased();
-  
+  enemyMovement();
 
   //BOUNDARIES FOR PLAYER
   if(geralt.x <= -3550){
@@ -434,6 +488,9 @@ function draw() {
   if(geralt.x >=4450){
     geralt.x = 4450;
   }
+
+
+  
 
   //pl.gravity();
   jump(geralt);
@@ -576,13 +633,13 @@ function keyReleased(){
   */
 } 
 
-
+var jumped = false;
 
 //geralt jump
 
 function jump(sprite){
 
-  
+    
     sprite.vel.y += fallingSpeed;
     sprite.y += sprite.vel.y;
 
@@ -593,7 +650,9 @@ function jump(sprite){
       if(keyIsDown(UP_ARROW)){
 
         sprite.vel.y= hop;
+        
       }
+
     }
   
 
@@ -869,11 +928,15 @@ function jump(sprite){
     sprite.vel.y=0;
     //sprite.y = 393;
   
-    if(keyIsDown(UP_ARROW)){
 
-      sprite.vel.y= hop;
+    if(keyIsDown(UP_ARROW) ){
+
+      sprite.vel.y = hop;
+      
     }
 
+  
+    
   }
 
 
@@ -1003,5 +1066,192 @@ function jump(sprite){
   }
 
 
+
+}
+
+collided = false;
+collided2nd = false;
+collided3rd = false;
+collided4th = false;
+collided5th = false;
+
+function enemyMovement(){
+
+  //first enemy
+  if(enemy1.y > minHeight){
+
+    enemy1.y = minHeight;
+  }
+
+  if(enemy1.x <= -2230 && collided==false){
+
+    enemy1.vel.x = 1;
+    collided = true;
+  }
+
+  if(enemy1.collided(S1wagon)){
+
+    enemy1.vel.x =-1;
+    
+  }
+
+  if(enemy1.collided(S1crate3)){
+
+    enemy1.vel.x = 1;
+  }
+
+  if(enemy1.collided(geralt)){
+
+    if(geralt.x < enemy1.x){
+      enemy1.vel.x=-1;
+    }
+    else{
+      enemy1.vel.x = 1;
+    }
+  }
+
+
+
+  //second enemy 
+  if(enemy2.y > minHeight){
+
+    enemy2.y = minHeight;
+  }
+
+
+  if(enemy2.x <= -840 && collided2nd==false){
+
+    enemy2.vel.x = 1.2;
+    collided2nd = true;
+  }
+
+  if(enemy2.collided(crate)){
+
+    enemy2.vel.x =-1.2;
+    
+  }
+
+  if(enemy2.collided(S1crate4)){
+
+    enemy2.vel.x = 1.2;
+  }
+
+  if(enemy2.collided(geralt)){
+
+    if(geralt.x < enemy2.x){
+      enemy2.vel.x=-1.2;
+    }
+    else{
+      enemy2.vel.x = 1.2;
+    }
+  }
+
+
+
+  //third enemy
+  if(enemy3.y > minHeight){
+
+    enemy3.y = minHeight;
+  }
+
+
+  if(enemy3.x <= 595 && collided3rd==false){
+
+    enemy3.vel.x = 1.2;
+    collided3rd = true;
+  }
+
+  if(enemy3.collided(crate2)){
+
+    enemy3.vel.x =-1.2;
+    
+  }
+
+  if(enemy3.collided(wagon)){
+
+    enemy3.vel.x = 1.2;
+  }
+
+  if(enemy3.collided(geralt)){
+
+    if(geralt.x < enemy3.x){
+      enemy3.vel.x=-1.2;
+    }
+    else{
+      enemy3.vel.x = 1.2;
+    }
+  }
+
+
+
+  //fourth enemy
+  if(enemy4.y > minHeight){
+
+    enemy4.y = minHeight;
+  }
+
+
+  if(enemy4.x <= 2740 && collided4th==false){
+
+    enemy4.vel.x = 1.2;
+    collided4th = true;
+  }
+
+  if(enemy4.collided(S2welltop)){
+
+    enemy4.vel.x =-1.2;
+    
+  }
+
+  if(enemy4.collided(S2crate3)){
+
+    enemy4.vel.x = 1.2;
+  }
+
+  if(enemy4.collided(geralt)){
+
+    if(geralt.x < enemy4.x){
+      enemy4.vel.x=-1.2;
+    }
+    else{
+      enemy4.vel.x = 1.2;
+    }
+  }
+
+
+
+  //fifth enemy
+  if(enemy5.y > minHeight){
+
+    enemy5.y = minHeight;
+  }
+
+
+  if(enemy5.x <= 3290 && collided5th==false){
+
+    enemy5.vel.x = 1.4;
+    collided5th = true;
+  }
+
+  if(enemy5.collided(S2barrel1)){
+
+    enemy5.vel.x =-1.4;
+    
+  }
+
+  if(enemy5.collided(S2welltop)){
+
+    enemy5.vel.x = 1.4;
+  }
+
+  if(enemy5.collided(geralt)){
+
+    if(geralt.x < enemy5.x){
+      enemy5.vel.x=-1.4;
+    }
+    else{
+      enemy5.vel.x = 1.4;
+    }
+  }
 
 }
