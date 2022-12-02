@@ -53,11 +53,15 @@ var platform2a;
 var platform2b;
 
 
+//animation variables
 
-var geralt_sheet;
-var idle_animation;
 var coin_sheet;
 var coin_animation;
+
+
+//sound effect variables
+var background_sound;
+var coin_sound;
 
 function preload(){
 
@@ -82,12 +86,21 @@ function preload(){
 
   //coins
   coins = loadAnimation('./assets/images/coin3_16x16.png', { size: [16, 22], frames: 14 });
+
+
+  //sound effects
+  soundFormats('mp3');
+  coin_sound = loadSound('./assets/sounds/mario_coin_sound');
+  background_sound = loadSound('./assets/sounds/background_music');
+
+
+
 }
 
 function setup() {
   // Setup
   createCanvas(900, 576);
-  //idle_walk = loadAnimation('./assets/images/SteamMan_idle.png', {size: [192,48], frames: 4});
+  
   
   rectMode(CENTER);
   textAlign(CENTER);
@@ -95,24 +108,15 @@ function setup() {
 
   // Background
   land = new Landscape();
+  //background music
+  backgroundMusic();
   
-  
-  //camera
-  //camera.x=100;
-  //camera.y=400;
+ 
 
   //world gravity
   world.gravity.y=10;
   
-  //floor
-  //floor= createSprite(450,515,900,10);
-  //floor.collider = 'static'
-  // na exafanizetai
-  //floor.visible = false;
-
-  //block
-  //block=createSprite(400,300,900,10);
-  //block.collider='static'; 
+ 
 
   
 
@@ -123,7 +127,7 @@ function setup() {
   geralt.rotationLock = true;
   geraltImg.resize(88,80);
   geralt.addImage(geraltImg);
-  //geralt.addAnimation('idle', './assets/images/SteamMan_idle.png', 4);
+  
   geralt.layer = 2;
   
 
@@ -199,7 +203,7 @@ function setup() {
  
   
 
-  //idle = loadAnimation('./assets/images/SteamMan_idle.png',{size: [192,48], frames: 4});
+ 
 
  // !!!!!!!!!!!!!!!!!!!!!! STAGE 1 !!!!!!!!!!!!!!!!!!!! 
 
@@ -332,9 +336,6 @@ function setup() {
   wagon.addImage(wagonImg);
   
 
-  //!!!!!!!!!! AXREIASTO  !!!!!!!!!!!!!
-  //lamp = new Lamp(503, 397);
-
 
   crate1 = createSprite(627, 404, 70, 65);
   crate1.collider = 'static';
@@ -442,7 +443,7 @@ function setup() {
   S2welltop = createSprite(2750, 415, 95, 15);
   S2welltop.collider ='static';
   welltopImg.resize(91,20);
-  //S2welltop.addImage(welltopImg);
+  
   S2welltop.visible = false;
 
 
@@ -502,8 +503,6 @@ function setup() {
 
 // !!!!!!!!!!!!!!!!!!!!!!!!! END STAGE 3 !!!!!!!!!!!!!!!!!!!
 
-  //idle_walk.layer = 2;
-
 
 }
 
@@ -511,14 +510,10 @@ function draw() {
   
   clear();
   //call functions
-  //camera
-  //camera.x=400;
-  //camera.y=290;
-  
-  camera.on();
-  //animation(idle_animation, -3200, 465);
-  //image(idle_walk.spriteSheet, -3200, 400, 5000, 1500)
 
+  //camera
+  camera.on();
+  
 
 
   if( geralt.x <= -3200){
@@ -530,7 +525,6 @@ function draw() {
     camera.x= 4050;
   }
   keyPressed();
-  keyReleased();
   enemyMovement();
   removeCoins();
 
@@ -545,7 +539,7 @@ function draw() {
  
   
 
-  //pl.gravity();
+  
   jump(geralt);
   
   
@@ -554,9 +548,7 @@ function draw() {
     camera.x=geralt.x+50;
   }
 
-    //!!!!!!!!!!emfanizei exafanizei ta sprites!!!!
-  //drawSprites();
-
+  
   // Background
   land.setStage(stage);
   land.display();
@@ -576,29 +568,7 @@ function game(stage) {
     barrel2.display();
     sign.display();
 
-    // Collisions  
-    //if ((pl.getX() + pl.getWidth() / 2 >= crate1.getX() - crate1.getWidth() / 2) && (pl.getX() - pl.getWidth() / 2 <= crate1.getX() + crate1.getWidth() / 2) && (pl.getY() + pl.getHeight() / 2 >= crate1.getY() - crate1.getHeight() / 2) && (pl.getY() - pl.getHeight() / 2 <= crate1.getY() + crate1.getHeight() / 2) && (pl.getJump() == false)) {
-      //pl.setY(pl.getY());
-      //pl.setVelocity(0);
-      //pl.setJumpCounter(0);
-    //}
-
-
-    //geralt movement
-    /*if (kb.pressing('ArrowLeft')) {
-      geralt.vel.x = -4;
-    }
-    else {
-      geralt.vel.x = 0;
-    }
-    
-    if (kb.pressing('ArrowRight')) {
-      geralt.vel.x = +4;
-    }
-    else {
-      geralt.vel.x = 0;
-    }
-    */
+   
 
     // Breaks
   } else if (stage == 2) {
@@ -629,9 +599,7 @@ function keyPressed() {
     geralt.vel.x = -5;
     
 
-    /*if(geralt.x>400){
-      camera.x += -5;
-    }*/
+   
   }
   else if(keyIsDown(RIGHT_ARROW)){
     geralt.vel.x = +5;
@@ -644,48 +612,10 @@ function keyPressed() {
   }
 
   
-  // Left
-  /*if (keyIsDown(LEFT_ARROW)) {
-    if ((pl.getX() - pl.getWidth() / 2 >= 5) || (!(stage == 1) && (pl.getX() >= 5))) {
-      pl.moveLeft();
-    } else if (!(stage == 1)) {
-      stage -= 1;
-      pl.setX(width);
-    }
-  }
-
-  // Right
-  if (keyIsDown(RIGHT_ARROW)) {
-    if ((pl.getX() + pl.getWidth() / 2 <= (width - 5)) || (!(stage == 3) && (pl.getX() <= (width - 5)))) {
-      pl.moveRight();
-    } else if (!(stage == 3)) {
-      stage += 1;
-      pl.setX(0);
-    }
-  }
-
-  // AUTO OUSIASTIKA EINAI TRUE OSO PATAME TO KOUMPI ALLA EINAI LATHOS DIOTI TWRA TO PATAS MIA FORA KAI PHGAINEI PANW 
-  // ARA PREPEI NA GINETAI MIA FORA OXI OSO PATAS TO PANW VELOS!!!!!!!!!!!!!!!!!
-
-  // Jump
-  if (keyCode === UP_ARROW) {
-    //pl.jump();
-  }
-  
-  */
 
 }
 
 
-function keyReleased(){
-
-
-/*  if (keyCode === UP_ARROW) {
-    //pl.noJump();
-  }
-
-  */
-} 
 
 var jumped = false;
 
@@ -710,13 +640,11 @@ function jump(sprite){
     }
   
 
-  //EDW THELEI SPRITE GROUPS GIA PLATFORMS BARRELS CRATES KLP
-  // EINAI LIGO BUGGY AMA TA VALW SE ENA GROUP OPOTE PROS TO PARON TO KATHE ENA SE KSEXWRISTO IF !!!!
+  
 
   if(sprite.colliding(crate)){
     sprite.vel.y=0;
-    //sprite.y = 393;
-  
+    
     if(keyIsDown(UP_ARROW)){
 
       sprite.vel.y= hop;
@@ -726,7 +654,7 @@ function jump(sprite){
 
   if(sprite.colliding(barrel1)){
     sprite.vel.y=0;
-    //sprite.y = 393;
+    
   
     if(keyIsDown(UP_ARROW)){
 
@@ -737,7 +665,7 @@ function jump(sprite){
  
   if(sprite.colliding(barrel2)){
     sprite.vel.y=0;
-    //sprite.y = 393;
+    
   
     if(keyIsDown(UP_ARROW)){
 
@@ -748,7 +676,7 @@ function jump(sprite){
 
   if(sprite.colliding(sign)){
     sprite.vel.y=0;
-    //sprite.y = 393;
+    
   
     if(keyIsDown(UP_ARROW)){
 
@@ -760,7 +688,7 @@ function jump(sprite){
 
   if(sprite.colliding(wagon)){
     sprite.vel.y=0;
-    //sprite.y = 393;
+   
   
     if(keyIsDown(UP_ARROW)){
 
@@ -772,7 +700,7 @@ function jump(sprite){
 
   if(sprite.colliding(crate1)){
     sprite.vel.y=0;
-    //sprite.y = 393;
+   
   
     if(keyIsDown(UP_ARROW)){
 
@@ -783,7 +711,7 @@ function jump(sprite){
 
   if(sprite.colliding(crate2)){
     sprite.vel.y=0;
-    //sprite.y = 393;
+    
   
     if(keyIsDown(UP_ARROW)){
 
@@ -794,7 +722,7 @@ function jump(sprite){
 
   if(sprite.colliding(crate3)){
     sprite.vel.y=0;
-    //sprite.y = 393;
+   
   
     if(keyIsDown(UP_ARROW)){
 
@@ -806,7 +734,7 @@ function jump(sprite){
 
   if(sprite.colliding(floor1)){
     sprite.vel.y=0;
-    //sprite.y = 393;
+   
   
     if(keyIsDown(UP_ARROW)){
 
@@ -818,7 +746,7 @@ function jump(sprite){
 
   if(sprite.colliding(floor2)){
     sprite.vel.y=0;
-    //sprite.y = 393;
+   
   
     if(keyIsDown(UP_ARROW)){
 
@@ -830,7 +758,7 @@ function jump(sprite){
 
   if(sprite.colliding(welltop)){
     sprite.vel.y=0;
-    //sprite.y = 393;
+   
   
     if(keyIsDown(UP_ARROW)){
 
@@ -842,7 +770,7 @@ function jump(sprite){
 
   if(sprite.colliding(platform1a)){
     sprite.vel.y=0;
-    //sprite.y = 393;
+    
   
     if(keyIsDown(UP_ARROW)){
 
@@ -855,7 +783,7 @@ function jump(sprite){
 
   if(sprite.colliding(platform2a)){
     sprite.vel.y=0;
-    //sprite.y = 393;
+    
   
     if(keyIsDown(UP_ARROW)){
 
@@ -866,7 +794,7 @@ function jump(sprite){
 
   if(sprite.colliding(S1barrel1)){
     sprite.vel.y=0;
-    //sprite.y = 393;
+   
   
     if(keyIsDown(UP_ARROW)){
 
@@ -879,7 +807,7 @@ function jump(sprite){
 
   if(sprite.colliding(S1barrel2)){
     sprite.vel.y=0;
-    //sprite.y = 393;
+    
   
     if(keyIsDown(UP_ARROW)){
 
@@ -892,7 +820,7 @@ function jump(sprite){
 
   if(sprite.colliding(S1crate)){
     sprite.vel.y=0;
-    //sprite.y = 393;
+    
   
     if(keyIsDown(UP_ARROW)){
 
@@ -905,7 +833,7 @@ function jump(sprite){
 
   if(sprite.colliding(S1crate1)){
     sprite.vel.y=0;
-    //sprite.y = 393;
+   
   
     if(keyIsDown(UP_ARROW)){
 
@@ -918,7 +846,7 @@ function jump(sprite){
 
   if(sprite.colliding(S1crate2)){
     sprite.vel.y=0;
-    //sprite.y = 393;
+   
   
     if(keyIsDown(UP_ARROW)){
 
@@ -931,7 +859,7 @@ function jump(sprite){
 
   if(sprite.colliding(S1crate3)){
     sprite.vel.y=0;
-    //sprite.y = 393;
+   
   
     if(keyIsDown(UP_ARROW)){
 
@@ -945,7 +873,7 @@ function jump(sprite){
 
   if(sprite.colliding(S1wagon)){
     sprite.vel.y=0;
-    //sprite.y = 393;
+    
   
     if(keyIsDown(UP_ARROW)){
 
@@ -957,7 +885,7 @@ function jump(sprite){
 
   if(sprite.colliding(S1sign)){
     sprite.vel.y=0;
-    //sprite.y = 393;
+   
   
     if(keyIsDown(UP_ARROW)){
 
@@ -969,7 +897,7 @@ function jump(sprite){
 
   if(sprite.colliding(S1crate4)){
     sprite.vel.y=0;
-    //sprite.y = 393;
+    
   
     if(keyIsDown(UP_ARROW)){
 
@@ -980,7 +908,7 @@ function jump(sprite){
 
   if(sprite.colliding(S1platform1a)){
     sprite.vel.y=0;
-    //sprite.y = 393;
+    
   
 
     if(keyIsDown(UP_ARROW) ){
@@ -996,7 +924,7 @@ function jump(sprite){
 
   if(sprite.colliding(S1platform2a)){
     sprite.vel.y=0;
-    //sprite.y = 393;
+   
   
     if(keyIsDown(UP_ARROW)){
 
@@ -1009,7 +937,7 @@ function jump(sprite){
 
   if(sprite.colliding(S2crate1)){
     sprite.vel.y=0;
-    //sprite.y = 393;
+    
   
     if(keyIsDown(UP_ARROW)){
 
@@ -1021,7 +949,7 @@ function jump(sprite){
 
   if(sprite.colliding(S2crate2)){
     sprite.vel.y=0;
-    //sprite.y = 393;
+    
   
     if(keyIsDown(UP_ARROW)){
 
@@ -1034,7 +962,7 @@ function jump(sprite){
 
   if(sprite.colliding(S2crate3)){
     sprite.vel.y=0;
-    //sprite.y = 393;
+    
   
     if(keyIsDown(UP_ARROW)){
 
@@ -1046,7 +974,7 @@ function jump(sprite){
 
   if(sprite.colliding(S2welltop)){
     sprite.vel.y=0;
-    //sprite.y = 393;
+    
   
     if(keyIsDown(UP_ARROW)){
 
@@ -1059,7 +987,7 @@ function jump(sprite){
 
   if(sprite.colliding(S2barrel1)){
     sprite.vel.y=0;
-    //sprite.y = 393;
+    
   
     if(keyIsDown(UP_ARROW)){
 
@@ -1072,8 +1000,7 @@ function jump(sprite){
 
   if(sprite.colliding(S2barrel2)){
     sprite.vel.y=0;
-    //sprite.y = 393;
-  
+    
     if(keyIsDown(UP_ARROW)){
 
       sprite.vel.y= hop;
@@ -1085,7 +1012,7 @@ function jump(sprite){
 
   if(sprite.colliding(S2floor1)){
     sprite.vel.y=0;
-    //sprite.y = 393;
+   
   
     if(keyIsDown(UP_ARROW)){
 
@@ -1098,7 +1025,7 @@ function jump(sprite){
 
   if(sprite.colliding(S2platform1a)){
     sprite.vel.y=0;
-    //sprite.y = 393;
+    
   
     if(keyIsDown(UP_ARROW)){
 
@@ -1110,7 +1037,7 @@ function jump(sprite){
  
   if(sprite.colliding(S2platform2a)){
     sprite.vel.y=0;
-    //sprite.y = 393;
+   
   
     if(keyIsDown(UP_ARROW)){
 
@@ -1317,44 +1244,58 @@ function removeCoins(){
   if(geralt.overlaps(coin1)){
 
     coin1.remove();
+    coin_sound.play();
   }
 
   if(geralt.overlaps(coin2)){
 
     coin2.remove();
+    coin_sound.play();
   }
 
   if(geralt.overlaps(coin3)){
 
     coin3.remove();
+    coin_sound.play();
   }
   
   if(geralt.overlaps(coin4)){
 
     coin4.remove();
+    coin_sound.play();
   }
 
   if(geralt.overlaps(coin5)){
 
     coin5.remove();
+    coin_sound.play();
   }
   
   if(geralt.overlaps(coin6)){
 
     coin6.remove();
+    coin_sound.play();
   }
 
   if(geralt.overlaps(coin7)){
 
     coin7.remove();
+    coin_sound.play();
   }
   
   if(geralt.overlaps(coin8)){
 
     coin8.remove();
+    coin_sound.play();
   }
 
-  
+}
 
 
+function backgroundMusic(){
+
+  background_sound.play();
+  background_sound.loop();
+  background_sound.setVolume(0.2);
+  userStartAudio();
 }
