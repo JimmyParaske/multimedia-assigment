@@ -13,6 +13,15 @@ var enemy2;
 var enemy3;
 var enemy4;
 var enemy5;
+var coin1;
+var coin2;
+var coin3;
+var coin4;
+var coin5;
+var coin6;
+var coin7;
+var coin8;
+
 
 // Stage 1
 var S1barrel1;
@@ -44,13 +53,16 @@ var platform2a;
 var platform2b;
 
 
+
 var geralt_sheet;
 var idle_animation;
+var coin_sheet;
+var coin_animation;
 
 function preload(){
 
+  //player and all obstacle assets
   geraltImg = loadImage('./assets/images/geralt_of_rivia.png');
-  //geralt_sheet = loadSpriteSheet('./assets/images/SteamMan_idle.png', 192, 48, 4);
   crateImg = loadImage('./assets/images/crate_cropped.png');
   cratestackedImg = loadImage('./assets/images/crate_stacked.png');
   barrelImg = loadImage('./assets/images/barrel.png');
@@ -64,11 +76,12 @@ function preload(){
   platform1Img = loadImage('./assets/images/platform1.png');
   platform2Img = loadImage('./assets/images/platform2.png');
 
+  //enemies (2 types)
   enemyImg = loadImage('./assets/images/sprite_0.png');
   enemy2Img = loadImage('./assets/images/sprite_enemy_0_reverted.png');
 
-  //geralt_sheet = loadSpriteSheet('./assets/images/SteamMan_idle.png', 48, 48, 4);
-  //idle_animation = loadAnimation(geralt_sheet);
+  //coins
+  coins = loadAnimation('./assets/images/coin3_16x16.png', { size: [16, 22], frames: 14 });
 }
 
 function setup() {
@@ -101,12 +114,10 @@ function setup() {
   //block=createSprite(400,300,900,10);
   //block.collider='static'; 
 
-  //jumping assets group
-  jumpingAssets = new Group();
- 
+  
 
   // Player
-  geralt = createSprite(2100,465,67,80);
+  geralt = createSprite(2500,465,67,80);
   //-3200
   //για να μην κανει rotate ο geralt 
   geralt.rotationLock = true;
@@ -145,6 +156,48 @@ function setup() {
   enemy2Img.resize(130, 130);
   enemy5.addImage(enemy2Img);
   enemy5.layer = 2;
+
+
+  coin1 = createSprite(-2750, 200, 10, 10);
+  coin1.collider = 'none';
+  coin1.addAnimation(coins);
+  
+
+  coin2 = createSprite(-1950, 150, 10, 10);
+  coin2.collider = 'none';
+  coin2.addAnimation(coins.clone());
+  
+
+  coin3 = createSprite(-1000, 100, 10, 10);
+  coin3.collider = 'none';
+  coin3.addAnimation(coins.clone());
+ 
+
+  coin4 = createSprite(300, 350, 10, 10);
+  coin4.collider = 'none';
+  coin4.addAnimation(coins.clone());
+  
+
+  coin5 = createSprite(1060, 80, 10, 10);
+  coin5.collider = 'none';
+  coin5.addAnimation(coins.clone());
+ 
+
+  coin6 = createSprite(1555, 465, 10, 10);
+  coin6.collider = 'none';
+  coin6.addAnimation(coins.clone());
+ 
+
+  coin7 = createSprite(2750, 180, 10, 10);
+  coin7.collider = 'none';
+  coin7.addAnimation(coins.clone());
+ 
+
+  coin8 = createSprite(3850, 100, 10, 10);
+  coin8.collider = 'none';
+  coin8.addAnimation(coins.clone());
+ 
+  
 
   //idle = loadAnimation('./assets/images/SteamMan_idle.png',{size: [192,48], frames: 4});
 
@@ -456,18 +509,17 @@ function setup() {
 
 function draw() {
   
-  //clear()
+  clear();
   //call functions
   //camera
   //camera.x=400;
   //camera.y=290;
- 
-
+  
   camera.on();
   //animation(idle_animation, -3200, 465);
   //image(idle_walk.spriteSheet, -3200, 400, 5000, 1500)
 
- 
+  
 
   if( geralt.x <= -3200){
 
@@ -489,7 +541,7 @@ function draw() {
     geralt.x = 4450;
   }
 
-
+ 
   
 
   //pl.gravity();
@@ -510,6 +562,7 @@ function draw() {
 
   //game(stage);
   camera.off();
+  
 }
 
 function game(stage) {
@@ -586,7 +639,7 @@ function keyPressed() {
   }
   else{
     geralt.vel.x = 0;
-  
+    
   }
 
   
