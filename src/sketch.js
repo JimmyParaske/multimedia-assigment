@@ -117,7 +117,7 @@ function setup() {
   
 
   // Player
-  geralt = createSprite(2500,465,67,80);
+  geralt = createSprite(-3200,465,67,80);
   //-3200
   //για να μην κανει rotate ο geralt 
   geralt.rotationLock = true;
@@ -159,42 +159,42 @@ function setup() {
 
 
   coin1 = createSprite(-2750, 200, 10, 10);
-  coin1.collider = 'none';
+  coin1.collider = 'static';
   coin1.addAnimation(coins);
-  
+
 
   coin2 = createSprite(-1950, 150, 10, 10);
-  coin2.collider = 'none';
+  coin2.collider = 'static';
   coin2.addAnimation(coins.clone());
   
 
   coin3 = createSprite(-1000, 100, 10, 10);
-  coin3.collider = 'none';
+  coin3.collider = 'static';
   coin3.addAnimation(coins.clone());
  
 
   coin4 = createSprite(300, 350, 10, 10);
-  coin4.collider = 'none';
+  coin4.collider = 'static';
   coin4.addAnimation(coins.clone());
   
 
   coin5 = createSprite(1060, 80, 10, 10);
-  coin5.collider = 'none';
+  coin5.collider = 'static';
   coin5.addAnimation(coins.clone());
  
 
   coin6 = createSprite(1555, 465, 10, 10);
-  coin6.collider = 'none';
+  coin6.collider = 'static';
   coin6.addAnimation(coins.clone());
  
 
   coin7 = createSprite(2750, 180, 10, 10);
-  coin7.collider = 'none';
+  coin7.collider = 'static';
   coin7.addAnimation(coins.clone());
  
 
   coin8 = createSprite(3850, 100, 10, 10);
-  coin8.collider = 'none';
+  coin8.collider = 'static';
   coin8.addAnimation(coins.clone());
  
   
@@ -519,7 +519,7 @@ function draw() {
   //animation(idle_animation, -3200, 465);
   //image(idle_walk.spriteSheet, -3200, 400, 5000, 1500)
 
-  
+
 
   if( geralt.x <= -3200){
 
@@ -532,6 +532,7 @@ function draw() {
   keyPressed();
   keyReleased();
   enemyMovement();
+  removeCoins();
 
   //BOUNDARIES FOR PLAYER
   if(geralt.x <= -3550){
@@ -1306,5 +1307,54 @@ function enemyMovement(){
       enemy5.vel.x = 1.4;
     }
   }
+
+}
+
+
+
+function removeCoins(){
+
+  if(geralt.overlaps(coin1)){
+
+    coin1.remove();
+  }
+
+  if(geralt.overlaps(coin2)){
+
+    coin2.remove();
+  }
+
+  if(geralt.overlaps(coin3)){
+
+    coin3.remove();
+  }
+  
+  if(geralt.overlaps(coin4)){
+
+    coin4.remove();
+  }
+
+  if(geralt.overlaps(coin5)){
+
+    coin5.remove();
+  }
+  
+  if(geralt.overlaps(coin6)){
+
+    coin6.remove();
+  }
+
+  if(geralt.overlaps(coin7)){
+
+    coin7.remove();
+  }
+  
+  if(geralt.overlaps(coin8)){
+
+    coin8.remove();
+  }
+
+  
+
 
 }
