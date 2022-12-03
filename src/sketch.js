@@ -1,9 +1,10 @@
 // Game control
 var stage = 1;
-let geraltImg;
+let geraltAnimationIdle;
 let hop=-8;
 let fallingSpeed = 0.2;
-let minHeight=465;
+let minHeight = 465;
+let minHeightPlayer=480;
 // Classes
 var land;
 var pl;
@@ -57,6 +58,10 @@ var platform2b;
 
 var coin_sheet;
 var coin_animation;
+var walk1_animation;
+var walk1_animation_reverse;
+var walk2_animation;
+var walk2_animation_reverse;
 
 
 //sound effect variables
@@ -66,7 +71,12 @@ var coin_sound;
 function preload(){
 
   //player and all obstacle assets
-  geraltImg = loadImage('./assets/images/geralt_of_rivia.png');
+  geraltAnimationIdle = loadAnimation('./assets/images/Knight/noBKG_KnightIdle_strip2.png', { size: [128, 128], frames: 15 });
+  geraltAnimationRunLeft = loadAnimation('./assets/images/Knight/noBKG_KnightRun_strip.png', { size: [192, 128], frames: 8 });
+  geraltAnimationRunRight = loadAnimation('./assets/images/Knight/noBKG_KnightRun_strip_right.png', { size: [192, 128], frames: 8 });
+  geraltAnimationIAttack = loadAnimation('./assets/images/Knight/noBKG_KnightAttack_strip.png', { size: [128, 128], frames: 22 });
+  geraltAnimationDeath = loadAnimation('./assets/images/Knight/noBKG_KnightDeath_strip.png', { size: [128, 128], frames: 15 });
+  geraltAnimationJump = loadAnimation('./assets/images/Knight/noBKG_KnightJumpAndFall_strip.png', { size: [192, 128], frames: 14 });
   crateImg = loadImage('./assets/images/crate_cropped.png');
   cratestackedImg = loadImage('./assets/images/crate_stacked.png');
   barrelImg = loadImage('./assets/images/barrel.png');
@@ -81,8 +91,16 @@ function preload(){
   platform2Img = loadImage('./assets/images/platform2.png');
 
   //enemies (2 types)
-  enemyImg = loadImage('./assets/images/sprite_0.png');
-  enemy2Img = loadImage('./assets/images/sprite_enemy_0_reverted.png');
+  enemyAnimationLeft = loadAnimation('./assets/images/Goblin/RunLeft.png', { size: [220, 220], frames: 8 });
+  enemy2AnimationLeft = loadAnimation('./assets/images/Skeleton/WalkLeft.png', { size: [270, 270], frames: 4 });
+  enemyAnimationRight = loadAnimation('./assets/images/Goblin/RunRight.png', { size: [220, 220], frames: 8 });
+  enemy2AnimationRight = loadAnimation('./assets/images/Skeleton/WalkRight.png', { size: [270, 270], frames: 4 });
+
+
+  enemyAnimationLeft.frameDelay = 10;
+  enemy2AnimationLeft.frameDelay = 15;
+  enemyAnimationRight.frameDelay = 10;
+  enemy2AnimationRight.frameDelay = 15;
 
   //coins
   coins = loadAnimation('./assets/images/coin3_16x16.png', { size: [16, 22], frames: 14 });
@@ -121,44 +139,53 @@ function setup() {
   
 
   // Player
-  geralt = createSprite(-3200,465,67,80);
+  geralt = createSprite(-3200,480,67,80);
   //-3200
   //για να μην κανει rotate ο geralt 
   geralt.rotationLock = true;
-  geraltImg.resize(88,80);
-  geralt.addImage(geraltImg);
-  
+  //geraltAnimationIdle.resize(88,80);
+  geralt.addAnimation('idle',geraltAnimationIdle);
+  geralt.addAnimation('left', geraltAnimationRunLeft);
+  geralt.addAnimation('right', geraltAnimationRunRight);
+  geralt.addAnimation('attack', geraltAnimationIAttack);
+  geralt.addAnimation('jump', geraltAnimationJump);
+  geralt.addAnimation('death', geraltAnimationDeath);
   geralt.layer = 2;
   
 
   enemy1 = createSprite(-2400,465,55,100);
   enemy1.rotationLock = true;
-  enemyImg.resize(200,220);
-  enemy1.addImage(enemyImg);
+  //enemyAnimationLeft.resize(200,220);
+  enemy1.addAnimation('left',enemyAnimationLeft);
+  enemy1.addAnimation('right',enemyAnimationRight);
   enemy1.layer = 2;
 
   enemy2 = createSprite(-1200,465,55,100);
   enemy2.rotationLock = true;
-  enemyImg.resize(200,220);
-  enemy2.addImage(enemyImg);
+  //enemyAnimationLeft.resize(200,220);
+  enemy2.addAnimation('left',enemyAnimationLeft.clone());
+  enemy2.addAnimation('right',enemyAnimationRight.clone());
   enemy2.layer = 2;
 
-  enemy3 = createSprite(300,465,55,100);
+  enemy3 = createSprite(300,445,55,100);
   enemy3.rotationLock = true;
-  enemy2Img.resize(130, 130);
-  enemy3.addImage(enemy2Img);
+  //enemy2AnimationLeft.resize(130, 130);
+  enemy3.addAnimation('left',enemy2AnimationLeft);
+  enemy3.addAnimation('right',enemy2AnimationRight);
   enemy3.layer = 2;
 
   enemy4 = createSprite(2300,465,55,100);
   enemy4.rotationLock = true;
-  enemyImg.resize(200,220);
-  enemy4.addImage(enemyImg);
+  //enemyAnimationLeft.resize(200,220);
+  enemy4.addAnimation('left',enemyAnimationLeft.clone());
+  enemy4.addAnimation('right',enemyAnimationRight.clone());
   enemy4.layer = 2;
 
   enemy5 = createSprite(2800,465,55,100);
   enemy5.rotationLock = true;
-  enemy2Img.resize(130, 130);
-  enemy5.addImage(enemy2Img);
+  //enemy2AnimationLeft.resize(130, 130);
+  enemy5.addAnimation('left',enemy2AnimationLeft.clone());
+  enemy5.addAnimation('right',enemy2AnimationRight.clone());
   enemy5.layer = 2;
 
 
@@ -597,18 +624,18 @@ function keyPressed() {
   if(keyIsDown(LEFT_ARROW)){
 
     geralt.vel.x = -5;
-    
+    geralt.changeAnimation('right');
 
    
   }
   else if(keyIsDown(RIGHT_ARROW)){
     geralt.vel.x = +5;
-    
+    geralt.changeAnimation('left');  
     /*camera.x += +5;*/
   }
   else{
     geralt.vel.x = 0;
-    
+    geralt.changeAnimation('idle');
   }
 
   
@@ -627,13 +654,14 @@ function jump(sprite){
     sprite.vel.y += fallingSpeed;
     sprite.y += sprite.vel.y;
 
-    if(sprite.y > minHeight){
+    if(sprite.y > minHeightPlayer){
       sprite.vel.y=0;
-      sprite.y = minHeight;
-    
+      sprite.y = minHeightPlayer;
+     
       if(keyIsDown(UP_ARROW)){
 
         sprite.vel.y= hop;
+       
         
       }
 
@@ -1068,26 +1096,30 @@ function enemyMovement(){
 
     enemy1.vel.x = 1;
     collided = true;
+    enemy1.changeAnimation('left');
   }
 
   if(enemy1.collided(S1wagon)){
 
     enemy1.vel.x =-1;
-    
+    enemy1.changeAnimation('right');
   }
 
   if(enemy1.collided(S1crate3)){
 
     enemy1.vel.x = 1;
+    enemy1.changeAnimation('left');
   }
 
   if(enemy1.collided(geralt)){
 
     if(geralt.x < enemy1.x){
       enemy1.vel.x=-1;
+      enemy1.changeAnimation('right');
     }
     else{
       enemy1.vel.x = 1;
+      enemy1.changeAnimation('left');
     }
   }
 
@@ -1104,26 +1136,30 @@ function enemyMovement(){
 
     enemy2.vel.x = 1.2;
     collided2nd = true;
+    enemy2.changeAnimation('left');
   }
 
   if(enemy2.collided(crate)){
 
     enemy2.vel.x =-1.2;
-    
+    enemy2.changeAnimation('right');
   }
 
   if(enemy2.collided(S1crate4)){
 
     enemy2.vel.x = 1.2;
+    enemy2.changeAnimation('left');
   }
 
   if(enemy2.collided(geralt)){
 
     if(geralt.x < enemy2.x){
       enemy2.vel.x=-1.2;
+      enemy2.changeAnimation('right');
     }
     else{
       enemy2.vel.x = 1.2;
+      enemy2.changeAnimation('left');
     }
   }
 
@@ -1140,26 +1176,30 @@ function enemyMovement(){
 
     enemy3.vel.x = 1.2;
     collided3rd = true;
+    enemy3.changeAnimation('left');
   }
 
   if(enemy3.collided(crate2)){
 
     enemy3.vel.x =-1.2;
-    
+    enemy3.changeAnimation('right');
   }
 
   if(enemy3.collided(wagon)){
 
     enemy3.vel.x = 1.2;
+    enemy3.changeAnimation('left');
   }
 
   if(enemy3.collided(geralt)){
 
     if(geralt.x < enemy3.x){
       enemy3.vel.x=-1.2;
+      enemy3.changeAnimation('right');
     }
     else{
       enemy3.vel.x = 1.2;
+      enemy3.changeAnimation('left');
     }
   }
 
@@ -1176,26 +1216,31 @@ function enemyMovement(){
 
     enemy4.vel.x = 1.2;
     collided4th = true;
+    enemy4.changeAnimation('left');
   }
 
   if(enemy4.collided(S2welltop)){
 
     enemy4.vel.x =-1.2;
+    enemy4.changeAnimation('right');
     
   }
 
   if(enemy4.collided(S2crate3)){
 
     enemy4.vel.x = 1.2;
+    enemy4.changeAnimation('left');
   }
 
   if(enemy4.collided(geralt)){
 
     if(geralt.x < enemy4.x){
       enemy4.vel.x=-1.2;
+      enemy4.changeAnimation('right');
     }
     else{
       enemy4.vel.x = 1.2;
+      enemy4.changeAnimation('left');
     }
   }
 
@@ -1212,26 +1257,31 @@ function enemyMovement(){
 
     enemy5.vel.x = 1.4;
     collided5th = true;
+    enemy5.changeAnimation('left');
   }
 
   if(enemy5.collided(S2barrel1)){
 
     enemy5.vel.x =-1.4;
+    enemy5.changeAnimation('right');
     
   }
 
   if(enemy5.collided(S2welltop)){
 
     enemy5.vel.x = 1.4;
+    enemy5.changeAnimation('left');
   }
 
   if(enemy5.collided(geralt)){
 
     if(geralt.x < enemy5.x){
       enemy5.vel.x=-1.4;
+      enemy5.changeAnimation('right');
     }
     else{
       enemy5.vel.x = 1.4;
+      enemy5.changeAnimation('left');
     }
   }
 
@@ -1294,8 +1344,8 @@ function removeCoins(){
 
 function backgroundMusic(){
 
-  background_sound.play();
-  background_sound.loop();
-  background_sound.setVolume(0.2);
-  userStartAudio();
+  //background_sound.play();
+  //background_sound.loop();
+  //background_sound.setVolume(0.2);
+  //userStartAudio();
 }
