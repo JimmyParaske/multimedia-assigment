@@ -1,83 +1,142 @@
 class Player {
     constructor() {
-        this.image = loadImage('./assets/images/player.png');
-
-        this.sprite = createSprite(this.image, 400, 465, 70, 70);
-
-        this.sprite.rotationLock = true;
-        //για να ειναι το σωστο collider και να μην χτυπαει στο κενο πριν το κεφαλι του geralt;
-        //geralt.setCollider("rectangle",0,0,80,80);
-
+        this.x = 400;
+        this.y = 465;
+        this.width = 70;
+        this.height = 70;
+        this.image = loadImage('./assets/images/barrel.png');
+        //this.jumpSound = loadSound('./assets/sounds/player-jump.mp3');
         this.speed = 5;
-        this.jumpHeight = -8;
-        this.fallingSpeed = 0.2;
+        this.j = false;
+        this.direction = 1;
+        this.velocity = 0;
+        this.jumpHeight = -15;
+        this.fallingSpeed = 0.5;
         this.minHeight = 465;
         this.maxHeight = 50;
+        this.jumpCounter = 0;
     }
 
     display() {
-        this.image.resize(88, 80); //TODO
+        fill(255, 255, 255);
+        rect(this.x, this.y, this.width, this.height);
+        image(this.image, this.x, this.y, this.width, this.height);
     }
+
 
     //Getters
     getX() {
-        return this.sprite.x;
+        return this.x;
     }
 
     getY() {
-        return this.sprite.y;
+        return this.y;
     }
 
     getWidth() {
-        return this.sprite.width;
+        return this.width;
     }
 
     getHeigth() {
-        return this.sprite.height;
+        return this.height;
     }
 
-    getSprite() {
-        return this.sprite;
+    getJump() {
+        return this.j;
     }
 
     //Setters
     setX(x) {
-        this.sprite.x = x;
+        this.x = x;
     }
 
     setY(y) {
-        this.sprite.y = y;
+        this.y = y;
     }
 
-    // setVelY(int){
-    //     this.sprite.vel.y = int;
-    // }
+    setVelocity(velocity) {
+        this.velocity = velocity;
+    }
+
+    setJumpCounter(jumpCounter) {
+        this.jumpCounter = jumpCounter;
+    }
 
     //Moves
     moveLeft() {
-        this.sprite.vel.x = -this.speed;
+        this.x = this.x - this.speed;
     }
 
     moveRight() {
-        this.sprite.vel.x = +this.speed;
-    }
-
-    stay() {
-        this.sprite.vel.x = 0;
+        this.x = this.x + this.speed;
     }
 
     jump() {
         //this.jumpSound.play();
-        this.sprite.vel.y += this.fallingSpeed;
-        this.sprite.y += this.sprite.vel.y;
+        this.j = true;
+    }
 
-        if (this.sprite.y > this.minHeight) {
-            this.sprite.vel.y = 0;
-            this.sprite.y = this.minHeight;
+    noJump() {
+        
+        this.j = false;
+    }
 
-            if (keyIsDown(UP_ARROW)) {
-                this.sprite.vel.y = this.jumpHeight;
+    /*gravity() {
+        if (this.y >= this.minHeight && this.j == false) {
+            //stopped falling
+            this.y = this.y; //stay at ground
+            this.jumpCounter = 0; //reset counter
+        }
+        else {
+            this.y = this.y + (this.direction * this.velocity);
+        }
+
+        if (this.j == true) {
+            if (this.y <= this.maxHeight || this.jumpCounter > this.jumpHeight) {
+                if (this.y >= this.minHeight) {
+                    this.y = this.minHeight; // stay at ground level, dont fall down 
+                }
+                else {
+                    this.velocity = this.fallingSpeed;
+                }
+            }
+            else {
+                this.velocity = -this.jumpHeight;
+                this.jumpCounter = this.jumpCounter + 1;
             }
         }
+        else {
+            this.velocity = this.fallingSpeed;
+        }
+    } */
+
+
+    /* MPOROUME AMA EINAI NA TO KALOUME MESW THS JUMP KAI MESA STIS IF NA VAZOUME SAN SYNTHIKH TO JUMP TRUE/FALSE EPISHS!!!! */
+
+    gravity(){
+
+        /* KATI EXW KANEI KAI FREEZAREI AMA PAS ARISTERA H DEKSIA H PATHSEIS ALLO PLHKTRO TO JUMP */
+        /* DHLADH KAPOY KRATAEI TO THIS.Y = THIS.Y ENW DEN PREPEI */
+    
+        this.velocity  += this.fallingSpeed
+        this.y += this.velocity
+        
+        if(this.y>this.minHeight) {
+            this.velocity = 0
+            this.y = this.minHeight
+            if (keyIsDown(UP_ARROW)) {
+                this.velocity += this.jumpHeight
+            } 
+        }
+        
+        
+            
+        /* H SYNTHIKH IF(THIS.J == TRUE DEN EINAI ETOIMH) !!!!!!!!!!!!!!!! */
+
+        /* EXW VALEI OTAN GINETAI TRUE NA PHDAEI PIO PSHLA GIA NA KATALAVNW POTE GINETAI TRUE KAI PWS/ME TI KOUMPI/SYNDIASMO GINETAI TRUE!!! */
+        //this.jump();
+        
+
+    
     }
 }
