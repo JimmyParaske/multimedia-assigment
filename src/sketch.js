@@ -70,13 +70,23 @@ var coin_sound;
 
 function preload(){
 
-  //player and all obstacle assets
-  geraltAnimationIdle = loadAnimation('./assets/images/Knight/noBKG_KnightIdle_strip2.png', { size: [128, 128], frames: 15 });
+  //player assets
+  geraltAnimationIdleLeft = loadAnimation('./assets/images/Knight/noBKG_KnightIdle_strip2.png', { size: [128, 128], frames: 15 });
+  geraltAnimationIdleRight = loadAnimation('./assets/images/Knight/noBKG_KnightIdle_strip2right.png', { size: [128, 128], frames: 15 });
   geraltAnimationRunLeft = loadAnimation('./assets/images/Knight/noBKG_KnightRun_strip.png', { size: [192, 128], frames: 8 });
   geraltAnimationRunRight = loadAnimation('./assets/images/Knight/noBKG_KnightRun_strip_right.png', { size: [192, 128], frames: 8 });
-  geraltAnimationIAttack = loadAnimation('./assets/images/Knight/noBKG_KnightAttack_strip.png', { size: [128, 128], frames: 22 });
+  geraltAnimationAttackLeft = loadAnimation('./assets/images/Knight/noBKG_KnightAttack_strip.png', { size: [288, 128], frames: 22 });
+  geraltAnimationAttackRight = loadAnimation('./assets/images/Knight/noBKG_KnightAttack_stripright.png', { size: [288, 128], frames: 22 });
   geraltAnimationDeath = loadAnimation('./assets/images/Knight/noBKG_KnightDeath_strip.png', { size: [128, 128], frames: 15 });
-  geraltAnimationJump = loadAnimation('./assets/images/Knight/noBKG_KnightJumpAndFall_strip.png', { size: [192, 128], frames: 14 });
+  geraltAnimationJump = loadAnimation('./assets/images/Knight/noBKG_KnightJumpAndFall_strip.png', { size: [309, 128], frames: 14 });
+
+  //attack and effects assets
+  slash_thinLeft = loadAnimation('./assets/images/Sword Slashes/slash_white_thin.png', { size: [68.75, 50], frames: 6 })
+  slash_thinRight = loadAnimation('./assets/images/Sword Slashes/slash_white_thinright.png', { size: [68.75, 50], frames: 6 })
+  slash_Left = loadAnimation('./assets/images/Sword Slashes/slash_white_wide.png', { size: [68.83, 50], frames: 6 })
+  slash_Right = loadAnimation('./assets/images/Sword Slashes/slash_white_wideright.png', { size: [68.83, 50], frames: 6 })
+
+  //obstacle assets
   crateImg = loadImage('./assets/images/crate_cropped.png');
   cratestackedImg = loadImage('./assets/images/crate_stacked.png');
   barrelImg = loadImage('./assets/images/barrel.png');
@@ -144,14 +154,29 @@ function setup() {
   //για να μην κανει rotate ο geralt 
   geralt.rotationLock = true;
   //geraltAnimationIdle.resize(88,80);
-  geralt.addAnimation('idle',geraltAnimationIdle);
+  
+  
   geralt.addAnimation('left', geraltAnimationRunLeft);
   geralt.addAnimation('right', geraltAnimationRunRight);
-  geralt.addAnimation('attack', geraltAnimationIAttack);
+  geralt.addAnimation('attack_left', geraltAnimationAttackLeft);
+  geralt.addAnimation('attack_right', geraltAnimationAttackRight);
   geralt.addAnimation('jump', geraltAnimationJump);
   geralt.addAnimation('death', geraltAnimationDeath);
+  geralt.addAnimation('idle_right',geraltAnimationIdleRight);
+  geralt.addAnimation('idle_left',geraltAnimationIdleLeft);
   geralt.layer = 2;
   
+
+  enemy1Slash = createSprite(-3200, 480, 67, 80);
+  enemy1Slash.collider = 'static'
+  enemy1Slash.addAnimation('slash_left', slash_thinLeft);
+  enemy1Slash.addAnimation('slash_right', slash_thinRight);
+
+
+  enemy2Slash = createSprite(-3200, 400, 67, 80);
+  enemy2Slash.collider = 'static'
+  enemy2Slash.addAnimation('slash_left', slash_Left);
+  enemy2Slash.addAnimation('slash_right', slash_Right);
 
   enemy1 = createSprite(-2400,465,55,100);
   enemy1.rotationLock = true;
@@ -631,11 +656,38 @@ function keyPressed() {
   else if(keyIsDown(RIGHT_ARROW)){
     geralt.vel.x = +5;
     geralt.changeAnimation('left');  
-    /*camera.x += +5;*/
+    
+  }
+  else if(keyIsDown(66)){               //b
+
+    geralt.vel.x=0;
+    geralt.changeAnimation('attack_left');
+
+  }
+  else if(keyIsDown(67)){               //c
+    geralt.vel.x=0;
+    geralt.changeAnimation('attack_right');
+
+  }
+  else if(kb.released(LEFT_ARROW)){
+    geralt.changeAnimation('idle_right');
+
+  }
+  else if(kb.released(RIGHT_ARROW)){
+
+    geralt.changeAnimation('idle_left');
+  }
+  else if(kb.released('b')){
+
+    geralt.changeAnimation('idle_left');
+  }
+  else if(kb.released('c')){
+
+    geralt.changeAnimation('idle_right');
   }
   else{
     geralt.vel.x = 0;
-    geralt.changeAnimation('idle');
+   
   }
 
   
