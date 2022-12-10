@@ -4,7 +4,6 @@ let geraltAnimationIdle;
 let hop=-8;
 let fallingSpeed = 0.2;
 let minHeight = 465;
-let minHeightPlayer=480;
 // Classes
 var land;
 var pl;
@@ -71,12 +70,12 @@ var coin_sound;
 function preload(){
 
   //player assets
-  geraltAnimationIdleLeft = loadAnimation('./assets/images/Knight/noBKG_KnightIdle_strip2.png', { size: [128, 128], frames: 15 });
-  geraltAnimationIdleRight = loadAnimation('./assets/images/Knight/noBKG_KnightIdle_strip2right.png', { size: [128, 128], frames: 15 });
-  geraltAnimationRunLeft = loadAnimation('./assets/images/Knight/noBKG_KnightRun_strip.png', { size: [192, 128], frames: 8 });
-  geraltAnimationRunRight = loadAnimation('./assets/images/Knight/noBKG_KnightRun_strip_right.png', { size: [192, 128], frames: 8 });
-  geraltAnimationAttackLeft = loadAnimation('./assets/images/Knight/noBKG_KnightAttack_strip.png', { size: [288, 128], frames: 22 });
-  geraltAnimationAttackRight = loadAnimation('./assets/images/Knight/noBKG_KnightAttack_stripright.png', { size: [288, 128], frames: 22 });
+  geraltAnimationIdleLeft = loadAnimation('./assets/images/Knight/noBKG_KnightIdle_strip4.png', { size: [128, 128], frames: 15 });
+  geraltAnimationIdleRight = loadAnimation('./assets/images/Knight/noBKG_KnightIdle_strip4right.png', { size: [128, 128], frames: 15 });
+  geraltAnimationRunLeft = loadAnimation('./assets/images/Knight/noBKG_KnightRun_strip2.png', { size: [192, 128], frames: 8 });
+  geraltAnimationRunRight = loadAnimation('./assets/images/Knight/noBKG_KnightRun_strip2right.png', { size: [192, 128], frames: 8 });
+  geraltAnimationAttackLeft = loadAnimation('./assets/images/Knight/noBKG_KnightAttack_strip2.png', { size: [288, 128], frames: 22 });
+  geraltAnimationAttackRight = loadAnimation('./assets/images/Knight/noBKG_KnightAttack_strip2right.png', { size: [288, 128], frames: 22 });
   geraltAnimationDeath = loadAnimation('./assets/images/Knight/noBKG_KnightDeath_strip.png', { size: [128, 128], frames: 15 });
   geraltAnimationJump = loadAnimation('./assets/images/Knight/noBKG_KnightJumpAndFall_strip.png', { size: [309, 128], frames: 14 });
 
@@ -149,7 +148,7 @@ function setup() {
   
 
   // Player
-  geralt = createSprite(-3200,480,67,80);
+  geralt = createSprite(-3400,480,67,80);
   //-3200
   //για να μην κανει rotate ο geralt 
   geralt.rotationLock = true;
@@ -167,17 +166,17 @@ function setup() {
   geralt.layer = 2;
   
 
-  enemy1Slash = createSprite(-3200, 480, 67, 80);
+  enemy1Slash = createSprite(-3200, 480, 60, 50);
   enemy1Slash.collider = 'static'
   enemy1Slash.addAnimation('slash_left', slash_thinLeft);
   enemy1Slash.addAnimation('slash_right', slash_thinRight);
 
 
-  enemy2Slash = createSprite(-3200, 400, 67, 80);
+  enemy2Slash = createSprite(-3200, 400, 60, 50);
   enemy2Slash.collider = 'static'
   enemy2Slash.addAnimation('slash_left', slash_Left);
   enemy2Slash.addAnimation('slash_right', slash_Right);
-
+  
   enemy1 = createSprite(-2400,465,55,100);
   enemy1.rotationLock = true;
   //enemyAnimationLeft.resize(200,220);
@@ -576,7 +575,8 @@ function draw() {
 
     camera.x= 4050;
   }
-  keyPressed();
+  keyPresses();
+  attackStop();
   enemyMovement();
   removeCoins();
 
@@ -642,7 +642,7 @@ function game(stage) {
 } 
 
 // Moves
-function keyPressed() {
+function keyPresses() {
 
 //geralt movement
 
@@ -658,17 +658,6 @@ function keyPressed() {
     geralt.changeAnimation('left');  
     
   }
-  else if(keyIsDown(66)){               //b
-
-    geralt.vel.x=0;
-    geralt.changeAnimation('attack_left');
-
-  }
-  else if(keyIsDown(67)){               //c
-    geralt.vel.x=0;
-    geralt.changeAnimation('attack_right');
-
-  }
   else if(kb.released(LEFT_ARROW)){
     geralt.changeAnimation('idle_right');
 
@@ -677,20 +666,41 @@ function keyPressed() {
 
     geralt.changeAnimation('idle_left');
   }
-  else if(kb.released('b')){
-
-    geralt.changeAnimation('idle_left');
-  }
-  else if(kb.released('c')){
-
-    geralt.changeAnimation('idle_right');
-  }
   else{
     geralt.vel.x = 0;
    
   }
 
   
+
+}
+
+
+function attackStop(){
+
+  if(kb.presses('b')){              
+
+    geralt.vel.x=0;
+    geralt.changeAnimation('attack_left');
+
+  }
+  else if(kb.released('b')){
+
+    geralt.changeAnimation('idle_left');
+    
+  }
+  else if(kb.presses('c')){               
+
+    geralt.vel.x=0;
+    geralt.changeAnimation('attack_right');
+
+  }
+  else if(kb.released('c')){
+
+    geralt.changeAnimation('idle_right');
+    
+  }
+
 
 }
 
@@ -706,9 +716,9 @@ function jump(sprite){
     sprite.vel.y += fallingSpeed;
     sprite.y += sprite.vel.y;
 
-    if(sprite.y > minHeightPlayer){
+    if(sprite.y > minHeight){
       sprite.vel.y=0;
-      sprite.y = minHeightPlayer;
+      sprite.y = minHeight;
      
       if(keyIsDown(UP_ARROW)){
 
@@ -824,6 +834,10 @@ function jump(sprite){
   }
 
 
+  if(sprite.y >= floor1.y && sprite.colliding(floor1)){
+    sprite.vel.y=0;
+  }
+
   if(sprite.colliding(floor2)){
     sprite.vel.y=0;
    
@@ -835,6 +849,10 @@ function jump(sprite){
 
   }
 
+
+  if(sprite.y >= floor2.y && sprite.colliding(floor2)){
+    sprite.vel.y=0;
+  }
 
   if(sprite.colliding(welltop)){
     sprite.vel.y=0;
@@ -848,6 +866,10 @@ function jump(sprite){
   }
 
 
+  if(sprite.y >= welltop.y && sprite.colliding(welltop)){
+    sprite.vel.y=0;
+  }
+
   if(sprite.colliding(platform1a)){
     sprite.vel.y=0;
     
@@ -860,6 +882,9 @@ function jump(sprite){
   }
 
 
+  if(sprite.y >= platform1a.y && sprite.colliding(platform1a)){
+    sprite.vel.y=0;
+  }
 
   if(sprite.colliding(platform2a)){
     sprite.vel.y=0;
@@ -870,6 +895,11 @@ function jump(sprite){
       sprite.vel.y= hop;
     }
 
+  }
+
+
+  if(sprite.y >= platform2a.y && sprite.colliding(platform2a)){
+    sprite.vel.y=0;
   }
 
   if(sprite.colliding(S1barrel1)){
@@ -974,6 +1004,10 @@ function jump(sprite){
 
   }
 
+  if(sprite.y >= S1sign.y && sprite.colliding(S1sign)){
+    sprite.vel.y=0;
+  }
+
 
   if(sprite.colliding(S1crate4)){
     sprite.vel.y=0;
@@ -1002,6 +1036,10 @@ function jump(sprite){
   }
 
 
+  if(sprite.y >= S1platform1a.y && sprite.colliding(S1platform1a)){
+    sprite.vel.y=0;
+  }
+
   if(sprite.colliding(S1platform2a)){
     sprite.vel.y=0;
    
@@ -1013,7 +1051,9 @@ function jump(sprite){
 
   }
 
-
+  if(sprite.y >= S1platform2a.y && sprite.colliding(S1platform2a)){
+    sprite.vel.y=0;
+  }
 
   if(sprite.colliding(S2crate1)){
     sprite.vel.y=0;
@@ -1063,7 +1103,9 @@ function jump(sprite){
 
   }
 
-
+  if(sprite.y >= S2welltop.y && sprite.colliding(S2welltop)){
+    sprite.vel.y=0;
+  }
 
   if(sprite.colliding(S2barrel1)){
     sprite.vel.y=0;
@@ -1102,6 +1144,10 @@ function jump(sprite){
   }
 
 
+  if(sprite.y >= S2floor1.y && sprite.colliding(S2floor1)){
+    sprite.vel.y=0;
+  }
+
 
   if(sprite.colliding(S2platform1a)){
     sprite.vel.y=0;
@@ -1114,6 +1160,10 @@ function jump(sprite){
 
   }
 
+
+  if(sprite.y >= S2platform1a.y && sprite.colliding(S2platform1a)){
+    sprite.vel.y=0;
+  }
  
   if(sprite.colliding(S2platform2a)){
     sprite.vel.y=0;
@@ -1126,7 +1176,9 @@ function jump(sprite){
 
   }
 
-
+  if(sprite.y >= S2platform2a.y && sprite.colliding(S2platform2a)){
+    sprite.vel.y=0;
+  }
 
 }
 
