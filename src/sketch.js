@@ -21,6 +21,9 @@ var coin5;
 var coin6;
 var coin7;
 var coin8;
+var slash_attack;
+var slash_attack2;
+
 
 
 // Stage 1
@@ -121,7 +124,7 @@ function preload(){
   background_sound = loadSound('./assets/sounds/background_music');
 
 
-
+  
 }
 
 function setup() {
@@ -144,15 +147,15 @@ function setup() {
   world.gravity.y=10;
   
  
-
   
+
 
   // Player
   geralt = createSprite(-3400,480,67,80);
   //-3200
   //για να μην κανει rotate ο geralt 
   geralt.rotationLock = true;
-  //geraltAnimationIdle.resize(88,80);
+ 
   
   
   geralt.addAnimation('left', geraltAnimationRunLeft);
@@ -166,7 +169,14 @@ function setup() {
   geralt.layer = 2;
   
 
-  enemy1Slash = createSprite(-3200, 480, 60, 50);
+  //attack slash sprite (move horizontaly)
+  slash_attack = new Sprite();
+  slash_attack.rotationLock = true;
+  slash_attack2 = new Sprite();
+  slash_attack2.rotationLock = true;
+
+  //slash animations (testing)
+  /*enemy1Slash = createSprite(-3200, 480, 60, 50);
   enemy1Slash.collider = 'static'
   enemy1Slash.addAnimation('slash_left', slash_thinLeft);
   enemy1Slash.addAnimation('slash_right', slash_thinRight);
@@ -176,43 +186,47 @@ function setup() {
   enemy2Slash.collider = 'static'
   enemy2Slash.addAnimation('slash_left', slash_Left);
   enemy2Slash.addAnimation('slash_right', slash_Right);
-  
+  */
+
+   //enemies (2 types)
   enemy1 = createSprite(-2400,465,55,100);
   enemy1.rotationLock = true;
-  //enemyAnimationLeft.resize(200,220);
+ 
   enemy1.addAnimation('left',enemyAnimationLeft);
   enemy1.addAnimation('right',enemyAnimationRight);
   enemy1.layer = 2;
 
   enemy2 = createSprite(-1200,465,55,100);
   enemy2.rotationLock = true;
-  //enemyAnimationLeft.resize(200,220);
+ 
   enemy2.addAnimation('left',enemyAnimationLeft.clone());
   enemy2.addAnimation('right',enemyAnimationRight.clone());
   enemy2.layer = 2;
 
   enemy3 = createSprite(300,445,55,100);
   enemy3.rotationLock = true;
-  //enemy2AnimationLeft.resize(130, 130);
+ 
   enemy3.addAnimation('left',enemy2AnimationLeft);
   enemy3.addAnimation('right',enemy2AnimationRight);
   enemy3.layer = 2;
 
   enemy4 = createSprite(2300,465,55,100);
   enemy4.rotationLock = true;
-  //enemyAnimationLeft.resize(200,220);
+
   enemy4.addAnimation('left',enemyAnimationLeft.clone());
   enemy4.addAnimation('right',enemyAnimationRight.clone());
   enemy4.layer = 2;
 
   enemy5 = createSprite(2800,465,55,100);
   enemy5.rotationLock = true;
-  //enemy2AnimationLeft.resize(130, 130);
+  
   enemy5.addAnimation('left',enemy2AnimationLeft.clone());
   enemy5.addAnimation('right',enemy2AnimationRight.clone());
   enemy5.layer = 2;
 
 
+
+  //coins picked up by geralt
   coin1 = createSprite(-2750, 200, 10, 10);
   coin1.collider = 'static';
   coin1.addAnimation(coins);
@@ -243,7 +257,7 @@ function setup() {
   coin6.addAnimation(coins.clone());
  
 
-  coin7 = createSprite(2750, 180, 10, 10);
+  coin7 = createSprite(2752, 180, 10, 10);
   coin7.collider = 'static';
   coin7.addAnimation(coins.clone());
  
@@ -324,10 +338,10 @@ function setup() {
   S1platform1b.addImage(platform1Img);
 
 
-  S1platform2a = createSprite(-1195, 285, 185, 20);
+  S1platform2a = createSprite(-1190, 285, 185, 20);
   S1platform2a.collider = 'static';
  
-  S1platform2b = createSprite(-1195, 383, 185, 20);
+  S1platform2b = createSprite(-1190, 383, 185, 20);
   S1platform2b.collider = 'none';
   platform2Img.resize(195,235);
   S1platform2b.addImage(platform2Img);
@@ -346,7 +360,7 @@ function setup() {
   S1platform1b.layer = 1;
   S1platform2a.layer = 1;
   S1platform2b.layer = 1;
-
+  
 
 
   // !!!!!!!!!!!!!!!!!!!!!! END STAGE 1 !!!!!!!!!!!!!!!!!!!
@@ -404,7 +418,7 @@ function setup() {
   crate3.addImage(cratestackedImg);
   
 
-  floor1 = createSprite(844, 390, 145, 40);
+  floor1 = createSprite(842, 390, 145, 40);
   floor1.collider = 'static';
   floorImg.resize(160,39);
   floor1.addImage(floorImg);
@@ -439,10 +453,10 @@ function setup() {
   platform1b.addImage(platform1Img);
 
 
-  platform2a = createSprite(1690, 285, 185, 20);
+  platform2a = createSprite(1695, 285, 185, 20);
   platform2a.collider = 'static';
  
-  platform2b = createSprite(1690, 383, 185, 20);
+  platform2b = createSprite(1695, 383, 185, 20);
   platform2b.collider = 'none';
   platform2Img.resize(195,235);
   platform2b.addImage(platform2Img);
@@ -579,7 +593,8 @@ function draw() {
   attackStop();
   enemyMovement();
   removeCoins();
-
+  spawnAttack();
+  
   //BOUNDARIES FOR PLAYER
   if(geralt.x <= -3550){
     geralt.x=-3550;
@@ -683,6 +698,7 @@ function attackStop(){
     geralt.vel.x=0;
     geralt.changeAnimation('attack_left');
 
+
   }
   else if(kb.released('b')){
 
@@ -703,6 +719,8 @@ function attackStop(){
 
 
 }
+
+
 
 
 
@@ -1190,6 +1208,8 @@ collided5th = false;
 
 function enemyMovement(){
 
+  
+
   //first enemy
   if(enemy1.y > minHeight){
 
@@ -1202,6 +1222,7 @@ function enemyMovement(){
     collided = true;
     enemy1.changeAnimation('left');
   }
+
 
   if(enemy1.collided(S1wagon)){
 
@@ -1318,32 +1339,32 @@ function enemyMovement(){
 
   if(enemy4.x <= 2740 && collided4th==false){
 
-    enemy4.vel.x = 1.2;
+    enemy4.vel.x = 1.4;
     collided4th = true;
     enemy4.changeAnimation('left');
   }
 
   if(enemy4.collided(S2welltop)){
 
-    enemy4.vel.x =-1.2;
+    enemy4.vel.x =-1.4;
     enemy4.changeAnimation('right');
     
   }
 
   if(enemy4.collided(S2crate3)){
 
-    enemy4.vel.x = 1.2;
+    enemy4.vel.x = 1.4;
     enemy4.changeAnimation('left');
   }
 
   if(enemy4.collided(geralt)){
 
     if(geralt.x < enemy4.x){
-      enemy4.vel.x=-1.2;
+      enemy4.vel.x=-1.4;
       enemy4.changeAnimation('right');
     }
     else{
-      enemy4.vel.x = 1.2;
+      enemy4.vel.x = 1.4;
       enemy4.changeAnimation('left');
     }
   }
@@ -1444,6 +1465,54 @@ function removeCoins(){
   }
 
 }
+
+
+function spawnAttack(){
+
+  if(kb.held('b')){
+
+    //slash_attack = createSprite(geralt.x + 100, geralt.y - 15, 60, 50);
+    slash_attack.x = geralt.x + 100;
+    slash_attack.y = geralt.y - 5;
+    slash_attack.w = 60;
+    slash_attack.h  = 50;
+    slash_attack.collider = 'kinematic';
+    slash_attack.vel.x = +3;
+    slash_attack.vel.y=0;
+   
+  
+   
+  }
+  
+  if(kb.held('c')){
+
+    //slash_attack = createSprite(geralt.x - 100, geralt.y - 15, 60, 50);
+    slash_attack2.x = geralt.x - 100;
+    slash_attack2.y = geralt.y - 5;
+    slash_attack2.width = 60;
+    slash_attack2.height = 50;
+    slash_attack2.collider = 'kinematic';
+    slash_attack2.vel.x = -3;
+    slash_attack2.vel.y=0;
+   
+   
+  }
+
+
+  if(slash_attack.overlaps(enemy1) || slash_attack.overlaps(enemy2) || slash_attack.overlaps(enemy3) || slash_attack.overlaps(enemy4) || slash_attack.overlaps(enemy5)){   //COLLIDING ANTI GIA OVERLAPS AMA THELOUME NA KANEI KAI KNOCKBACK TO ENEMY1
+    slash_attack.remove();
+    slash_attack = new Sprite();
+  }
+ 
+
+  
+  if(slash_attack2.overlaps(enemy1) || slash_attack2.overlaps(enemy2) || slash_attack2.overlaps(enemy3) || slash_attack2.overlaps(enemy4) || slash_attack2.overlaps(enemy5)){   //COLLIDING ANTI GIA OVERLAPS AMA THELOUME NA KANEI KAI KNOCKBACK TO ENEMY1
+    slash_attack2.remove();
+    slash_attack2 = new Sprite();
+  }
+  
+}
+
 
 
 function backgroundMusic(){
