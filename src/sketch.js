@@ -1513,6 +1513,7 @@ function spawnAttack(){
   
 }
 
+//function overlaps isws thelei enemies kai slash se ena function !!!!!!!!!!!!!!!!!!!!!
 
 
 function backgroundMusic(){
