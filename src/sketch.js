@@ -123,7 +123,6 @@ function preload(){
   coin_sound = loadSound('./assets/sounds/mario_coin_sound');
   background_sound = loadSound('./assets/sounds/background_music');
 
-
   
 }
 
@@ -170,11 +169,16 @@ function setup() {
   
 
   //attack slash sprite (move horizontaly)
+ 
   slash_attack = new Sprite();
-  slash_attack.rotationLock = true;
+  slash_attack.x = -3700;
   slash_attack2 = new Sprite();
-  slash_attack2.rotationLock = true;
+  slash_attack2.x = -3700;
 
+
+  //slash_attack2 = new Sprite();  
+
+ 
   //slash animations (testing)
   /*enemy1Slash = createSprite(-3200, 480, 60, 50);
   enemy1Slash.collider = 'static'
@@ -1469,14 +1473,16 @@ function removeCoins(){
 
 function spawnAttack(){
 
-  if(kb.held('b')){
+  if(kb.presses('b')){
 
-    //slash_attack = createSprite(geralt.x + 100, geralt.y - 15, 60, 50);
+    slash_attack = createSprite(geralt.x + 100, geralt.y - 15, 60, 50);
     slash_attack.x = geralt.x + 100;
     slash_attack.y = geralt.y - 5;
     slash_attack.w = 60;
     slash_attack.h  = 50;
-    slash_attack.collider = 'kinematic';
+    slash_attack.collider = 'kinematic';  //SLASH ORIZONTIA
+    slash_attack.rotationLock = true;
+   
     slash_attack.vel.x = +3;
     slash_attack.vel.y=0;
    
@@ -1484,14 +1490,16 @@ function spawnAttack(){
    
   }
   
-  if(kb.held('c')){
+  if(kb.presses('c')){
 
-    //slash_attack = createSprite(geralt.x - 100, geralt.y - 15, 60, 50);
+    slash_attack2 = createSprite(geralt.x - 100, geralt.y - 15, 60, 50);
     slash_attack2.x = geralt.x - 100;
     slash_attack2.y = geralt.y - 5;
-    slash_attack2.width = 60;
-    slash_attack2.height = 50;
-    slash_attack2.collider = 'kinematic';
+    slash_attack2.w = 60;
+    slash_attack2.h = 50;
+                                            //XWRIS KIMENATIC DHLADH DEFAULT DYNAMIC EINAI TO BOMB DROP
+    slash_attack2.rotationLock = true;
+
     slash_attack2.vel.x = -3;
     slash_attack2.vel.y=0;
    
@@ -1499,16 +1507,15 @@ function spawnAttack(){
   }
 
 
-  if(slash_attack.overlaps(enemy1) || slash_attack.overlaps(enemy2) || slash_attack.overlaps(enemy3) || slash_attack.overlaps(enemy4) || slash_attack.overlaps(enemy5)){   //COLLIDING ANTI GIA OVERLAPS AMA THELOUME NA KANEI KAI KNOCKBACK TO ENEMY1
+  if(slash_attack.overlaps(enemy1) || slash_attack.overlaps(enemy2) || slash_attack.overlaps(enemy3) || slash_attack.overlaps(enemy4) || slash_attack.overlaps(enemy5) || slash_attack.y>=minHeight){   //COLLIDING ANTI GIA OVERLAPS AMA THELOUME NA KANEI KAI KNOCKBACK TO ENEMY1
     slash_attack.remove();
-    slash_attack = new Sprite();
+    
   }
  
 
   
-  if(slash_attack2.overlaps(enemy1) || slash_attack2.overlaps(enemy2) || slash_attack2.overlaps(enemy3) || slash_attack2.overlaps(enemy4) || slash_attack2.overlaps(enemy5)){   //COLLIDING ANTI GIA OVERLAPS AMA THELOUME NA KANEI KAI KNOCKBACK TO ENEMY1
+  if(slash_attack2.overlaps(enemy1) || slash_attack2.overlaps(enemy2) || slash_attack2.overlaps(enemy3) || slash_attack2.overlaps(enemy4) || slash_attack2.overlaps(enemy5) || slash_attack2.y>=minHeight){   //COLLIDING ANTI GIA OVERLAPS AMA THELOUME NA KANEI KAI KNOCKBACK TO ENEMY1
     slash_attack2.remove();
-    slash_attack2 = new Sprite();
   }
   
 }
