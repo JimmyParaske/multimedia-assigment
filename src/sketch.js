@@ -79,7 +79,7 @@ function preload(){
   geraltAnimationRunRight = loadAnimation('./assets/images/Knight/noBKG_KnightRun_strip2right.png', { size: [192, 128], frames: 8 });
   geraltAnimationAttackLeft = loadAnimation('./assets/images/Knight/noBKG_KnightAttack_strip2.png', { size: [288, 128], frames: 22 });
   geraltAnimationAttackRight = loadAnimation('./assets/images/Knight/noBKG_KnightAttack_strip2right.png', { size: [288, 128], frames: 22 });
-  geraltAnimationDeath = loadAnimation('./assets/images/Knight/noBKG_KnightDeath_strip.png', { size: [128, 128], frames: 15 });
+  geraltAnimationDeath = loadAnimation('./assets/images/Knight/noBKG_KnightDeath_strip.png', { size: [192, 128], frames: 15 });
   geraltAnimationJump = loadAnimation('./assets/images/Knight/noBKG_KnightJumpAndFall_strip.png', { size: [309, 128], frames: 14 });
 
   //attack and effects assets
@@ -150,7 +150,7 @@ function setup() {
 
 
   // Player
-  geralt = createSprite(-3400,480,67,80);
+  geralt = createSprite(-3200,480,67,80);
   //-3200
   //για να μην κανει rotate ο geralt 
   geralt.rotationLock = true;
@@ -171,9 +171,10 @@ function setup() {
   //attack slash sprite (move horizontaly)
  
   slash_attack = new Sprite();
-  slash_attack.x = -3700;
+  slash_attack.life= 0;
   slash_attack2 = new Sprite();
-  slash_attack2.x = -3700;
+  slash_attack2.life = 0;
+  
 
 
   //slash_attack2 = new Sprite();  
@@ -595,7 +596,8 @@ function draw() {
   }
   keyPresses();
   attackStop();
-  enemyMovement();
+  enemyMovementAndAttackCollision();
+  enemyGeraltCollision();
   removeCoins();
   spawnAttack();
   
@@ -1210,7 +1212,20 @@ collided3rd = false;
 collided4th = false;
 collided5th = false;
 
-function enemyMovement(){
+function enemyGeraltCollision(){
+
+    if(geralt.overlaps(enemy1) || geralt.overlaps(enemy2) || geralt.overlaps(enemy3) || geralt.overlaps(enemy4) || geralt.overlaps(enemy5)){
+
+
+      geralt.changeAnimation('death');
+    }
+
+
+}
+
+
+
+function enemyMovementAndAttackCollision(){
 
   
 
@@ -1414,6 +1429,60 @@ function enemyMovement(){
     }
   }
 
+  if(slash_attack.overlaps(enemy1)){
+
+    enemy1.remove();
+    slash_attack.remove();
+  }
+  if(slash_attack.overlaps(enemy2)){
+
+    enemy2.remove();
+    slash_attack.remove();
+  }
+  if(slash_attack.overlaps(enemy3)){
+
+    enemy3.remove();
+    slash_attack.remove();
+  }
+  if(slash_attack.overlaps(enemy4)){
+
+    enemy4.remove();
+    slash_attack.remove();
+  }
+  if(slash_attack.overlaps(enemy5)){
+
+    enemy5.remove();
+    slash_attack.remove();
+  }
+
+
+  if(slash_attack2.overlaps(enemy1)){
+
+    enemy1.remove();
+    slash_attack2.remove();
+  }
+  if(slash_attack2.overlaps(enemy2)){
+
+    enemy2.remove();
+    slash_attack2.remove();
+  }
+  if(slash_attack2.overlaps(enemy3)){
+
+    enemy3.remove();
+    slash_attack2.remove();
+  }
+  if(slash_attack2.overlaps(enemy4)){
+
+    enemy4.remove();
+    slash_attack2.remove();
+  }
+  if(slash_attack2.overlaps(enemy5)){
+
+    enemy5.remove();
+    slash_attack2.remove();
+  }
+
+
 }
 
 
@@ -1473,7 +1542,7 @@ function removeCoins(){
 
 function spawnAttack(){
 
-  if(kb.presses('b')){
+  if(kb.held('b')){
 
     slash_attack = createSprite(geralt.x + 100, geralt.y - 15, 60, 50);
     slash_attack.x = geralt.x + 100;
@@ -1507,14 +1576,15 @@ function spawnAttack(){
   }
 
 
-  if(slash_attack.overlaps(enemy1) || slash_attack.overlaps(enemy2) || slash_attack.overlaps(enemy3) || slash_attack.overlaps(enemy4) || slash_attack.overlaps(enemy5) || slash_attack.y>=minHeight){   //COLLIDING ANTI GIA OVERLAPS AMA THELOUME NA KANEI KAI KNOCKBACK TO ENEMY1
+  if(slash_attack.y>=minHeight){   //COLLIDING ANTI GIA OVERLAPS AMA THELOUME NA KANEI KAI KNOCKBACK TO ENEMY1
     slash_attack.remove();
+    
     
   }
  
 
   
-  if(slash_attack2.overlaps(enemy1) || slash_attack2.overlaps(enemy2) || slash_attack2.overlaps(enemy3) || slash_attack2.overlaps(enemy4) || slash_attack2.overlaps(enemy5) || slash_attack2.y>=minHeight){   //COLLIDING ANTI GIA OVERLAPS AMA THELOUME NA KANEI KAI KNOCKBACK TO ENEMY1
+  if(slash_attack2.y>=minHeight){   //COLLIDING ANTI GIA OVERLAPS AMA THELOUME NA KANEI KAI KNOCKBACK TO ENEMY1
     slash_attack2.remove();
   }
   
