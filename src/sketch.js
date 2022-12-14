@@ -23,6 +23,7 @@ var coin7;
 var coin8;
 var slash_attack;
 var slash_attack2;
+var slash_attack3;
 
 
 
@@ -174,6 +175,8 @@ function setup() {
   slash_attack.life= 0;
   slash_attack2 = new Sprite();
   slash_attack2.life = 0;
+  slash_attack3 = new Sprite();
+  slash_attack3.life = 0;
   
 
 
@@ -699,14 +702,14 @@ function keyPresses() {
 
 function attackStop(){
 
-  if(kb.presses('b')){              
+  if(kb.presses('b') || kb.presses('v')){              
 
     geralt.vel.x=0;
     geralt.changeAnimation('attack_left');
 
 
   }
-  else if(kb.released('b')){
+  else if(kb.released('b') || kb.released('v')){
 
     geralt.changeAnimation('idle_left');
     
@@ -722,6 +725,7 @@ function attackStop(){
     geralt.changeAnimation('idle_right');
     
   }
+  
 
 
 }
@@ -1433,26 +1437,31 @@ function enemyMovementAndAttackCollision(){
 
     enemy1.remove();
     slash_attack.remove();
+    attackingB = false;
   }
   if(slash_attack.overlaps(enemy2)){
 
     enemy2.remove();
     slash_attack.remove();
+    attackingB = false;
   }
   if(slash_attack.overlaps(enemy3)){
 
     enemy3.remove();
     slash_attack.remove();
+    attackingB = false;
   }
   if(slash_attack.overlaps(enemy4)){
 
     enemy4.remove();
     slash_attack.remove();
+    attackingB = false;
   }
   if(slash_attack.overlaps(enemy5)){
 
     enemy5.remove();
     slash_attack.remove();
+    attackingB = false;
   }
 
 
@@ -1460,28 +1469,65 @@ function enemyMovementAndAttackCollision(){
 
     enemy1.remove();
     slash_attack2.remove();
+    attackingC = false;
   }
   if(slash_attack2.overlaps(enemy2)){
 
     enemy2.remove();
     slash_attack2.remove();
+    attackingC = false;
   }
   if(slash_attack2.overlaps(enemy3)){
 
     enemy3.remove();
     slash_attack2.remove();
+    attackingC = false;
   }
   if(slash_attack2.overlaps(enemy4)){
 
     enemy4.remove();
     slash_attack2.remove();
+    attackingC = false;
   }
   if(slash_attack2.overlaps(enemy5)){
 
     enemy5.remove();
     slash_attack2.remove();
+    attackingC = false;
   }
 
+
+
+if(slash_attack3.overlaps(enemy1)){
+
+    enemy1.remove();
+    slash_attack3.remove();
+    attackingV = false;
+  }
+  if(slash_attack3.overlaps(enemy2)){
+
+    enemy2.remove();
+    slash_attack3.remove();
+    attackingV = false;
+  }
+  if(slash_attack3.overlaps(enemy3)){
+
+    enemy3.remove();
+    slash_attack3.remove();
+    attackingV = false;
+  }
+  if(slash_attack3.overlaps(enemy4)){
+
+    enemy4.remove();
+    slash_attack3.remove();
+    attackingV = false;
+  }
+  if(slash_attack3.overlaps(enemy5)){
+
+    enemy5.remove();
+    slash_attack3.remove();
+    attackingV = false;
+  }
 
 }
 
@@ -1540,44 +1586,72 @@ function removeCoins(){
 }
 
 
+
+
+
+
+var attackingB = false;
+var attackingC = false;
+var attackingV = false;
+
 function spawnAttack(){
 
-  if(kb.held('b')){
+  if(kb.presses('b') && (attackingB == false)){
 
     slash_attack = createSprite(geralt.x + 100, geralt.y - 15, 60, 50);
     slash_attack.x = geralt.x + 100;
     slash_attack.y = geralt.y - 5;
     slash_attack.w = 60;
     slash_attack.h  = 50;
-    slash_attack.collider = 'kinematic';  //SLASH ORIZONTIA
+   
     slash_attack.rotationLock = true;
    
     slash_attack.vel.x = +3;
     slash_attack.vel.y=0;
-   
+
+
+    attackingB = true;
   
    
   }
   
-  if(kb.presses('c')){
+  if(kb.presses('c') && (attackingC == false)){
 
     slash_attack2 = createSprite(geralt.x - 100, geralt.y - 15, 60, 50);
     slash_attack2.x = geralt.x - 100;
     slash_attack2.y = geralt.y - 5;
     slash_attack2.w = 60;
     slash_attack2.h = 50;
-                                            //XWRIS KIMENATIC DHLADH DEFAULT DYNAMIC EINAI TO BOMB DROP
+                                          
     slash_attack2.rotationLock = true;
 
     slash_attack2.vel.x = -3;
     slash_attack2.vel.y=0;
    
-   
+    attackingC = true;
+
+
+  }
+
+  if(kb.holding('v')  && (attackingV == false)){
+
+    slash_attack3 = createSprite(geralt.x + 110, geralt.y - 15, 90, 50);
+    slash_attack3.x = geralt.x + 110;
+    slash_attack3.y = geralt.y - 5;
+    slash_attack3.collider = 'static';
+    slash_attack3.w = 90;
+    slash_attack3.h = 50;
+    slash_attack3.rotationLock = true;
+
+    
+    attackingV = true;
+
   }
 
 
   if(slash_attack.y>=minHeight){   //COLLIDING ANTI GIA OVERLAPS AMA THELOUME NA KANEI KAI KNOCKBACK TO ENEMY1
-    slash_attack.remove();
+    slash_attack.y = minHeight;
+    perimene();
     
     
   }
@@ -1586,9 +1660,28 @@ function spawnAttack(){
   
   if(slash_attack2.y>=minHeight){   //COLLIDING ANTI GIA OVERLAPS AMA THELOUME NA KANEI KAI KNOCKBACK TO ENEMY1
     slash_attack2.remove();
+    attackingC = false;
   }
+
+  if(kb.released('v')){
+
+    slash_attack3.remove();
+    attackingV = false;
+  }
+ 
+
   
 }
+
+
+
+async function perimene(){
+
+  await sleep(1000);
+  slash_attack.remove();
+  attackingB = false;
+}
+
 
 //function overlaps isws thelei enemies kai slash se ena function !!!!!!!!!!!!!!!!!!!!!
 
