@@ -84,10 +84,12 @@ function preload(){
   geraltAnimationJump = loadAnimation('./assets/images/Knight/noBKG_KnightJumpAndFall_strip.png', { size: [309, 128], frames: 14 });
 
   //attack and effects assets
+  slash_main = loadAnimation('./assets/images/Sword Slashes/slash.png', { size: [165, 120], frames: 20 })
   slash_thinLeft = loadAnimation('./assets/images/Sword Slashes/slash_white_thin.png', { size: [68.75, 50], frames: 6 })
   slash_thinRight = loadAnimation('./assets/images/Sword Slashes/slash_white_thinright.png', { size: [68.75, 50], frames: 6 })
-  slash_Left = loadAnimation('./assets/images/Sword Slashes/slash_white_wide.png', { size: [68.83, 50], frames: 6 })
-  slash_Right = loadAnimation('./assets/images/Sword Slashes/slash_white_wideright.png', { size: [68.83, 50], frames: 6 })
+  slash_Right = loadAnimation('./assets/images/Sword Slashes/slash_red_right.png', { size: [89.5, 65], frames: 6 })
+  slash_Left = loadAnimation('./assets/images/Sword Slashes/slash_red_left.png', { size: [89.5, 65], frames: 6 })
+ 
 
   //obstacle assets
   crateImg = loadImage('./assets/images/crate_cropped.png');
@@ -172,10 +174,15 @@ function setup() {
   //attack slash sprite (move horizontaly)
  
   slash_attack = new Sprite();
+  slash_attack.addAnimation('white_slash_left', slash_thinLeft);
   slash_attack.life= 0;
+
   slash_attack2 = new Sprite();
+  slash_attack2.addAnimation('white_slash_right', slash_thinRight);
   slash_attack2.life = 0;
+
   slash_attack3 = new Sprite();
+  slash_attack3.addAnimation('red_yellow_slash', slash_main);
   slash_attack3.life = 0;
   
 
@@ -573,6 +580,45 @@ function setup() {
   S2platform2b.layer = 1;
 
 
+  obstacles =new Group();
+  obstacles.add(S1barrel1);
+  obstacles.add(S1barrel2);
+  obstacles.add(S1crate);
+  obstacles.add(S1crate1);
+  obstacles.add(S1crate2);
+  obstacles.add(S1crate3);
+  obstacles.add(S1crate4);
+  obstacles.add(S1sign);
+  obstacles.add(S1sign);
+  obstacles.add(S1wagon);
+  obstacles.add(S1platform1a);
+  obstacles.add(S1platform2a);
+  obstacles.add(S1crate);
+  obstacles.add(crate);
+  obstacles.add(barrel1);
+  obstacles.add(barrel2);
+  obstacles.add(sign);
+  obstacles.add(wagon);
+  obstacles.add(crate1);
+  obstacles.add(crate2);
+  obstacles.add(crate3);
+  obstacles.add(floor1);
+  obstacles.add(floor2);
+  obstacles.add(welltop);
+  obstacles.add(platform1a);
+  obstacles.add(platform2a);
+  obstacles.add(S2crate1);
+  obstacles.add(S2crate2);
+  obstacles.add(S2crate3);
+  obstacles.add(S2welltop); 
+  obstacles.add(S2barrel1);
+  obstacles.add(S2barrel2);
+  obstacles.add(S2floor1); 
+  obstacles.add(S2platform1a);
+  obstacles.add(S2platform2a);
+ 
+  
+
 
 // !!!!!!!!!!!!!!!!!!!!!!!!! END STAGE 3 !!!!!!!!!!!!!!!!!!!
 
@@ -603,6 +649,7 @@ function draw() {
   enemyGeraltCollision();
   removeCoins();
   spawnAttack();
+  slashCollisionObjects();
   
   //BOUNDARIES FOR PLAYER
   if(geralt.x <= -3550){
@@ -1229,6 +1276,26 @@ function enemyGeraltCollision(){
 
 
 
+function slashCollisionObjects(){
+
+
+  if(slash_attack.collided(obstacles)){
+    slash_attack.remove();
+    attackingB = false;
+  }
+  if(slash_attack2.collided(obstacles)){
+
+    slash_attack2.remove();
+    attackingC = false;
+  }
+  if(slash_attack3.collided(obstacles)){
+
+    slash_attack3.remove();
+    attackingV = false;
+  } 
+}
+
+
 function enemyMovementAndAttackCollision(){
 
   
@@ -1583,6 +1650,112 @@ function removeCoins(){
     coin_sound.play();
   }
 
+
+  if(slash_attack.overlaps(coin1)){
+
+    coin1.remove();
+    coin_sound.play();
+  }
+
+  if(slash_attack.overlaps(coin2)){
+
+    coin2.remove();
+    coin_sound.play();
+  }
+
+  if(slash_attack.overlaps(coin3)){
+
+    coin3.remove();
+    coin_sound.play();
+  }
+  
+  if(slash_attack.overlaps(coin4)){
+
+    coin4.remove();
+    coin_sound.play();
+  }
+
+  if(slash_attack.overlaps(coin5)){
+
+    coin5.remove();
+    coin_sound.play();
+  }
+  
+  if(slash_attack.overlaps(coin6)){
+
+    coin6.remove();
+    coin_sound.play();
+  }
+
+  if(slash_attack.overlaps(coin7)){
+
+    coin7.remove();
+    coin_sound.play();
+  }
+  
+  if(slash_attack.overlaps(coin8)){
+
+    coin8.remove();
+    coin_sound.play();
+  }
+
+
+
+  if(slash_attack2.overlaps(coin1)){
+
+    coin1.remove();
+    coin_sound.play();
+  }
+
+  if(slash_attack2.overlaps(coin2)){
+
+    coin2.remove();
+    coin_sound.play();
+  }
+
+  if(slash_attack2.overlaps(coin3)){
+
+    coin3.remove();
+    coin_sound.play();
+  }
+  
+  if(slash_attack2.overlaps(coin4)){
+
+    coin4.remove();
+    coin_sound.play();
+  }
+
+  if(slash_attack2.overlaps(coin5)){
+
+    coin5.remove();
+    coin_sound.play();
+  }
+  
+  if(slash_attack2.overlaps(coin6)){
+
+    coin6.remove();
+    coin_sound.play();
+  }
+
+  if(slash_attack2.overlaps(coin7)){
+
+    coin7.remove();
+    coin_sound.play();
+  }
+  
+  if(slash_attack2.overlaps(coin8)){
+
+    coin8.remove();
+    coin_sound.play();
+  }
+
+
+
+
+
+
+  
+
 }
 
 
@@ -1599,10 +1772,7 @@ function spawnAttack(){
   if(kb.presses('b') && (attackingB == false)){
 
     slash_attack = createSprite(geralt.x + 100, geralt.y - 15, 60, 50);
-    slash_attack.x = geralt.x + 100;
-    slash_attack.y = geralt.y - 5;
-    slash_attack.w = 60;
-    slash_attack.h  = 50;
+    slash_attack.addAnimation(slash_Right);
    
     slash_attack.rotationLock = true;
    
@@ -1618,10 +1788,7 @@ function spawnAttack(){
   if(kb.presses('c') && (attackingC == false)){
 
     slash_attack2 = createSprite(geralt.x - 100, geralt.y - 15, 60, 50);
-    slash_attack2.x = geralt.x - 100;
-    slash_attack2.y = geralt.y - 5;
-    slash_attack2.w = 60;
-    slash_attack2.h = 50;
+    slash_attack2.addAnimation(slash_Left);
                                           
     slash_attack2.rotationLock = true;
 
@@ -1635,12 +1802,10 @@ function spawnAttack(){
 
   if(kb.holding('v')  && (attackingV == false)){
 
-    slash_attack3 = createSprite(geralt.x + 110, geralt.y - 15, 90, 50);
-    slash_attack3.x = geralt.x + 110;
-    slash_attack3.y = geralt.y - 5;
+    slash_attack3 = createSprite(geralt.x + 120, geralt.y - 15, 90, 50);
+    slash_attack3.addAnimation(slash_main);
     slash_attack3.collider = 'static';
-    slash_attack3.w = 90;
-    slash_attack3.h = 50;
+    
     slash_attack3.rotationLock = true;
 
     
@@ -1651,7 +1816,10 @@ function spawnAttack(){
 
   if(slash_attack.y>=minHeight){   //COLLIDING ANTI GIA OVERLAPS AMA THELOUME NA KANEI KAI KNOCKBACK TO ENEMY1
     slash_attack.y = minHeight;
-    perimene();
+    slash_attack.remove();
+    attackingB = false;
+    
+    
     
     
   }
@@ -1674,13 +1842,6 @@ function spawnAttack(){
 }
 
 
-
-async function perimene(){
-
-  await sleep(1000);
-  slash_attack.remove();
-  attackingB = false;
-}
 
 
 //function overlaps isws thelei enemies kai slash se ena function !!!!!!!!!!!!!!!!!!!!!
