@@ -67,9 +67,7 @@ var walk2_animation;
 var walk2_animation_reverse;
 
 
-//sound effect variables
-var background_sound;
-var coin_sound;
+
 
 function preload(){
 
@@ -123,9 +121,16 @@ function preload(){
 
   //sound effects
   soundFormats('mp3');
+  geralt_hit = loadSound('./assets/sounds/geralt_hit');
+  geralt_death =  loadSound('./assets/sounds/geralt_death');
   coin_sound = loadSound('./assets/sounds/mario_coin_sound');
   background_sound = loadSound('./assets/sounds/background_music');
-
+  enemy_hit = loadSound('./assets/sounds/enemy_hit');
+  goblin_death = loadSound('./assets/sounds/goblin_death');
+  skeleton_death = loadSound('./assets/sounds/skeleton_death');
+  slash_sound = loadSound('./assets/sounds/slash_sound');
+  slash_main_sound = loadSound('./assets/sounds/slash_main');
+  slash_main_sound.rate(2);
   
 }
 
@@ -650,6 +655,7 @@ function draw() {
   removeCoins();
   spawnAttack();
   slashCollisionObjects();
+  deathScreen();
   
   //BOUNDARIES FOR PLAYER
   if(geralt.x <= -3550){
@@ -1296,6 +1302,11 @@ function slashCollisionObjects(){
 }
 
 
+const counter_attack = [0,0,0];
+const counter_attack_skeleton = [0,0];
+var life_counter=0;
+
+
 function enemyMovementAndAttackCollision(){
 
   
@@ -1326,9 +1337,16 @@ function enemyMovementAndAttackCollision(){
     enemy1.changeAnimation('left');
   }
 
-  if(enemy1.collided(geralt)){
+  if(enemy1.overlaps(geralt)){
 
-    if(geralt.x < enemy1.x){
+    life_counter++;
+    if(life_counter <3){
+      geralt_hit.play();
+    }
+    else if(life_counter == 3){
+      geralt_death.play();
+    }
+    if(geralt.x > enemy1.x){
       enemy1.vel.x=-1;
       enemy1.changeAnimation('right');
     }
@@ -1366,9 +1384,16 @@ function enemyMovementAndAttackCollision(){
     enemy2.changeAnimation('left');
   }
 
-  if(enemy2.collided(geralt)){
+  if(enemy2.overlaps(geralt)){
 
-    if(geralt.x < enemy2.x){
+    life_counter++
+    if(life_counter <3){
+      geralt_hit.play();
+    }
+    else if(life_counter == 3){
+      geralt_death.play();
+    }
+    if(geralt.x > enemy2.x){
       enemy2.vel.x=-1.2;
       enemy2.changeAnimation('right');
     }
@@ -1406,9 +1431,16 @@ function enemyMovementAndAttackCollision(){
     enemy3.changeAnimation('left');
   }
 
-  if(enemy3.collided(geralt)){
+  if(enemy3.overlaps(geralt)){
 
-    if(geralt.x < enemy3.x){
+    life_counter++;
+    if(life_counter <3){
+      geralt_hit.play();
+    }
+    else if(life_counter == 3){
+      geralt_death.play();
+    }
+    if(geralt.x > enemy3.x){
       enemy3.vel.x=-1.2;
       enemy3.changeAnimation('right');
     }
@@ -1447,9 +1479,16 @@ function enemyMovementAndAttackCollision(){
     enemy4.changeAnimation('left');
   }
 
-  if(enemy4.collided(geralt)){
+  if(enemy4.overlaps(geralt)){
 
-    if(geralt.x < enemy4.x){
+    life_counter++;
+    if(life_counter <3){
+      geralt_hit.play();
+    }
+    else if(life_counter == 3){
+      geralt_death.play();
+    }
+    if(geralt.x > enemy4.x){
       enemy4.vel.x=-1.4;
       enemy4.changeAnimation('right');
     }
@@ -1488,9 +1527,16 @@ function enemyMovementAndAttackCollision(){
     enemy5.changeAnimation('left');
   }
 
-  if(enemy5.collided(geralt)){
+  if(enemy5.overlaps(geralt)){
 
-    if(geralt.x < enemy5.x){
+    life_counter++;
+    if(life_counter <3){
+      geralt_hit.play();
+    }
+    else if(life_counter == 3){
+      geralt_death.play();
+    }
+    if(geralt.x > enemy5.x){
       enemy5.vel.x=-1.4;
       enemy5.changeAnimation('right');
     }
@@ -1500,105 +1546,185 @@ function enemyMovementAndAttackCollision(){
     }
   }
 
+
+
+
   if(slash_attack.overlaps(enemy1)){
 
-    enemy1.remove();
+    //enemy1.remove();
     slash_attack.remove();
     attackingB = false;
+    enemy_hit.play();
+    counter_attack[0]++;
+    if(counter_attack[0] == 2){
+      enemy1.remove();
+      goblin_death.play();
+    }
   }
   if(slash_attack.overlaps(enemy2)){
 
-    enemy2.remove();
+   
     slash_attack.remove();
     attackingB = false;
+    enemy_hit.play();
+    counter_attack[1]++;
+    if(counter_attack[1] == 2){
+      enemy2.remove();
+      goblin_death.play();
+    }
   }
   if(slash_attack.overlaps(enemy3)){
 
-    enemy3.remove();
+    
     slash_attack.remove();
     attackingB = false;
+    enemy_hit.play();
+    counter_attack_skeleton[0]++;
+    if(counter_attack_skeleton[0] == 4){
+      enemy3.remove();
+      skeleton_death.play();
+    }
   }
   if(slash_attack.overlaps(enemy4)){
 
-    enemy4.remove();
+   
     slash_attack.remove();
     attackingB = false;
+    enemy_hit.play();
+    counter_attack[2]++;
+    if(counter_attack[2] == 2){
+      enemy4.remove();
+      goblin_death.play();
+    }
   }
   if(slash_attack.overlaps(enemy5)){
 
-    enemy5.remove();
+   
     slash_attack.remove();
     attackingB = false;
+    enemy_hit.play();
+    counter_attack_skeleton[1]++;
+    if(counter_attack_skeleton[1] == 4){
+      enemy5.remove();
+      skeleton_death.play();
+    }
   }
+
+
 
 
   if(slash_attack2.overlaps(enemy1)){
 
-    enemy1.remove();
+   
     slash_attack2.remove();
     attackingC = false;
+    enemy_hit.play();
+    counter_attack[0]++;
+    if(counter_attack[0] == 2){
+      enemy1.remove();
+      goblin_death.play();
+    }
   }
   if(slash_attack2.overlaps(enemy2)){
 
-    enemy2.remove();
+   
     slash_attack2.remove();
     attackingC = false;
+    enemy_hit.play();
+    counter_attack[1]++;
+    if(counter_attack[1] == 2){
+      enemy2.remove();
+      goblin_death.play();
+    }
   }
   if(slash_attack2.overlaps(enemy3)){
 
-    enemy3.remove();
+   
     slash_attack2.remove();
     attackingC = false;
+    enemy_hit.play();
+    counter_attack_skeleton[0]++;
+    if(counter_attack_skeleton[0] == 4){
+      enemy3.remove();
+      skeleton_death.play();
+    }
   }
   if(slash_attack2.overlaps(enemy4)){
 
-    enemy4.remove();
+   
     slash_attack2.remove();
     attackingC = false;
+    enemy_hit.play();
+    counter_attack[2]++;
+    if(counter_attack[2] == 2){
+      enemy4.remove();
+      goblin_death.play();
+    }
   }
   if(slash_attack2.overlaps(enemy5)){
 
-    enemy5.remove();
+   
     slash_attack2.remove();
     attackingC = false;
+    enemy_hit.play();
+    counter_attack_skeleton[1]++;
+    if(counter_attack_skeleton[1] == 4){
+      enemy5.remove();
+      skeleton_death.play();
+    }
   }
 
 
 
-if(slash_attack3.overlaps(enemy1)){
+  if(slash_attack3.overlaps(enemy1)){
 
     enemy1.remove();
     slash_attack3.remove();
     attackingV = false;
+    goblin_death.play();
+    
   }
   if(slash_attack3.overlaps(enemy2)){
 
     enemy2.remove();
     slash_attack3.remove();
     attackingV = false;
+    goblin_death.play();
   }
   if(slash_attack3.overlaps(enemy3)){
 
     enemy3.remove();
     slash_attack3.remove();
     attackingV = false;
+    skeleton_death.play();
   }
   if(slash_attack3.overlaps(enemy4)){
 
     enemy4.remove();
     slash_attack3.remove();
     attackingV = false;
+    goblin_death.play();
   }
   if(slash_attack3.overlaps(enemy5)){
 
     enemy5.remove();
     slash_attack3.remove();
     attackingV = false;
+    skeleton_death.play();
   }
 
 }
 
 
+
+function deathScreen(){
+
+  if(life_counter == 3){
+    for(let i = allSprites.length; i--;){
+      allSprites[i].remove();
+    }
+  }
+}
 
 function removeCoins(){
 
@@ -1773,7 +1899,7 @@ function spawnAttack(){
 
     slash_attack = createSprite(geralt.x + 100, geralt.y - 15, 60, 50);
     slash_attack.addAnimation(slash_Right);
-   
+    slash_sound.play();
     slash_attack.rotationLock = true;
    
     slash_attack.vel.x = +3;
@@ -1789,7 +1915,8 @@ function spawnAttack(){
 
     slash_attack2 = createSprite(geralt.x - 100, geralt.y - 15, 60, 50);
     slash_attack2.addAnimation(slash_Left);
-                                          
+    slash_sound.play();
+                            
     slash_attack2.rotationLock = true;
 
     slash_attack2.vel.x = -3;
@@ -1805,7 +1932,8 @@ function spawnAttack(){
     slash_attack3 = createSprite(geralt.x + 120, geralt.y - 15, 90, 50);
     slash_attack3.addAnimation(slash_main);
     slash_attack3.collider = 'static';
-    
+    slash_main_sound.play();
+    slash_main_sound.loop();
     slash_attack3.rotationLock = true;
 
     
@@ -1835,6 +1963,8 @@ function spawnAttack(){
 
     slash_attack3.remove();
     attackingV = false;
+    slash_main_sound.stop();
+
   }
  
 
