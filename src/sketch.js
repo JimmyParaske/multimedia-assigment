@@ -82,12 +82,14 @@ function preload(){
   geraltAnimationJump = loadAnimation('./assets/images/Knight/noBKG_KnightJumpAndFall_strip.png', { size: [309, 128], frames: 14 });
 
   //attack and effects assets
-  slash_main = loadAnimation('./assets/images/Sword Slashes/slash.png', { size: [165, 120], frames: 20 })
-  slash_thinLeft = loadAnimation('./assets/images/Sword Slashes/slash_white_thin.png', { size: [68.75, 50], frames: 6 })
-  slash_thinRight = loadAnimation('./assets/images/Sword Slashes/slash_white_thinright.png', { size: [68.75, 50], frames: 6 })
-  slash_Right = loadAnimation('./assets/images/Sword Slashes/slash_red_right.png', { size: [89.5, 65], frames: 6 })
-  slash_Left = loadAnimation('./assets/images/Sword Slashes/slash_red_left.png', { size: [89.5, 65], frames: 6 })
+  slash_main = loadAnimation('./assets/images/Sword Slashes/slash.png', { size: [165, 120], frames: 20 });
+  slash_thinLeft = loadAnimation('./assets/images/Sword Slashes/slash_white_thin.png', { size: [68.75, 50], frames: 6 });
+  slash_thinRight = loadAnimation('./assets/images/Sword Slashes/slash_white_thinright.png', { size: [68.75, 50], frames: 6 });
+  slash_Right = loadAnimation('./assets/images/Sword Slashes/slash_red_right.png', { size: [89.5, 65], frames: 6 });
+  slash_Left = loadAnimation('./assets/images/Sword Slashes/slash_red_left.png', { size: [89.5, 65], frames: 6 });
  
+  //life of geralt asset 
+  lives = loadAnimation('./assets/images/hearts.png', { size: [40, 40], frames: 3 });
 
   //obstacle assets
   crateImg = loadImage('./assets/images/crate_cropped.png');
@@ -175,6 +177,22 @@ function setup() {
   geralt.addAnimation('idle_left',geraltAnimationIdleLeft);
   geralt.layer = 2;
   
+
+  //geralt healthbar
+  kardia = createSprite(-3500,50,40,40);
+  kardia.collider = 'static';
+  kardia.addAnimation(lives);
+  kardia.animation.stop();
+
+  kardia2 = createSprite(-3460,50,40,40);
+  kardia2.collider = 'static';
+  kardia2.addAnimation(lives.clone());
+  kardia2.animation.stop();
+  
+  kardia3 = createSprite(-3420,50,40,40);
+  kardia3.collider = 'static';
+  kardia3.addAnimation(lives.clone());
+  kardia3.animation.stop();
 
   //attack slash sprite (move horizontaly)
  
@@ -675,6 +693,9 @@ function draw() {
 	//camera.y = geralt.y;
   if(geralt.x >= -3200 && geralt.x <= 4000){
     camera.x=geralt.x+50;
+    kardia.x =geralt.x - 320;
+    kardia2.x =geralt.x - 284;
+    kardia3.x =geralt.x - 248;
   }
 
   
@@ -1340,10 +1361,28 @@ function enemyMovementAndAttackCollision(){
   if(enemy1.overlaps(geralt)){
 
     life_counter++;
-    if(life_counter <3){
+    if(life_counter <6){
       geralt_hit.play();
+      if(life_counter == 1){
+        kardia3.animation.nextFrame();
+      }
+      if(life_counter == 2){
+        kardia3.animation.nextFrame();
+      }
+      if(life_counter == 3){
+        kardia2.animation.nextFrame();
+      }
+      if(life_counter == 4){
+        kardia2.animation.nextFrame();
+      }
+      if(life_counter == 5){
+        kardia.animation.nextFrame();
+      }
+      if(life_counter == 6){
+        kardia.animation.nextFrame();
+      }
     }
-    else if(life_counter == 3){
+    else{
       geralt_death.play();
     }
     if(geralt.x > enemy1.x){
@@ -1387,10 +1426,28 @@ function enemyMovementAndAttackCollision(){
   if(enemy2.overlaps(geralt)){
 
     life_counter++
-    if(life_counter <3){
+    if(life_counter <6){
       geralt_hit.play();
+      if(life_counter == 1){
+        kardia3.animation.nextFrame();
+      }
+      if(life_counter == 2){
+        kardia3.animation.nextFrame();
+      }
+      if(life_counter == 3){
+        kardia2.animation.nextFrame();
+      }
+      if(life_counter == 4){
+        kardia2.animation.nextFrame();
+      }
+      if(life_counter == 5){
+        kardia.animation.nextFrame();
+      }
+      if(life_counter == 6){
+        kardia.animation.nextFrame();
+      }
     }
-    else if(life_counter == 3){
+    else{
       geralt_death.play();
     }
     if(geralt.x > enemy2.x){
@@ -1434,10 +1491,28 @@ function enemyMovementAndAttackCollision(){
   if(enemy3.overlaps(geralt)){
 
     life_counter++;
-    if(life_counter <3){
+    if(life_counter <6){
       geralt_hit.play();
+      if(life_counter == 1){
+        kardia3.animation.nextFrame();
+      }
+      if(life_counter == 2){
+        kardia3.animation.nextFrame();
+      }
+      if(life_counter == 3){
+        kardia2.animation.nextFrame();
+      }
+      if(life_counter == 4){
+        kardia2.animation.nextFrame();
+      }
+      if(life_counter == 5){
+        kardia.animation.nextFrame();
+      }
+      if(life_counter == 6){
+        kardia.animation.nextFrame();
+      }
     }
-    else if(life_counter == 3){
+    else{
       geralt_death.play();
     }
     if(geralt.x > enemy3.x){
@@ -1482,10 +1557,28 @@ function enemyMovementAndAttackCollision(){
   if(enemy4.overlaps(geralt)){
 
     life_counter++;
-    if(life_counter <3){
+    if(life_counter <6){
       geralt_hit.play();
+      if(life_counter == 1){
+        kardia3.animation.nextFrame();
+      }
+      if(life_counter == 2){
+        kardia3.animation.nextFrame();
+      }
+      if(life_counter == 3){
+        kardia2.animation.nextFrame();
+      }
+      if(life_counter == 4){
+        kardia2.animation.nextFrame();
+      }
+      if(life_counter == 5){
+        kardia.animation.nextFrame();
+      }
+      if(life_counter == 6){
+        kardia.animation.nextFrame();
+      }
     }
-    else if(life_counter == 3){
+    else{
       geralt_death.play();
     }
     if(geralt.x > enemy4.x){
@@ -1530,10 +1623,28 @@ function enemyMovementAndAttackCollision(){
   if(enemy5.overlaps(geralt)){
 
     life_counter++;
-    if(life_counter <3){
+    if(life_counter <6){
       geralt_hit.play();
+      if(life_counter == 1){
+        kardia3.animation.nextFrame();
+      }
+      if(life_counter == 2){
+        kardia3.animation.nextFrame();
+      }
+      if(life_counter == 3){
+        kardia2.animation.nextFrame();
+      }
+      if(life_counter == 4){
+        kardia2.animation.nextFrame();
+      }
+      if(life_counter == 5){
+        kardia.animation.nextFrame();
+      }
+      if(life_counter == 6){
+        kardia.animation.nextFrame();
+      }
     }
-    else if(life_counter == 3){
+    else{
       geralt_death.play();
     }
     if(geralt.x > enemy5.x){
@@ -1719,7 +1830,7 @@ function enemyMovementAndAttackCollision(){
 
 function deathScreen(){
 
-  if(life_counter == 3){
+  if(life_counter == 6){
     for(let i = allSprites.length; i--;){
       allSprites[i].remove();
     }
