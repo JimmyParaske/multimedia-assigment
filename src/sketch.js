@@ -124,11 +124,13 @@ function preload(){
   platform1Img = loadImage('./assets/images/platform1.png');
   platform2Img = loadImage('./assets/images/platform2.png');
 
-  //enemies (2 types)
+  //enemies (3 types)
   enemyAnimationLeft = loadAnimation('./assets/images/Goblin/RunLeft.png', { size: [220, 220], frames: 8 });
   enemy2AnimationLeft = loadAnimation('./assets/images/Skeleton/WalkLeft.png', { size: [270, 270], frames: 4 });
   enemyAnimationRight = loadAnimation('./assets/images/Goblin/RunRight.png', { size: [220, 220], frames: 8 });
   enemy2AnimationRight = loadAnimation('./assets/images/Skeleton/WalkRight.png', { size: [270, 270], frames: 4 });
+  enemy3AnimationLeft = loadAnimation('./assets/images/bat_right.png', { size: [60.25, 64], frames: 4 });
+  enemy3AnimationRight = loadAnimation('./assets/images/bat_left.png', { size: [60.25, 64], frames: 4 });
 
 
   enemyAnimationLeft.frameDelay = 10;
@@ -149,6 +151,7 @@ function preload(){
   enemy_hit = loadSound('./assets/sounds/enemy_hit');
   goblin_death = loadSound('./assets/sounds/goblin_death');
   skeleton_death = loadSound('./assets/sounds/skeleton_death');
+  bat_death = loadSound('./assets/sounds/zorua');
   slash_sound = loadSound('./assets/sounds/slash_sound');
   slash_main_sound = loadSound('./assets/sounds/slash_main');
   slash_main_sound.rate(2);
@@ -264,8 +267,8 @@ function setup() {
   enemy2_1.rotationLock = true;
   enemy2_1.collider = 'kinematic';
 
-  enemy2_1.addAnimation('left',enemyAnimationLeft.clone());
-  enemy2_1.addAnimation('right',enemyAnimationRight.clone());
+  enemy2_1.addAnimation('left',enemy3AnimationLeft);
+  enemy2_1.addAnimation('right',enemy3AnimationRight);
   enemy2_1.layer = 2;
 
   enemy2_2 = createSprite(-730,465,55,100);
@@ -2192,7 +2195,7 @@ if(enemy2_7.overlaps(geralt)){
     counter_attack[3]++;
     if(counter_attack[3] == 2){
       enemy2_1.remove();
-      goblin_death.play();
+      bat_death.play();
     }
   }
   if(slash_attack.overlaps(enemy2_2)){
@@ -2340,7 +2343,7 @@ if(enemy2_7.overlaps(geralt)){
     counter_attack[3]++;
     if(counter_attack[3] == 2){
       enemy2_1.remove();
-      goblin_death.play();
+      bat_death.play();
     }
   }
   if(slash_attack2.overlaps(enemy2_2)){
@@ -2474,7 +2477,7 @@ if(enemy2_7.overlaps(geralt)){
     enemy2_1.remove();
     slash_attack3.remove();
     attackingV = false;
-    goblin_death.play();
+    bat_death.play();
   }
   if(slash_attack3.overlaps(enemy2_2)){
 
