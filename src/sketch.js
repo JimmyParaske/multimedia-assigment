@@ -34,6 +34,10 @@ var coin6;
 var coin7;
 var coin8;
 var coin2_1;
+var coin2_2;
+var coin2_3;
+var coin2_4;
+var coin2_5;
 
 
 var slash_attack;
@@ -175,7 +179,7 @@ function setup() {
 
 
   // Player
-  geralt = createSprite(-3200,480,67,80);
+  geralt = createSprite(-1500,480,67,80);
   //-3200
   //για να μην κανει rotate ο geralt 
   geralt.rotationLock = true;
@@ -256,9 +260,10 @@ function setup() {
   enemy2.addAnimation('right',enemyAnimationRight.clone());
   enemy2.layer = 2;
 
-  enemy2_1 = createSprite(-1170,220,55,100);
+  enemy2_1 = createSprite(-1170,150,55,100);
   enemy2_1.rotationLock = true;
- 
+  enemy2_1.collider = 'kinematic';
+
   enemy2_1.addAnimation('left',enemyAnimationLeft.clone());
   enemy2_1.addAnimation('right',enemyAnimationRight.clone());
   enemy2_1.layer = 2;
@@ -348,7 +353,7 @@ function setup() {
   coin2.addAnimation(coins.clone());
   
 
-  coin3 = createSprite(-1000, 100, 10, 10);
+  coin3 = createSprite(-1000, 50, 10, 10);
   coin3.collider = 'static';
   coin3.addAnimation(coins.clone());
  
@@ -377,7 +382,27 @@ function setup() {
   coin8.collider = 'static';
   coin8.addAnimation(coins.clone());
  
-  
+  //more coins vol 2
+
+  coin2_1 = createSprite(-1175, 350, 10, 10);
+  coin2_1.collider = 'static';
+  coin2_1.addAnimation(coins.clone());
+
+  coin2_2 = createSprite(-130, 465, 10, 10);
+  coin2_2.collider = 'static';
+  coin2_2.addAnimation(coins.clone());
+
+  coin2_3 = createSprite(970, 365, 10, 10);
+  coin2_3.collider = 'static';
+  coin2_3.addAnimation(coins.clone());
+
+  coin2_4 = createSprite(2250, 365, 10, 10);
+  coin2_4.collider = 'static';
+  coin2_4.addAnimation(coins.clone());
+
+  coin2_5 = createSprite(3655, 380, 10, 10);
+  coin2_5.collider = 'static';
+  coin2_5.addAnimation(coins.clone());
 
  
 
@@ -1538,10 +1563,32 @@ function enemyMovementAndAttackCollision(){
 
   //first enemy vol2
 
-  if(enemy2_1.y < 285){
- 
-    enemy2_1.y = 225; 
+  if(enemy2_1.y < 210){
+    
+    enemy2_1.y = 150; 
   }
+
+  if(enemy2_1.x <= -840 && collided2nd_vol2==false){
+
+    enemy2_1.vel.x = 1.2;
+    collided2nd_vol2 = true;
+    enemy2_1.changeAnimation('left');
+    
+  }
+
+  if(enemy2_1.x == crate.x){
+
+    enemy2_1.vel.x =-1.2;
+    enemy2_1.changeAnimation('right');
+    
+  }
+  if(enemy2_1.x == S1sign.x){
+
+    enemy2_1.vel.x = 1.2;
+    enemy2_1.changeAnimation('left');
+    
+  }
+
 
   if(enemy2_1.overlaps(geralt)){
 
@@ -1569,6 +1616,14 @@ function enemyMovementAndAttackCollision(){
     }
     else{
       geralt_death.play();
+    }
+    if(geralt.x > enemy2_1.x){
+      enemy2_1.vel.x=-1.2;
+      enemy2_1.changeAnimation('right');
+    }
+    else{
+      enemy2_1.vel.x = 1.2;
+      enemy2_1.changeAnimation('left');
     }
   
   }
@@ -1812,20 +1867,20 @@ if(enemy2_6.y > minHeight){
 
 if(enemy2_6.x <= 3800 && collided6th_vol2==false){
 
-  enemy2_6.vel.x = 1.2;
+  enemy2_6.vel.x = 2;
   collided6th_vol2 = true;
   enemy2_6.changeAnimation('left');
 }
 
 if(enemy2_6.collided(S2barrel2)){
 
-  enemy2_6.vel.x =1.2;
+  enemy2_6.vel.x =2;
   enemy2_6.changeAnimation('left');
 }
 
-if(enemy2_6.x == 4400){
+if(enemy2_6.x >= 4200){
 
-  enemy2_6.vel.x = -1.2;
+  enemy2_6.vel.x = -2;
   enemy2_6.changeAnimation('right');
 }
 
@@ -1857,11 +1912,11 @@ if(enemy2_6.overlaps(geralt)){
     geralt_death.play();
   }
   if(geralt.x > enemy2_6.x){
-    enemy2_6.vel.x=-1.2;
+    enemy2_6.vel.x= -2;
     enemy2_6.changeAnimation('right');
   }
   else{
-    enemy2_6.vel.x = 1.2;
+    enemy2_6.vel.x = 2;
     enemy2_6.changeAnimation('left');
   }
 }
@@ -1980,21 +2035,21 @@ if(enemy2_7.overlaps(geralt)){
 
   if(enemy4.x <= 2740 && collided4th==false){
 
-    enemy4.vel.x = 1.4;
+    enemy4.vel.x = 1.6;
     collided4th = true;
     enemy4.changeAnimation('left');
   }
 
   if(enemy4.collided(S2welltop)){
 
-    enemy4.vel.x =-1.4;
+    enemy4.vel.x =-1.6;
     enemy4.changeAnimation('right');
     
   }
 
   if(enemy4.collided(S2crate3)){
 
-    enemy4.vel.x = 1.4;
+    enemy4.vel.x = 1.6;
     enemy4.changeAnimation('left');
   }
 
@@ -2026,11 +2081,11 @@ if(enemy2_7.overlaps(geralt)){
       geralt_death.play();
     }
     if(geralt.x > enemy4.x){
-      enemy4.vel.x=-1.4;
+      enemy4.vel.x=-1.6;
       enemy4.changeAnimation('right');
     }
     else{
-      enemy4.vel.x = 1.4;
+      enemy4.vel.x = 1.6;
       enemy4.changeAnimation('left');
     }
   }
@@ -2548,6 +2603,36 @@ function removeCoins(){
     coin_sound.play();
   }
 
+  if(geralt.overlaps(coin2_1)){
+
+    coin2_1.remove();
+    coin_sound.play();
+  }
+
+  if(geralt.overlaps(coin2_2)){
+
+    coin2_2.remove();
+    coin_sound.play();
+  }
+
+  if(geralt.overlaps(coin2_3)){
+
+    coin2_3.remove();
+    coin_sound.play();
+  }
+
+  if(geralt.overlaps(coin2_4)){
+
+    coin2_4.remove();
+    coin_sound.play();
+  }
+
+  if(geralt.overlaps(coin2_5)){
+
+    coin2_5.remove();
+    coin_sound.play();
+  }
+
 
   if(slash_attack.overlaps(coin1)){
 
@@ -2597,6 +2682,35 @@ function removeCoins(){
     coin_sound.play();
   }
 
+  if(slash_attack.overlaps(coin2_1)){
+
+    coin2_1.remove();
+    coin_sound.play();
+  }
+
+  if(slash_attack.overlaps(coin2_2)){
+
+    coin2_2.remove();
+    coin_sound.play();
+  }
+
+  if(slash_attack.overlaps(coin2_3)){
+
+    coin2_3.remove();
+    coin_sound.play();
+  }
+
+  if(slash_attack.overlaps(coin2_4)){
+
+    coin2_4.remove();
+    coin_sound.play();
+  }
+
+  if(slash_attack.overlaps(coin2_5)){
+
+    coin2_5.remove();
+    coin_sound.play();
+  }
 
 
   if(slash_attack2.overlaps(coin1)){
@@ -2647,8 +2761,35 @@ function removeCoins(){
     coin_sound.play();
   }
 
+  if(slash_attack2.overlaps(coin2_1)){
 
+    coin2_1.remove();
+    coin_sound.play();
+  }
 
+  if(slash_attack2.overlaps(coin2_2)){
+
+    coin2_2.remove();
+    coin_sound.play();
+  }
+
+  if(slash_attack2.overlaps(coin2_3)){
+
+    coin2_3.remove();
+    coin_sound.play();
+  }
+
+  if(slash_attack2.overlaps(coin2_4)){
+
+    coin2_4.remove();
+    coin_sound.play();
+  }
+
+  if(slash_attack2.overlaps(coin2_5)){
+
+    coin2_5.remove();
+    coin_sound.play();
+  }
 
 
 
