@@ -182,7 +182,7 @@ function setup() {
 
 
   // Player
-  geralt = createSprite(-1500,480,67,80);
+  geralt = createSprite(-3200,480,67,80);
   //-3200
   //για να μην κανει rotate ο geralt 
   geralt.rotationLock = true;
@@ -296,13 +296,13 @@ function setup() {
 
 
 
-  enemy2_5 = createSprite(3650,345,55,100);
+  enemy2_5 = createSprite(3650,250,55,100);
   enemy2_5.rotationLock = true;
  
-  enemy2_5.addAnimation('left',enemyAnimationLeft.clone());
-  enemy2_5.addAnimation('right',enemyAnimationRight.clone());
+  enemy2_5.addAnimation('left',enemy3AnimationLeft.clone());
+  enemy2_5.addAnimation('right',enemy3AnimationRight.clone());
   enemy2_5.layer = 2;
-
+  enemy2_5.collider = 'kinematic';
 
   enemy2_6 = createSprite(3650,465,55,100);
   enemy2_6.rotationLock = true;
@@ -313,13 +313,13 @@ function setup() {
 
 
 
-  enemy2_7 = createSprite(4295,200,55,100);
+  enemy2_7 = createSprite(4295,170,55,100);
   enemy2_7.rotationLock = true;
  
-  enemy2_7.addAnimation('left',enemyAnimationLeft.clone());
-  enemy2_7.addAnimation('right',enemyAnimationRight.clone());
+  enemy2_7.addAnimation('left',enemy3AnimationLeft.clone());
+  enemy2_7.addAnimation('right',enemy3AnimationRight.clone());
   enemy2_7.layer = 2;
-
+  enemy2_7.collider = 'kinematic';
 
 
   enemy3 = createSprite(300,445,55,100);
@@ -1422,8 +1422,6 @@ collided5th_vol2 = false;
 collided6th_vol2 = false;
 collided7th_vol2 = false;
 collided8th_vol2 = false;
-collided9th_vol2 = false;
-collided10th_vol2 = false;
 
 
 const counter_attack = [0,0,0,0,0,0,0,0,0,0];
@@ -1566,10 +1564,6 @@ function enemyMovementAndAttackCollision(){
 
   //first enemy vol2
 
-  if(enemy2_1.y < 210){
-    
-    enemy2_1.y = 150; 
-  }
 
   if(enemy2_1.x <= -840 && collided2nd_vol2==false){
 
@@ -1579,13 +1573,13 @@ function enemyMovementAndAttackCollision(){
     
   }
 
-  if(enemy2_1.x == crate.x){
+  if(enemy2_1.x >= crate.x){
 
     enemy2_1.vel.x =-1.2;
     enemy2_1.changeAnimation('right');
     
   }
-  if(enemy2_1.x == S1sign.x){
+  if(enemy2_1.x <= S1sign.x){
 
     enemy2_1.vel.x = 1.2;
     enemy2_1.changeAnimation('left');
@@ -1826,10 +1820,29 @@ if(enemy2_4.overlaps(geralt)){
 
 //fifth enemy vol 2
 
-if(enemy2_5.y < 290){
- 
-  enemy2_5.y = 290; 
+
+
+if(enemy2_5.x <= 3700 && collided7th_vol2==false){
+
+  enemy2_5.vel.x = 2;
+  collided7th_vol2 = true;
+  enemy2_5.changeAnimation('left');
+  
 }
+if(enemy2_5.x >= S2platform1a.x){
+
+  enemy2_5.vel.x =-2;
+  enemy2_5.changeAnimation('right');
+  
+}
+if(enemy2_5.x <= S2barrel1.x){
+
+  enemy2_5.vel.x = 2;
+  enemy2_5.changeAnimation('left');
+  
+  
+}
+
 
 if(enemy2_5.overlaps(geralt)){
 
@@ -1858,8 +1871,20 @@ if(enemy2_5.overlaps(geralt)){
   else{
     geralt_death.play();
   }
+  if(geralt.x > enemy2_5.x){
+    enemy2_5.vel.x=-2;
+    enemy2_5.changeAnimation('right');
+   
+  }
+  else{
+    enemy2_5.vel.x = 2;
+    enemy2_5.changeAnimation('left');
+   
+  }
 
 }
+
+
 
 //sixth enemy vol 2
 if(enemy2_6.y > minHeight){
@@ -1881,7 +1906,7 @@ if(enemy2_6.collided(S2barrel2)){
   enemy2_6.changeAnimation('left');
 }
 
-if(enemy2_6.x >= 4200){
+if(enemy2_6.x >= 4480){
 
   enemy2_6.vel.x = -2;
   enemy2_6.changeAnimation('right');
@@ -1927,10 +1952,27 @@ if(enemy2_6.overlaps(geralt)){
 
 //seventh enemy vol 2
 
-if(enemy2_7.y < 200){
- 
-  enemy2_7.y = 200; 
+
+if(enemy2_7.x <= 3700 && collided8th_vol2==false){
+
+  enemy2_7.vel.x = -1.5;
+  collided8th_vol2 = true;
+  enemy2_7.changeAnimation('right');
+  
 }
+if(enemy2_7.x >= S2platform2a.x){
+
+  enemy2_7.vel.x =-1.5;
+  enemy2_7.changeAnimation('right');
+  
+}
+if(enemy2_7.x <= S2floor1.x){
+
+  enemy2_7.vel.x = 1.5;
+  enemy2_7.changeAnimation('left');
+  
+}
+
 
 if(enemy2_7.overlaps(geralt)){
 
@@ -1958,6 +2000,16 @@ if(enemy2_7.overlaps(geralt)){
   }
   else{
     geralt_death.play();
+  }
+  if(geralt.x > enemy2_7.x){
+    enemy2_7.vel.x=-1.5;
+    enemy2_7.changeAnimation('right');
+   
+  }
+  else{
+    enemy2_7.vel.x = 1.5;
+    enemy2_7.changeAnimation('left');
+    
   }
 
 }
@@ -2243,7 +2295,7 @@ if(enemy2_7.overlaps(geralt)){
     counter_attack[7]++;
     if(counter_attack[7] == 2){
       enemy2_5.remove();
-      goblin_death.play();
+      bat_death.play();
     }
   }
   if(slash_attack.overlaps(enemy2_6)){
@@ -2267,7 +2319,7 @@ if(enemy2_7.overlaps(geralt)){
     counter_attack[9]++;
     if(counter_attack[9] == 2){
       enemy2_7.remove();
-      goblin_death.play();
+      bat_death.play();
     }
   }
   if(slash_attack.overlaps(enemy3)){
