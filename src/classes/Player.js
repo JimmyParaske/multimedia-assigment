@@ -77,7 +77,7 @@ class Player {
     }
 
     noJump() {
-        
+
         this.j = false;
     }
 
@@ -113,30 +113,30 @@ class Player {
 
     /* MPOROUME AMA EINAI NA TO KALOUME MESW THS JUMP KAI MESA STIS IF NA VAZOUME SAN SYNTHIKH TO JUMP TRUE/FALSE EPISHS!!!! */
 
-    gravity(){
+    gravity() {
 
         /* KATI EXW KANEI KAI FREEZAREI AMA PAS ARISTERA H DEKSIA H PATHSEIS ALLO PLHKTRO TO JUMP */
         /* DHLADH KAPOY KRATAEI TO THIS.Y = THIS.Y ENW DEN PREPEI */
-    
-        this.velocity  += this.fallingSpeed
+
+        this.velocity += this.fallingSpeed
         this.y += this.velocity
-        
-        if(this.y>this.minHeight) {
+
+        if (this.y > this.minHeight) {
             this.velocity = 0
             this.y = this.minHeight
             if (keyIsDown(UP_ARROW)) {
                 this.velocity += this.jumpHeight
-            } 
+            }
         }
-        
-        
-            
+
+
+
         /* H SYNTHIKH IF(THIS.J == TRUE DEN EINAI ETOIMH) !!!!!!!!!!!!!!!! */
 
         /* EXW VALEI OTAN GINETAI TRUE NA PHDAEI PIO PSHLA GIA NA KATALAVNW POTE GINETAI TRUE KAI PWS/ME TI KOUMPI/SYNDIASMO GINETAI TRUE!!! */
         //this.jump();
-        
 
-    
+
+
     }
 }

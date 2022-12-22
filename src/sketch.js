@@ -89,7 +89,7 @@ function preload() {
   geraltAnimationRunRight = loadAnimation('./assets/images/Knight/Blue/noBKG_KnightRun_strip2right.png', { size: [192, 128], frames: 8 });
   geraltAnimationAttackLeft = loadAnimation('./assets/images/Knight/Blue/noBKG_KnightAttack_strip2.png', { size: [288, 128], frames: 22 });
   geraltAnimationAttackRight = loadAnimation('./assets/images/Knight/Blue/noBKG_KnightAttack_strip2right.png', { size: [288, 128], frames: 22 });
-  geraltAnimationDeath = loadAnimation('./assets/images/Knight/Red/noBKG_KnightDeath_strip.png', { size: [192, 128], frames: 15 });
+  geraltAnimationDeath = loadAnimation('./assets/images/Knight/Blue/noBKG_KnightDeath_strip.png', { size: [192, 128], frames: 15 });
 
   //attack and effects assets
   slash_main = loadAnimation('./assets/images/Sword Slashes/slash.png', { size: [165, 120], frames: 20 });
@@ -157,12 +157,17 @@ function setup() {
   // Background
   land = new Landscape();
 
-  // Background music
+  // Background Music
   backgroundMusic();
 
   // Start Menu
-  playButton = new Button(width / 2, height / 2, "Play");
-  exitButton = new Button(width / 2, height / 2 + (3 / 2) * playButton.getHeight(), "Exit");
+  playButton = new Button(width / 2, height / 2, "New Game");
+  optionsButton = new Button(width / 2, playButton.getY() + 65, "Options");
+  creditsButton = new Button(width / 2, optionsButton.getY() + 65, "Credits");
+  exitButton = new Button(width / 2, creditsButton.getY() + 65, "Exit");
+
+  // End Menu
+  replayButton = new Button(width / 2, height / 2, "Play Again");
 
   //world gravity
   world.gravity.y = 10;
@@ -636,6 +641,8 @@ function draw() {
   if (stage == "startMenu") {
     // Draw starting menu
     playButton.display();
+    optionsButton.display();
+    creditsButton.display();
     exitButton.display();
   }
 
@@ -643,6 +650,11 @@ function draw() {
   else if (stage == "playing") {
     // Play game
     game();
+  }
+
+  else if (stage == "endMenu") {
+    replayButton.display();
+    exitButton.show();
   }
 
   // Stop controlling camera
@@ -653,14 +665,23 @@ function mouseClicked() {
   // If user clicks "Play" on start menu
   if ((stage == "startMenu") && (mouseX >= playButton.getX() - playButton.getWidth() / 2) && (mouseX <= playButton.getX() + playButton.getWidth() / 2) && (mouseY >= playButton.getY() - playButton.getHeight() / 2) && (mouseY <= playButton.getY() + playButton.getHeight() / 2)) {
     // Remove start menu buttons
-    playButton.remove();
-    exitButton.remove();
+    playButton.hide();
+    exitButton.hide();
     // Change stage to "playing"
     stage = "playing";
   }
 
-  // If user clicks "Exit" on start menu
-  if ((stage == "startMenu") && (mouseX >= exitButton.getX() - exitButton.getWidth() / 2) && (mouseX <= exitButton.getX() + exitButton.getWidth() / 2) && (mouseY >= exitButton.getY() - exitButton.getHeight() / 2) && (mouseY <= exitButton.getY() + exitButton.getHeight() / 2)) {
+  // If user clicks "Play again" on end menu
+  if ((stage == "endMenu") && (mouseX >= replayButton.getX() - replayButton.getWidth() / 2) && (mouseX <= replayButton.getX() + replayButton.getWidth() / 2) && (mouseY >= replayButton.getY() - replayButton.getHeight() / 2) && (mouseY <= replayButton.getY() + replayButton.getHeight() / 2)) {
+    // Remove end menu buttons
+    replayButton.remove();
+    // Change stage to "playing"
+    stage = "startMenu";
+    life_counter = 0;
+  }
+
+  // If user clicks "Exit" on start menu or end menu
+  if (((stage == "startMenu") || (stage == "endMenu")) && (mouseX >= exitButton.getX() - exitButton.getWidth() / 2) && (mouseX <= exitButton.getX() + exitButton.getWidth() / 2) && (mouseY >= exitButton.getY() - exitButton.getHeight() / 2) && (mouseY <= exitButton.getY() + exitButton.getHeight() / 2)) {
     // Exit
     window.location.href = "../index.html";
   }
@@ -1054,7 +1075,6 @@ function jump(sprite) {
 
       sprite.vel.y = hop;
     }
-
   }
 
   if (sprite.y >= S2platform1a.y && sprite.colliding(S2platform1a)) {
