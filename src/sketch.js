@@ -1,5 +1,5 @@
 // Game control
-var stage = 1;
+var stage = "startMenu";
 let geraltAnimationIdle;
 let hop = -8;
 let fallingSpeed = 0.2;
@@ -157,8 +157,13 @@ function setup() {
 
   // Background
   land = new Landscape();
-  //background music
+
+  // Background music
   backgroundMusic();
+
+  // Start Menu
+  playButton = new Button(width / 2, height / 2, "Play");
+  exitButton = new Button(width / 2, height / 2 + (3 / 2) * playButton.getHeight(), "Exit");
 
   //world gravity
   world.gravity.y = 10;
@@ -624,9 +629,46 @@ function setup() {
 function draw() {
   clear();
 
-  //camera
+  // Control camera
   camera.on();
 
+  // Draw background
+  land.display(stage);
+
+  if (stage == "startMenu") {
+    // Draw starting menu
+    playButton.display();
+    exitButton.display();
+  }
+
+  // If user clicks on "play"
+  else if (stage == "playing") {
+    // Play game
+    game();
+  }
+
+  // Stop controlling camera
+  camera.off();
+}
+
+function mouseClicked() {
+  // If user clicks "Play" on start menu
+  if ((stage == "startMenu") && (mouseX >= playButton.getX() - playButton.getWidth() / 2) && (mouseX <= playButton.getX() + playButton.getWidth() / 2) && (mouseY >= playButton.getY() - playButton.getHeight() / 2) && (mouseY <= playButton.getY() + playButton.getHeight() / 2)) {
+    // Remove start menu buttons
+    playButton.remove();
+    exitButton.remove();
+    // Change stage to "playing"
+    stage = "playing";
+  }
+
+  // If user clicks "Exit" on start menu
+  if ((stage == "startMenu") && (mouseX >= exitButton.getX() - exitButton.getWidth() / 2) && (mouseX <= exitButton.getX() + exitButton.getWidth() / 2) && (mouseY >= exitButton.getY() - exitButton.getHeight() / 2) && (mouseY <= exitButton.getY() + exitButton.getHeight() / 2)) {
+    // Exit
+    window.location.href = "../index.html";
+  }
+}
+
+function game() {
   if (geralt.x <= -3200) {
     camera.x = -3150;
   }
@@ -642,7 +684,7 @@ function draw() {
   removeCoins();
   spawnAttack();
   slashCollisionObjects();
-  deathScreen();
+  death();
 
   //BOUNDARIES FOR PLAYER
   if (geralt.x <= -3550) {
@@ -663,12 +705,6 @@ function draw() {
     kardia3.x = geralt.x - 248;
   }
 
-  // Background
-  land.setStage(stage);
-  land.display();
-
-  //game(stage);
-  camera.off();
 }
 
 // Moves
@@ -2119,11 +2155,13 @@ function enemyMovementAndAttackCollision() {
   }
 }
 
-function deathScreen() {
+function death() {
   if (life_counter == 6) {
     for (let i = allSprites.length; i--;) {
       allSprites[i].remove();
     }
+
+    stage = "endMenu";
   }
 }
 

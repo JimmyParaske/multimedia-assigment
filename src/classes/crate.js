@@ -10,8 +10,7 @@ class Crate {
     display() {
         this.image.resize(this.sprite.width*2,this.sprite.height*2); //TODO
     }
-
-
+    
     //Getters
     getX() {
         return this.sprite.x;

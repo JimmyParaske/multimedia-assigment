@@ -1,38 +1,36 @@
-import {CANVAS_WIDTH,CANVAS_HEIGHT,BUTTON_WIDTH,BUTTON_HEIGHT} from './constants';
-
-export default class button{
-  contstructor(p5,x,y,text){
-    this.p5=p5;
-    //Coordinates
+class Button {
+  constructor(x, y, text) {
     this.x = x;
     this.y = y;
-    //Characteristics
-    this.width = BUTTON_WIDTH;
-    this.height = BUTTON_HEIGHT;
-    this.color = color(0,0,0);
-    //Context
-    this.text = text;
+    this.width = 300;
+    this.height = 50;
+    this.button = createButton(text);
   }
-  
-  draw() {
-    noFill();
-    if (this.hovering) {
-      fill(this.col);
-    }
 
-    if (this.clicked) {
-      this.width = this.width * 1.2;
-      this.height = this.height * 1.2;
-    }
+  display() {
+    this.button.size(this.width, this.height);
+    this.button.position(this.x - this.width/2, this.y - this.height/2);
+    this.button.style("font-family", "Bodoni");
+    this.button.style("font-size", "30px");
+  }
 
-    rect(this.x, this.y, this.width, this.height);
+  getX() {
+    return this.x;
+  }
 
-    this.clicked = false;
-    }
+  getY() {
+    return this.y;
+  }
 
-  click(){
-    if (this.over()) {
-      this.clicked = true;
-    }
+  getWidth() {
+    return this.width;
+  }
+
+  getHeight() {
+    return this.height;
+  }
+
+  remove() {
+    this.button.remove();
   }
 }
