@@ -83,14 +83,13 @@ var walk2_animation_reverse;
 
 function preload() {
   //player assets
-  geraltAnimationIdleLeft = loadAnimation('./assets/images/Knight/noBKG_KnightIdle_strip4.png', { size: [128, 128], frames: 15 });
-  geraltAnimationIdleRight = loadAnimation('./assets/images/Knight/noBKG_KnightIdle_strip4right.png', { size: [128, 128], frames: 15 });
-  geraltAnimationRunLeft = loadAnimation('./assets/images/Knight/noBKG_KnightRun_strip2.png', { size: [192, 128], frames: 8 });
-  geraltAnimationRunRight = loadAnimation('./assets/images/Knight/noBKG_KnightRun_strip2right.png', { size: [192, 128], frames: 8 });
-  geraltAnimationAttackLeft = loadAnimation('./assets/images/Knight/noBKG_KnightAttack_strip2.png', { size: [288, 128], frames: 22 });
-  geraltAnimationAttackRight = loadAnimation('./assets/images/Knight/noBKG_KnightAttack_strip2right.png', { size: [288, 128], frames: 22 });
-  geraltAnimationDeath = loadAnimation('./assets/images/Knight/noBKG_KnightDeath_strip.png', { size: [192, 128], frames: 15 });
-  geraltAnimationJump = loadAnimation('./assets/images/Knight/noBKG_KnightJumpAndFall_strip.png', { size: [309, 128], frames: 14 });
+  geraltAnimationIdleLeft = loadAnimation('./assets/images/Knight/Blue/noBKG_KnightIdle_strip4.png', { size: [128, 128], frames: 15 });
+  geraltAnimationIdleRight = loadAnimation('./assets/images/Knight/Blue/noBKG_KnightIdle_strip4right.png', { size: [128, 128], frames: 15 });
+  geraltAnimationRunLeft = loadAnimation('./assets/images/Knight/Blue/noBKG_KnightRun_strip2.png', { size: [192, 128], frames: 8 });
+  geraltAnimationRunRight = loadAnimation('./assets/images/Knight/Blue/noBKG_KnightRun_strip2right.png', { size: [192, 128], frames: 8 });
+  geraltAnimationAttackLeft = loadAnimation('./assets/images/Knight/Blue/noBKG_KnightAttack_strip2.png', { size: [288, 128], frames: 22 });
+  geraltAnimationAttackRight = loadAnimation('./assets/images/Knight/Blue/noBKG_KnightAttack_strip2right.png', { size: [288, 128], frames: 22 });
+  geraltAnimationDeath = loadAnimation('./assets/images/Knight/Red/noBKG_KnightDeath_strip.png', { size: [192, 128], frames: 15 });
 
   //attack and effects assets
   slash_main = loadAnimation('./assets/images/Sword Slashes/slash.png', { size: [165, 120], frames: 20 });
@@ -176,7 +175,6 @@ function setup() {
   geralt.addAnimation('right', geraltAnimationRunRight);
   geralt.addAnimation('attack_left', geraltAnimationAttackLeft);
   geralt.addAnimation('attack_right', geraltAnimationAttackRight);
-  geralt.addAnimation('jump', geraltAnimationJump);
   geralt.addAnimation('death', geraltAnimationDeath);
   geralt.addAnimation('idle_right', geraltAnimationIdleRight);
   geralt.addAnimation('idle_left', geraltAnimationIdleLeft);
