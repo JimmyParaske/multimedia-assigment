@@ -1,53 +1,29 @@
 class Button {
-  constructor(x, y, text) {
-    this.x = x;
-    this.y = y;
-    this.width = 300;
-    this.height = 50;
-    this.button = createButton(text);
-    this.button.hide();
-  }
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+    }
 
-  display() {
-    this.button.show();
-    this.button.size(this.width, this.height);
-    this.button.position(this.x - this.width / 2, this.y - this.height / 2);
-    this.button.style("font-family", "Comic Sans MS");
-    this.button.style("font-size", "30px");
-    this.button.style("color", color(161,97,82));
-    this.button.style("background-color", color(0, 0, 0));
+    clicked() {
+        if ((mouseX >= this.x - this.width / 2) && (mouseX <= this.x + this.width / 2) && (mouseY >= this.y - this.height / 2) && (mouseY <= this.y + this.height / 2)) {
+            return true;
+        }
+        return false;
+    }
 
-    fill(0, 0, 0);
-    stroke(161,97,82);
-    strokeWeight(2);
-    rect(this.x, this.y, (this.width + 18), this.height+10, 20);
-  }
+    getX() {
+        return this.x;
+    }
 
-  getX() {
-    return this.x;
-  }
+    getY() {
+        return this.y;
+    }
 
-  getY() {
-    return this.y;
-  }
+    getWidth() {
+        return this.width;
+    }
 
-  getWidth() {
-    return this.width;
-  }
-
-  getHeight() {
-    return this.height;
-  }
-
-  show() {
-    this.button.show();
-  }
-
-  hide() {
-    this.button.hide();
-  }
-
-  remove() {
-    this.button.remove();
-  }
+    getHeight() {
+        return this.height;
+    }
 }

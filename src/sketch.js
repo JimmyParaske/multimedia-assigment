@@ -1,5 +1,4 @@
 // Game control
-var stage = "startMenu";
 let geraltAnimationIdle;
 let hop = -8;
 let fallingSpeed = 0.2;
@@ -160,14 +159,17 @@ function setup() {
   // Background Music
   backgroundMusic();
 
-  // Start Menu
-  playButton = new Button(width / 2, height / 2, "New Game");
-  optionsButton = new Button(width / 2, playButton.getY() + 65, "Options");
-  creditsButton = new Button(width / 2, optionsButton.getY() + 65, "Credits");
-  exitButton = new Button(width / 2, creditsButton.getY() + 65, "Exit");
+  // Buttons
+  playButton = new TextButton(width / 2, height / 2, "New Game");
+  optionsButton = new TextButton(width / 2, playButton.getY() + 65, "Options");
+  creditsButton = new TextButton(width / 2, optionsButton.getY() + 65, "Credits");
+  exitButton = new TextButton(width / 2, creditsButton.getY() + 65, "Exit");
 
-  // End Menu
-  replayButton = new Button(width / 2, height / 2, "Play Again");
+  skinButton = new TextButton(width / 2, height / 2, "Change Skin");
+  soundButton = new SoundButton(width - 65, 65);
+  returnButton = new ReturnButton(65, 65);
+
+  replayButton = new TextButton(width / 2, height / 2, "Play Again");
 
   //world gravity
   world.gravity.y = 10;
@@ -629,65 +631,53 @@ function setup() {
   obstacles.add(S2platform2a);
 }
 
+let stage = "startMenu";
+
 function draw() {
   clear();
 
+  if (stage == "startMenu") {
+    startMenu();
+  } else if (stage == "options") {
+    options();
+  } else if (stage == "playing") {
+    game();
+  } else if (stage == "endMenu") {
+    endMenu();
+  }
+}
+
+function startMenu() {
+  // Draw background
+  land.displayMenu();
+
+  // Draw start menu
+  playButton.display();
+  optionsButton.display();
+  creditsButton.display();
+  exitButton.display();
+}
+
+function options() {
+  // Draw background
+  land.displayMenu();
+
+  // 
+  animation(geraltAnimationIdleLeft, skinButton.getX(), skinButton.getY() - 80);
+
+  // Draw options
+  skinButton.display();
+  soundButton.display();
+  returnButton.display();
+}
+
+function game() {
   // Control camera
   camera.on();
 
   // Draw background
-  land.display(stage);
+  land.displayGame();
 
-  if (stage == "startMenu") {
-    // Draw starting menu
-    playButton.display();
-    optionsButton.display();
-    creditsButton.display();
-    exitButton.display();
-  }
-
-  // If user clicks on "play"
-  else if (stage == "playing") {
-    // Play game
-    game();
-  }
-
-  else if (stage == "endMenu") {
-    replayButton.display();
-    exitButton.show();
-  }
-
-  // Stop controlling camera
-  camera.off();
-}
-
-function mouseClicked() {
-  // If user clicks "Play" on start menu
-  if ((stage == "startMenu") && (mouseX >= playButton.getX() - playButton.getWidth() / 2) && (mouseX <= playButton.getX() + playButton.getWidth() / 2) && (mouseY >= playButton.getY() - playButton.getHeight() / 2) && (mouseY <= playButton.getY() + playButton.getHeight() / 2)) {
-    // Remove start menu buttons
-    playButton.hide();
-    exitButton.hide();
-    // Change stage to "playing"
-    stage = "playing";
-  }
-
-  // If user clicks "Play again" on end menu
-  if ((stage == "endMenu") && (mouseX >= replayButton.getX() - replayButton.getWidth() / 2) && (mouseX <= replayButton.getX() + replayButton.getWidth() / 2) && (mouseY >= replayButton.getY() - replayButton.getHeight() / 2) && (mouseY <= replayButton.getY() + replayButton.getHeight() / 2)) {
-    // Remove end menu buttons
-    replayButton.remove();
-    // Change stage to "playing"
-    stage = "startMenu";
-    life_counter = 0;
-  }
-
-  // If user clicks "Exit" on start menu or end menu
-  if (((stage == "startMenu") || (stage == "endMenu")) && (mouseX >= exitButton.getX() - exitButton.getWidth() / 2) && (mouseX <= exitButton.getX() + exitButton.getWidth() / 2) && (mouseY >= exitButton.getY() - exitButton.getHeight() / 2) && (mouseY <= exitButton.getY() + exitButton.getHeight() / 2)) {
-    // Exit
-    window.location.href = "../index.html";
-  }
-}
-
-function game() {
   if (geralt.x <= -3200) {
     camera.x = -3150;
   }
@@ -724,6 +714,106 @@ function game() {
     kardia3.x = geralt.x - 248;
   }
 
+  // Stop controlling camera
+  camera.off();
+}
+
+function endMenu() {
+  // Draw background
+  land.displayMenu();
+
+  // Draw end menu
+  replayButton.display();
+  optionsButton.display();
+  creditsButton.display();
+  exitButton.display();
+}
+
+function mouseClicked() {
+  // If user clicks "New Game" on start menu 
+  if ((stage == "startMenu") && (playButton.clicked())) {
+    newGame();
+  }
+
+  // 
+  if ((stage == "startMenu") && (optionsButton.clicked())) {
+    settings();
+  }
+
+  if ((stage == "options") && (skinButton.clicked())) {
+    changeSkin();
+  }
+
+  if ((stage == "options") && (soundButton.clicked())) {
+    if (soundButton.isMuted()) {
+      soundButton.unmute();
+    } else {
+      soundButton.mute();
+    }
+  }
+
+  if ((stage == "options") && (returnButton.clicked())) {
+    back();
+  }
+
+  // 
+  if (((stage == "startMenu") || (stage == "endMenu")) && (creditsButton.clicked())) {
+    window.location.href = "../credits.html";
+  }
+
+  // If user clicks "Play again" on end menu
+  if ((stage == "endMenu") && (replayButton.clicked())) {
+    playAgain();
+  }
+
+  // If user clicks "Exit" on start menu or end menu
+  if (((stage == "startMenu") || (stage == "endMenu")) && (exitButton.clicked())) {
+    // Exit
+    window.location.href = "../index.html";
+  }
+}
+
+function newGame() {
+  // Remove start menu buttons
+  playButton.hide();
+  optionsButton.hide();
+  creditsButton.hide();
+  exitButton.hide();
+  // Change stage to "playing"
+  stage = "playing";
+}
+
+function settings() {
+  // Remove start menu buttons
+  playButton.hide();
+  optionsButton.hide();
+  creditsButton.hide();
+  exitButton.hide();
+  // 
+  stage = "options";
+}
+
+function playAgain() {
+  // Remove end menu buttons
+  replayButton.hide();
+  optionsButton.hide();
+  creditsButton.hide();
+  exitButton.hide();
+  // 
+  life_counter = 0;
+  // Change stage to "playing"
+  stage = "playing";
+}
+
+function changeSkin() {
+  // Remove start menu buttons
+}
+
+function back() {
+  // Remove start menu buttons
+  skinButton.hide();
+
+  stage = "startMenu";
 }
 
 // Moves
@@ -739,6 +829,8 @@ function keyPresses() {
     geralt.changeAnimation('idle_right');
   } else if (kb.released(RIGHT_ARROW)) {
     geralt.changeAnimation('idle_left');
+  } else if (keyIsDown(ESCAPE)) {
+    window.location.href = "../play.html";
   } else {
     geralt.vel.x = 0;
   }
