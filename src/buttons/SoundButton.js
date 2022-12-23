@@ -4,17 +4,13 @@ class SoundButton extends Button {
         this.width = 60;
         this.height = 60;
 
-        this.image = loadImage('./assets/images/Buttons/sound-off.png');
+        this.image = loadImage('./assets/images/Buttons/sound-on.png');
 
         this.muted = true;
     }
 
     display() {
         image(this.image, this.x, this.y, this.width, this.height);
-    }
-
-    isMuted() {
-        return this.muted;
     }
 
     mute() {

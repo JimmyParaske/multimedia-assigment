@@ -647,6 +647,12 @@ function draw() {
   }
 }
 
+function backgroundMusic() {
+  background_sound.play();
+  background_sound.setVolume(0.2);
+  background_sound.loop();
+}
+
 function startMenu() {
   // Draw background
   land.displayMenu();
@@ -745,11 +751,7 @@ function mouseClicked() {
   }
 
   if ((stage == "options") && (soundButton.clicked())) {
-    if (soundButton.isMuted()) {
-      soundButton.unmute();
-    } else {
-      soundButton.mute();
-    }
+    sound();
   }
 
   if ((stage == "options") && (returnButton.clicked())) {
@@ -806,7 +808,16 @@ function playAgain() {
 }
 
 function changeSkin() {
-  // Remove start menu buttons
+}
+
+function sound() {
+  if (background_sound.isPlaying()) {
+    soundButton.mute();
+    background_sound.stop();
+  } else {
+    soundButton.unmute();
+    background_sound.play();
+  }
 }
 
 function back() {
@@ -2270,7 +2281,7 @@ function death() {
     for (let i = allSprites.length; i--;) {
       allSprites[i].remove();
     }
-
+    background_sound.stop();
     stage = "endMenu";
   }
 }
@@ -2525,11 +2536,4 @@ function spawnAttack() {
     attackingV = false;
     slash_main_sound.stop();
   }
-}
-
-function backgroundMusic() {
-  //background_sound.play();
-  //background_sound.loop();
-  //background_sound.setVolume(0.2);
-  //userStartAudio();
 }
