@@ -1,18 +1,31 @@
 class Heart {
-    constructor(x,y){
+    constructor(x, y, animation) {
         this.x = x;
         this.y = y;
         this.width = 40;
         this.height = 40;
 
-        this.animation = loadAnimation('./assets/images/hearts.png', { size: [40, 40], frames: 3 });
+        this.sprite = createSprite(this.x, this.y, this.width, this.height);
+        this.sprite.visible = false;
+
+        this.animation = animation;
+        this.sprite.rotationLock = true;
     }
 
-    display(){
-        this.sprite = createSprite(x, y, this.width, this.height);
-
+    display() {
+        this.sprite.visible = true;
         this.sprite.collider = 'static';
         this.sprite.addAnimation(this.animation);
         this.sprite.animation.stop();
+        this.sprite.y = this.y;
+    }
+
+    setX(int) {
+        this.x = int;
+        this.sprite.x = int;
+    }
+
+    nextFrame() {
+        this.sprite.animation.nextFrame();
     }
 }

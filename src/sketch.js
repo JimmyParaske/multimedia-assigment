@@ -80,15 +80,41 @@ var walk1_animation_reverse;
 var walk2_animation;
 var walk2_animation_reverse;
 
+// Skins
+var idleLeft = 'idleLeftBlue';
+var idleRight = 'idleRightBlue';
+
+var runLeft = 'runLeftBlue';
+var runRight = 'runRightBlue';
+
+var attackLeft = 'attackLeftBlue';
+var attackRight = 'attackRightBlue';
+
 function preload() {
   //player assets
-  geraltAnimationIdleLeft = loadAnimation('./assets/images/Knight/Blue/noBKG_KnightIdle_strip4.png', { size: [128, 128], frames: 15 });
-  geraltAnimationIdleRight = loadAnimation('./assets/images/Knight/Blue/noBKG_KnightIdle_strip4right.png', { size: [128, 128], frames: 15 });
-  geraltAnimationRunLeft = loadAnimation('./assets/images/Knight/Blue/noBKG_KnightRun_strip2.png', { size: [192, 128], frames: 8 });
-  geraltAnimationRunRight = loadAnimation('./assets/images/Knight/Blue/noBKG_KnightRun_strip2right.png', { size: [192, 128], frames: 8 });
-  geraltAnimationAttackLeft = loadAnimation('./assets/images/Knight/Blue/noBKG_KnightAttack_strip2.png', { size: [288, 128], frames: 22 });
-  geraltAnimationAttackRight = loadAnimation('./assets/images/Knight/Blue/noBKG_KnightAttack_strip2right.png', { size: [288, 128], frames: 22 });
-  geraltAnimationDeath = loadAnimation('./assets/images/Knight/Blue/noBKG_KnightDeath_strip.png', { size: [192, 128], frames: 15 });
+  geraltAnimationIdleLeftBlue = loadAnimation('./assets/images/Knight/Blue/noBKG_KnightIdle_strip4.png', { size: [128, 128], frames: 15 });
+  geraltAnimationIdleLeftRed = loadAnimation('./assets/images/Knight/Red/noBKG_KnightIdle_strip4.png', { size: [128, 128], frames: 15 });
+  geraltAnimationIdleLeftGreen = loadAnimation('./assets/images/Knight/Green/noBKG_KnightIdle_strip4.png', { size: [128, 128], frames: 15 });
+
+  geraltAnimationIdleRightBlue = loadAnimation('./assets/images/Knight/Blue/noBKG_KnightIdle_strip4right.png', { size: [128, 128], frames: 15 });
+  geraltAnimationIdleRightRed = loadAnimation('./assets/images/Knight/Red/noBKG_KnightIdle_strip4right.png', { size: [128, 128], frames: 15 });
+  geraltAnimationIdleRightGreen = loadAnimation('./assets/images/Knight/Green/noBKG_KnightIdle_strip4right.png', { size: [128, 128], frames: 15 });
+
+  geraltAnimationRunLeftBlue = loadAnimation('./assets/images/Knight/Blue/noBKG_KnightRun_strip2.png', { size: [192, 128], frames: 8 });
+  geraltAnimationRunLeftRed = loadAnimation('./assets/images/Knight/Red/noBKG_KnightRun_strip2.png', { size: [192, 128], frames: 8 });
+  geraltAnimationRunLeftGreen = loadAnimation('./assets/images/Knight/Green/noBKG_KnightRun_strip2.png', { size: [192, 128], frames: 8 });
+
+  geraltAnimationRunRightBlue = loadAnimation('./assets/images/Knight/Blue/noBKG_KnightRun_strip2right.png', { size: [192, 128], frames: 8 });
+  geraltAnimationRunRightRed = loadAnimation('./assets/images/Knight/Red/noBKG_KnightRun_strip2right.png', { size: [192, 128], frames: 8 });
+  geraltAnimationRunRightGreen = loadAnimation('./assets/images/Knight/Green/noBKG_KnightRun_strip2right.png', { size: [192, 128], frames: 8 });
+
+  geraltAnimationAttackLeftBlue = loadAnimation('./assets/images/Knight/Blue/noBKG_KnightAttack_strip2.png', { size: [288, 128], frames: 22 });
+  geraltAnimationAttackLeftRed = loadAnimation('./assets/images/Knight/Red/noBKG_KnightAttack_strip2.png', { size: [288, 128], frames: 22 });
+  geraltAnimationAttackLeftGreen = loadAnimation('./assets/images/Knight/Green/noBKG_KnightAttack_strip2.png', { size: [288, 128], frames: 22 });
+
+  geraltAnimationAttackRightBlue = loadAnimation('./assets/images/Knight/Blue/noBKG_KnightAttack_strip2right.png', { size: [288, 128], frames: 22 });
+  geraltAnimationAttackRightRed = loadAnimation('./assets/images/Knight/Red/noBKG_KnightAttack_strip2right.png', { size: [288, 128], frames: 22 });
+  geraltAnimationAttackRightGreen = loadAnimation('./assets/images/Knight/Green/noBKG_KnightAttack_strip2right.png', { size: [288, 128], frames: 22 });
 
   //attack and effects assets
   slash_main = loadAnimation('./assets/images/Sword Slashes/slash.png', { size: [165, 120], frames: 20 });
@@ -178,30 +204,35 @@ function setup() {
   geralt = createSprite(-3200, 480, 67, 80);
   geralt.rotationLock = true;
 
-  geralt.addAnimation('left', geraltAnimationRunLeft);
-  geralt.addAnimation('right', geraltAnimationRunRight);
-  geralt.addAnimation('attack_left', geraltAnimationAttackLeft);
-  geralt.addAnimation('attack_right', geraltAnimationAttackRight);
-  geralt.addAnimation('death', geraltAnimationDeath);
-  geralt.addAnimation('idle_right', geraltAnimationIdleRight);
-  geralt.addAnimation('idle_left', geraltAnimationIdleLeft);
-  geralt.layer = 2;
+  geralt.addAnimation('attackLeftGreen', geraltAnimationAttackLeftGreen);
+  geralt.addAnimation('attackLeftRed', geraltAnimationAttackLeftRed);
+  geralt.addAnimation('attackLeftBlue', geraltAnimationAttackLeftBlue);
+
+  geralt.addAnimation('attackRightGreen', geraltAnimationAttackRightGreen);
+  geralt.addAnimation('attackRightRed', geraltAnimationAttackRightRed);
+  geralt.addAnimation('attackRightBlue', geraltAnimationAttackRightBlue);
+
+  geralt.addAnimation('runLeftGreen', geraltAnimationRunLeftGreen);
+  geralt.addAnimation('runLeftRed', geraltAnimationRunLeftRed);
+  geralt.addAnimation('runLeftBlue', geraltAnimationRunLeftBlue);
+
+  geralt.addAnimation('runRightGreen', geraltAnimationRunRightGreen);
+  geralt.addAnimation('runRightRed', geraltAnimationRunRightRed);
+  geralt.addAnimation('runRightBlue', geraltAnimationRunRightBlue);
+
+  geralt.addAnimation('idleRightGreen', geraltAnimationIdleRightGreen);
+  geralt.addAnimation('idleRightRed', geraltAnimationIdleRightRed);
+  geralt.addAnimation('idleRightBlue', geraltAnimationIdleRightBlue);
+
+  geralt.addAnimation('idleLeftGreen', geraltAnimationIdleLeftGreen);
+  geralt.addAnimation('idleLeftRed', geraltAnimationIdleLeftRed);
+  geralt.addAnimation('idleLeftBlue', geraltAnimationIdleLeftBlue);
+
 
   //geralt healthbar
-  kardia = createSprite(-3500, 50, 40, 40);
-  kardia.collider = 'static';
-  kardia.addAnimation(lives);
-  kardia.animation.stop();
-
-  kardia2 = createSprite(-3460, 50, 40, 40);
-  kardia2.collider = 'static';
-  kardia2.addAnimation(lives.clone());
-  kardia2.animation.stop();
-
-  kardia3 = createSprite(-3420, 50, 40, 40);
-  kardia3.collider = 'static';
-  kardia3.addAnimation(lives.clone());
-  kardia3.animation.stop();
+  kardia = new Heart(-3500, 50, lives);
+  kardia2 = new Heart(-3460, 50, lives.clone());
+  kardia3 = new Heart(-3420, 50, lives.clone());
 
   //attack slash sprite (move horizontaly)
   slash_attack = new Sprite();
@@ -636,6 +667,8 @@ let stage = "startMenu";
 function draw() {
   clear();
 
+  rect(30, 20, 55, 55, 20);
+
   if (stage == "startMenu") {
     startMenu();
   } else if (stage == "options") {
@@ -669,7 +702,7 @@ function options() {
   land.displayMenu();
 
   // 
-  animation(geraltAnimationIdleLeft, skinButton.getX(), skinButton.getY() - 80);
+  animation(geraltAnimationIdleLeftBlue, skinButton.getX(), skinButton.getY() - 80);
 
   // Draw options
   skinButton.display();
@@ -683,6 +716,12 @@ function game() {
 
   // Draw background
   land.displayGame();
+
+  kardia.display();
+  kardia2.display();
+  kardia3.display();
+
+  // enemy1.display();
 
   if (geralt.x <= -3200) {
     camera.x = -3150;
@@ -715,9 +754,9 @@ function game() {
   //camera.y = geralt.y;
   if (geralt.x >= -3200 && geralt.x <= 4000) {
     camera.x = geralt.x + 50;
-    kardia.x = geralt.x - 320;
-    kardia2.x = geralt.x - 284;
-    kardia3.x = geralt.x - 248;
+    kardia.setX(geralt.x - 320);
+    kardia2.setX(geralt.x - 284);
+    kardia3.setX(geralt.x - 248);
   }
 
   // Stop controlling camera
@@ -808,6 +847,34 @@ function playAgain() {
 }
 
 function changeSkin() {
+  if (idleLeft == 'idleLeftBlue') {
+    idleLeft = 'idleLeftRed';
+    idleRight = 'idleRightRed';
+
+    runLeft = 'runLeftRed';
+    runRight = 'runRightRed';
+
+    attackLeft = 'attackLeftRed';
+    attackRight = 'attackRightRed';
+  } else if (idleLeft == 'idleLeftRed') {
+    idleLeft = 'idleLeftGreen';
+    idleRight = 'idleRightGreen';
+
+    runLeft = 'runLeftGreen';
+    runRight = 'runRightGreen';
+
+    attackLeft = 'attackLeftGreen';
+    attackRight = 'attackRightGreen';
+  } else {
+    idleLeft = 'idleLeftBlue';
+    idleRight = 'idleRightBlue';
+
+    runLeft = 'runLeftBlue';
+    runRight = 'runRightBlue';
+
+    attackLeft = 'attackLeftBlue';
+    attackRight = 'attackRightBlue';
+  }
 }
 
 function sound() {
@@ -832,14 +899,14 @@ function keyPresses() {
   //geralt movement
   if (keyIsDown(LEFT_ARROW)) {
     geralt.vel.x = -5;
-    geralt.changeAnimation('right');
+    geralt.changeAnimation(runRight);
   } else if (keyIsDown(RIGHT_ARROW)) {
     geralt.vel.x = +5;
-    geralt.changeAnimation('left');
+    geralt.changeAnimation(runLeft);
   } else if (kb.released(LEFT_ARROW)) {
-    geralt.changeAnimation('idle_right');
+    geralt.changeAnimation(idleRight);
   } else if (kb.released(RIGHT_ARROW)) {
-    geralt.changeAnimation('idle_left');
+    geralt.changeAnimation(idleLeft);
   } else if (keyIsDown(ESCAPE)) {
     window.location.href = "../play.html";
   } else {
@@ -850,14 +917,14 @@ function keyPresses() {
 function attackStop() {
   if (kb.presses('b') || kb.presses('v')) {
     geralt.vel.x = 0;
-    geralt.changeAnimation('attack_left');
+    geralt.changeAnimation(attackLeft);
   } else if (kb.released('b') || kb.released('v')) {
-    geralt.changeAnimation('idle_left');
+    geralt.changeAnimation(idleLeft);
   } else if (kb.presses('c')) {
     geralt.vel.x = 0;
-    geralt.changeAnimation('attack_right');
+    geralt.changeAnimation(attackRight);
   } else if (kb.released('c')) {
-    geralt.changeAnimation('idle_right');
+    geralt.changeAnimation(idleRight);
   }
 }
 
@@ -1260,22 +1327,22 @@ function enemyMovementAndAttackCollision() {
     if (life_counter < 6) {
       geralt_hit.play();
       if (life_counter == 1) {
-        kardia3.animation.nextFrame();
+        kardia3.nextFrame();
       }
       if (life_counter == 2) {
-        kardia3.animation.nextFrame();
+        kardia3.nextFrame();
       }
       if (life_counter == 3) {
-        kardia2.animation.nextFrame();
+        kardia2.nextFrame();
       }
       if (life_counter == 4) {
-        kardia2.animation.nextFrame();
+        kardia2.nextFrame();
       }
       if (life_counter == 5) {
-        kardia.animation.nextFrame();
+        kardia.nextFrame();
       }
       if (life_counter == 6) {
-        kardia.animation.nextFrame();
+        kardia.nextFrame();
       }
     } else {
       geralt_death.play();
@@ -1316,22 +1383,22 @@ function enemyMovementAndAttackCollision() {
     if (life_counter < 6) {
       geralt_hit.play();
       if (life_counter == 1) {
-        kardia3.animation.nextFrame();
+        kardia3.nextFrame();
       }
       if (life_counter == 2) {
-        kardia3.animation.nextFrame();
+        kardia3.nextFrame();
       }
       if (life_counter == 3) {
-        kardia2.animation.nextFrame();
+        kardia2.nextFrame();
       }
       if (life_counter == 4) {
-        kardia2.animation.nextFrame();
+        kardia2.nextFrame();
       }
       if (life_counter == 5) {
-        kardia.animation.nextFrame();
+        kardia.nextFrame();
       }
       if (life_counter == 6) {
-        kardia.animation.nextFrame();
+        kardia.nextFrame();
       }
     } else {
       geralt_death.play();
@@ -1368,22 +1435,22 @@ function enemyMovementAndAttackCollision() {
     if (life_counter < 6) {
       geralt_hit.play();
       if (life_counter == 1) {
-        kardia3.animation.nextFrame();
+        kardia3.nextFrame();
       }
       if (life_counter == 2) {
-        kardia3.animation.nextFrame();
+        kardia3.nextFrame();
       }
       if (life_counter == 3) {
-        kardia2.animation.nextFrame();
+        kardia2.nextFrame();
       }
       if (life_counter == 4) {
-        kardia2.animation.nextFrame();
+        kardia2.nextFrame();
       }
       if (life_counter == 5) {
-        kardia.animation.nextFrame();
+        kardia.nextFrame();
       }
       if (life_counter == 6) {
-        kardia.animation.nextFrame();
+        kardia.nextFrame();
       }
     } else {
       geralt_death.play();
@@ -1424,22 +1491,22 @@ function enemyMovementAndAttackCollision() {
     if (life_counter < 6) {
       geralt_hit.play();
       if (life_counter == 1) {
-        kardia3.animation.nextFrame();
+        kardia3.nextFrame();
       }
       if (life_counter == 2) {
-        kardia3.animation.nextFrame();
+        kardia3.nextFrame();
       }
       if (life_counter == 3) {
-        kardia2.animation.nextFrame();
+        kardia2.nextFrame();
       }
       if (life_counter == 4) {
-        kardia2.animation.nextFrame();
+        kardia2.nextFrame();
       }
       if (life_counter == 5) {
-        kardia.animation.nextFrame();
+        kardia.nextFrame();
       }
       if (life_counter == 6) {
-        kardia.animation.nextFrame();
+        kardia.nextFrame();
       }
     } else {
       geralt_death.play();
@@ -1481,22 +1548,22 @@ function enemyMovementAndAttackCollision() {
     if (life_counter < 6) {
       geralt_hit.play();
       if (life_counter == 1) {
-        kardia3.animation.nextFrame();
+        kardia3.nextFrame();
       }
       if (life_counter == 2) {
-        kardia3.animation.nextFrame();
+        kardia3.nextFrame();
       }
       if (life_counter == 3) {
-        kardia2.animation.nextFrame();
+        kardia2.nextFrame();
       }
       if (life_counter == 4) {
-        kardia2.animation.nextFrame();
+        kardia2.nextFrame();
       }
       if (life_counter == 5) {
-        kardia.animation.nextFrame();
+        kardia.nextFrame();
       }
       if (life_counter == 6) {
-        kardia.animation.nextFrame();
+        kardia.nextFrame();
       }
     } else {
       geralt_death.play();
@@ -1537,22 +1604,22 @@ function enemyMovementAndAttackCollision() {
     if (life_counter < 6) {
       geralt_hit.play();
       if (life_counter == 1) {
-        kardia3.animation.nextFrame();
+        kardia3.nextFrame();
       }
       if (life_counter == 2) {
-        kardia3.animation.nextFrame();
+        kardia3.nextFrame();
       }
       if (life_counter == 3) {
-        kardia2.animation.nextFrame();
+        kardia2.nextFrame();
       }
       if (life_counter == 4) {
-        kardia2.animation.nextFrame();
+        kardia2.nextFrame();
       }
       if (life_counter == 5) {
-        kardia.animation.nextFrame();
+        kardia.nextFrame();
       }
       if (life_counter == 6) {
-        kardia.animation.nextFrame();
+        kardia.nextFrame();
       }
     } else {
       geralt_death.play();
@@ -1590,22 +1657,22 @@ function enemyMovementAndAttackCollision() {
     if (life_counter < 6) {
       geralt_hit.play();
       if (life_counter == 1) {
-        kardia3.animation.nextFrame();
+        kardia3.nextFrame();
       }
       if (life_counter == 2) {
-        kardia3.animation.nextFrame();
+        kardia3.nextFrame();
       }
       if (life_counter == 3) {
-        kardia2.animation.nextFrame();
+        kardia2.nextFrame();
       }
       if (life_counter == 4) {
-        kardia2.animation.nextFrame();
+        kardia2.nextFrame();
       }
       if (life_counter == 5) {
-        kardia.animation.nextFrame();
+        kardia.nextFrame();
       }
       if (life_counter == 6) {
-        kardia.animation.nextFrame();
+        kardia.nextFrame();
       }
     } else {
       geralt_death.play();
@@ -1649,22 +1716,22 @@ function enemyMovementAndAttackCollision() {
     if (life_counter < 6) {
       geralt_hit.play();
       if (life_counter == 1) {
-        kardia3.animation.nextFrame();
+        kardia3.nextFrame();
       }
       if (life_counter == 2) {
-        kardia3.animation.nextFrame();
+        kardia3.nextFrame();
       }
       if (life_counter == 3) {
-        kardia2.animation.nextFrame();
+        kardia2.nextFrame();
       }
       if (life_counter == 4) {
-        kardia2.animation.nextFrame();
+        kardia2.nextFrame();
       }
       if (life_counter == 5) {
-        kardia.animation.nextFrame();
+        kardia.nextFrame();
       }
       if (life_counter == 6) {
-        kardia.animation.nextFrame();
+        kardia.nextFrame();
       }
     } else {
       geralt_death.play();
@@ -1704,22 +1771,22 @@ function enemyMovementAndAttackCollision() {
     if (life_counter < 6) {
       geralt_hit.play();
       if (life_counter == 1) {
-        kardia3.animation.nextFrame();
+        kardia3.nextFrame();
       }
       if (life_counter == 2) {
-        kardia3.animation.nextFrame();
+        kardia3.nextFrame();
       }
       if (life_counter == 3) {
-        kardia2.animation.nextFrame();
+        kardia2.nextFrame();
       }
       if (life_counter == 4) {
-        kardia2.animation.nextFrame();
+        kardia2.nextFrame();
       }
       if (life_counter == 5) {
-        kardia.animation.nextFrame();
+        kardia.nextFrame();
       }
       if (life_counter == 6) {
-        kardia.animation.nextFrame();
+        kardia.nextFrame();
       }
     } else {
       geralt_death.play();
@@ -1762,22 +1829,22 @@ function enemyMovementAndAttackCollision() {
     if (life_counter < 6) {
       geralt_hit.play();
       if (life_counter == 1) {
-        kardia3.animation.nextFrame();
+        kardia3.nextFrame();
       }
       if (life_counter == 2) {
-        kardia3.animation.nextFrame();
+        kardia3.nextFrame();
       }
       if (life_counter == 3) {
-        kardia2.animation.nextFrame();
+        kardia2.nextFrame();
       }
       if (life_counter == 4) {
-        kardia2.animation.nextFrame();
+        kardia2.nextFrame();
       }
       if (life_counter == 5) {
-        kardia.animation.nextFrame();
+        kardia.nextFrame();
       }
       if (life_counter == 6) {
-        kardia.animation.nextFrame();
+        kardia.nextFrame();
       }
     }
     else {
@@ -1819,22 +1886,22 @@ function enemyMovementAndAttackCollision() {
     if (life_counter < 6) {
       geralt_hit.play();
       if (life_counter == 1) {
-        kardia3.animation.nextFrame();
+        kardia3.nextFrame();
       }
       if (life_counter == 2) {
-        kardia3.animation.nextFrame();
+        kardia3.nextFrame();
       }
       if (life_counter == 3) {
-        kardia2.animation.nextFrame();
+        kardia2.nextFrame();
       }
       if (life_counter == 4) {
-        kardia2.animation.nextFrame();
+        kardia2.nextFrame();
       }
       if (life_counter == 5) {
-        kardia.animation.nextFrame();
+        kardia.nextFrame();
       }
       if (life_counter == 6) {
-        kardia.animation.nextFrame();
+        kardia.nextFrame();
       }
     } else {
       geralt_death.play();
@@ -1879,17 +1946,17 @@ function enemyMovementAndAttackCollision() {
       geralt_hit.play();
 
       if (life_counter == 1) {
-        kardia3.animation.nextFrame();
+        kardia3.nextFrame();
       } else if (life_counter == 2) {
-        kardia3.animation.nextFrame();
+        kardia3.nextFrame();
       } else if (life_counter == 3) {
-        kardia2.animation.nextFrame();
+        kardia2.nextFrame();
       } else if (life_counter == 4) {
-        kardia2.animation.nextFrame();
+        kardia2.nextFrame();
       } else if (life_counter == 5) {
-        kardia.animation.nextFrame();
+        kardia.nextFrame();
       } else {
-        kardia.animation.nextFrame();
+        kardia.nextFrame();
       }
     }
 
@@ -2520,13 +2587,13 @@ function spawnAttack() {
     attackingV = true;
   }
 
-  if (slash_attack.y >= minHeight) {   //COLLIDING ANTI GIA OVERLAPS AMA THELOUME NA KANEI KAI KNOCKBACK TO ENEMY1
+  if (slash_attack.y >= minHeight) {   //COLLIDING ANTI GIA OVERLAPS AMA THELOUME NA KANEI KAI KNOCKBACK TO enemy1
     slash_attack.y = minHeight;
     slash_attack.remove();
     attackingB = false;
   }
 
-  if (slash_attack2.y >= minHeight) {   //COLLIDING ANTI GIA OVERLAPS AMA THELOUME NA KANEI KAI KNOCKBACK TO ENEMY1
+  if (slash_attack2.y >= minHeight) {   //COLLIDING ANTI GIA OVERLAPS AMA THELOUME NA KANEI KAI KNOCKBACK TO enemy1
     slash_attack2.remove();
     attackingC = false;
   }
