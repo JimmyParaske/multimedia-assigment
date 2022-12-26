@@ -26,20 +26,6 @@ var enemy2_8;
 var enemy2_9;
 var enemy2_10;
 
-var coin1;
-var coin2;
-var coin3;
-var coin4;
-var coin5;
-var coin6;
-var coin7;
-var coin8;
-var coin2_1;
-var coin2_2;
-var coin2_3;
-var coin2_4;
-var coin2_5;
-
 var slash_attack;
 var slash_attack2;
 var slash_attack3;
@@ -51,15 +37,11 @@ var S1barrel2;
 var S1sign;
 
 // Stage 2
-var crate;
 var barrel1;
 var barrel2;
 var sign;
 
 var lamp;
-var crate1;
-var crate2;
-var crate3;
 var floor1;
 var floor2;
 var well;
@@ -123,11 +105,8 @@ function preload() {
   lives = loadAnimation('./assets/images/hearts.png', { size: [40, 40], frames: 3 });
 
   //obstacle assets
-  crateImg = loadImage('./assets/images/crate_cropped.png');
-  cratestackedImg = loadImage('./assets/images/crate_stacked.png');
   barrelImg = loadImage('./assets/images/barrel.png');
   signImg = loadImage('./assets/images/sign.png');
-  wagonImg = loadImage('./assets/images/wagon.png');
   floorImg = loadImage('./assets/images/floor.png');
   floorshortImg = loadImage('./assets/images/floor_short.png');
   wellImg = loadImage('./assets/images/well.png');
@@ -332,58 +311,32 @@ function setup() {
   enemy5.layer = 2;
 
   //coins picked up by geralt
-  coin1 = createSprite(-2750, 200, 10, 10);
-  coin1.collider = 'static';
-  coin1.addAnimation(coins);
+  coin1 = new Coin(-2750, 200, coins);
 
-  coin2 = createSprite(-1950, 150, 10, 10);
-  coin2.collider = 'static';
-  coin2.addAnimation(coins.clone());
+  coin2 = new Coin(-1950, 150, coins.clone());
 
-  coin3 = createSprite(-1000, 50, 10, 10);
-  coin3.collider = 'static';
-  coin3.addAnimation(coins.clone());
+  coin3 = new Coin(-1000, 50, coins.clone());
 
-  coin4 = createSprite(300, 350, 10, 10);
-  coin4.collider = 'static';
-  coin4.addAnimation(coins.clone());
+  coin4 = new Coin(300, 350, coins.clone());
 
-  coin5 = createSprite(1060, 80, 10, 10);
-  coin5.collider = 'static';
-  coin5.addAnimation(coins.clone());
+  coin5 = new Coin(1060, 80, coins.clone());
 
-  coin6 = createSprite(1700, 350, 10, 10);
-  coin6.collider = 'static';
-  coin6.addAnimation(coins.clone());
+  coin6 = new Coin(1700, 350, coins.clone());
 
-  coin7 = createSprite(2752, 180, 10, 10);
-  coin7.collider = 'static';
-  coin7.addAnimation(coins.clone());
+  coin7 = new Coin(2752, 180, coins.clone());
 
-  coin8 = createSprite(3850, 100, 10, 10);
-  coin8.collider = 'static';
-  coin8.addAnimation(coins.clone());
+  coin8 = new Coin(3850, 100, coins.clone());
 
   //more coins vol 2
-  coin2_1 = createSprite(-1175, 350, 10, 10);
-  coin2_1.collider = 'static';
-  coin2_1.addAnimation(coins.clone());
+  coin2_1 = new Coin(-1175, 350, coins.clone());
 
-  coin2_2 = createSprite(-130, 465, 10, 10);
-  coin2_2.collider = 'static';
-  coin2_2.addAnimation(coins.clone());
+  coin2_2 = new Coin(-130, 465, coins.clone());
 
-  coin2_3 = createSprite(970, 365, 10, 10);
-  coin2_3.collider = 'static';
-  coin2_3.addAnimation(coins.clone());
+  coin2_3 = new Coin(970, 365, coins.clone());
 
-  coin2_4 = createSprite(2250, 365, 10, 10);
-  coin2_4.collider = 'static';
-  coin2_4.addAnimation(coins.clone());
+  coin2_4 = new Coin(2250, 365, coins.clone());
 
-  coin2_5 = createSprite(3655, 380, 10, 10);
-  coin2_5.collider = 'static';
-  coin2_5.addAnimation(coins.clone());
+  coin2_5 = new Coin(3655, 380, coins.clone());
 
   // STAGE 1 
   S1barrel1 = createSprite(-3550, 475, 45, 55);
@@ -407,8 +360,6 @@ function setup() {
   S1sign.collider = 'static';
   signImg.resize(70, 100);
   S1sign.addImage(signImg);
-
-  
 
   S1platform1a = createSprite(-1450, 320, 185, 20);
   S1platform1a.collider = 'static';
@@ -436,10 +387,10 @@ function setup() {
   S1platform2b.layer = 1;
 
   // STAGE 2 
-  crate = createSprite(-840, 470, 78, 70);
-  crate.collider = 'static';
-  crateImg.resize(83, 74);
-  crate.addImage(crateImg);
+  crate = new Crate(-840, 470);
+  crate1 = new Crate(627, 404);
+  crate2 = new Crate(595, 470);
+  crate3 = new Crate(665, 470);
 
   barrel1 = createSprite(-435, 475, 45, 55);
   barrel1.collider = 'static';
@@ -456,19 +407,6 @@ function setup() {
   sign.addImage(signImg);
 
   wagon = new Wagon(0, 430);
-
-  crate1 = createSprite(627, 404, 70, 65);
-  crate1.collider = 'static';
-  crate1.addImage(crateImg);
-
-  crate2 = createSprite(595, 470, 70, 65);
-  crate2.collider = 'static';
-  crate2.addImage(crateImg);
-
-  crate3 = createSprite(665, 470, 65, 65);
-  crate3.collider = 'static';
-  cratestackedImg.resize(70, 70);
-  crate3.addImage(cratestackedImg);
 
   floor1 = createSprite(842, 390, 145, 40);
   floor1.collider = 'static';
@@ -506,14 +444,9 @@ function setup() {
   platform2Img.resize(195, 235);
   platform2b.addImage(platform2Img);
 
-  crate.layer = 1;
   barrel1.layer = 1;
   barrel2.layer = 1;
   sign.layer = 1;
-
-  crate1.layer = 1;
-  crate2.layer = 1;
-  crate3.layer = 1;
   floor1.layer = 1;
   floor2.layer = 1;
   well.layer = 1;
@@ -524,18 +457,11 @@ function setup() {
   platform2b.layer = 1;
 
   //  STAGE 3 
-  S2crate1 = createSprite(1910, 404, 70, 65);
-  S2crate1.collider = 'static';
-  S2crate1.addImage(crateImg);
+  S2crate1 = new Crate(1910, 404);
 
-  S2crate2 = createSprite(1880, 470, 70, 65);
-  S2crate2.collider = 'static';
-  S2crate2.addImage(crateImg);
+  S2crate2 = new Crate(1880, 470);
 
-  S2crate3 = createSprite(1945, 470, 65, 65);
-  S2crate3.collider = 'static';
-  cratestackedImg.resize(70, 70);
-  S2crate3.addImage(cratestackedImg);
+  S2crate3 = new Crate(1945, 470);
 
   S2well = createSprite(2750, 460, 110, 15);
   S2well.collider = 'none';
@@ -578,9 +504,6 @@ function setup() {
   platform2Img.resize(195, 235);
   S2platform2b.addImage(platform2Img);
 
-  S2crate1.layer = 1;
-  S2crate2.layer = 1;
-  S2crate3.layer = 1;
   S2well.layer = 1;
   S2welltop.layer = 1;
   S2barrel1.layer = 1;
@@ -604,22 +527,22 @@ function setup() {
   obstacles.add(S1wagon.getSprite());
   obstacles.add(S1platform1a);
   obstacles.add(S1platform2a);
-  obstacles.add(crate);
+  obstacles.add(crate.getSprite());
+  obstacles.add(crate1.getSprite());
+  obstacles.add(crate2.getSprite());
+  obstacles.add(crate3.getSprite());
   obstacles.add(barrel1);
   obstacles.add(barrel2);
   obstacles.add(sign);
   obstacles.add(wagon.getSprite());
-  obstacles.add(crate1);
-  obstacles.add(crate2);
-  obstacles.add(crate3);
   obstacles.add(floor1);
   obstacles.add(floor2);
   obstacles.add(welltop);
   obstacles.add(platform1a);
   obstacles.add(platform2a);
-  obstacles.add(S2crate1);
-  obstacles.add(S2crate2);
-  obstacles.add(S2crate3);
+  obstacles.add(S2crate1.getSprite());
+  obstacles.add(S2crate2.getSprite());
+  obstacles.add(S2crate3.getSprite());
   obstacles.add(S2welltop);
   obstacles.add(S2barrel1);
   obstacles.add(S2barrel2);
@@ -691,13 +614,35 @@ function game() {
   kardia2.display();
   kardia3.display();
 
+  coin1.display();
+  coin2.display();
+  coin3.display();
+  coin4.display();
+  coin5.display();
+  coin6.display();
+  coin7.display();
+  coin8.display();
+  coin2_1.display();
+  coin2_2.display();
+  coin2_3.display();
+  coin2_4.display();
+  coin2_5.display();
+
   S1wagon.display();
   wagon.display();
+
+  crate.display();
+  crate1.display();
+  crate2.display();
+  crate3.display();
   S1crate.display();
   S1crate1.display();
   S1crate2.display();
   S1crate3.display();
   S1crate4.display();
+  S2crate1.display();
+  S2crate2.display();
+  S2crate3.display();
 
   if (geralt.x <= -3200) {
     camera.x = -3150;
@@ -920,7 +865,7 @@ function jump(sprite) {
     }
   }
 
-  if (sprite.colliding(crate)) {
+  if (sprite.colliding(crate.getSprite())) {
     sprite.vel.y = 0;
 
     if (keyIsDown(UP_ARROW)) {
@@ -960,7 +905,7 @@ function jump(sprite) {
     }
   }
 
-  if (sprite.colliding(crate1)) {
+  if (sprite.colliding(crate1.getSprite())) {
     sprite.vel.y = 0;
 
     if (keyIsDown(UP_ARROW)) {
@@ -968,7 +913,7 @@ function jump(sprite) {
     }
   }
 
-  if (sprite.colliding(crate2)) {
+  if (sprite.colliding(crate2.getSprite())) {
     sprite.vel.y = 0;
 
     if (keyIsDown(UP_ARROW)) {
@@ -976,7 +921,7 @@ function jump(sprite) {
     }
   }
 
-  if (sprite.colliding(crate3)) {
+  if (sprite.colliding(crate3.getSprite())) {
     sprite.vel.y = 0;
 
     if (keyIsDown(UP_ARROW)) {
@@ -1147,7 +1092,7 @@ function jump(sprite) {
     sprite.vel.y = 0;
   }
 
-  if (sprite.colliding(S2crate1)) {
+  if (sprite.colliding(S2crate1.getSprite())) {
     sprite.vel.y = 0;
 
     if (keyIsDown(UP_ARROW)) {
@@ -1155,7 +1100,7 @@ function jump(sprite) {
     }
   }
 
-  if (sprite.colliding(S2crate2)) {
+  if (sprite.colliding(S2crate2.getSprite())) {
     sprite.vel.y = 0;
 
     if (keyIsDown(UP_ARROW)) {
@@ -1163,7 +1108,7 @@ function jump(sprite) {
     }
   }
 
-  if (sprite.colliding(S2crate3)) {
+  if (sprite.colliding(S2crate3.getSprite())) {
     sprite.vel.y = 0;
 
     if (keyIsDown(UP_ARROW)) {
@@ -1344,7 +1289,7 @@ function enemyMovementAndAttackCollision() {
     enemy2.changeAnimation('left');
   }
 
-  if (enemy2.collided(crate)) {
+  if (enemy2.collided(crate.getSprite())) {
     enemy2.vel.x = -1.2;
     enemy2.changeAnimation('right');
   }
@@ -1396,7 +1341,7 @@ function enemyMovementAndAttackCollision() {
     enemy2_1.changeAnimation('left');
   }
 
-  if (enemy2_1.x >= crate.x) {
+  if (enemy2_1.x >= crate.getX()) {
     enemy2_1.vel.x = -1.2;
     enemy2_1.changeAnimation('right');
   }
@@ -1452,7 +1397,7 @@ function enemyMovementAndAttackCollision() {
     enemy2_2.changeAnimation('left');
   }
 
-  if (enemy2_2.collided(crate)) {
+  if (enemy2_2.collided(crate.getSprite())) {
     enemy2_2.vel.x = 1.2;
     enemy2_2.changeAnimation('left');
   }
@@ -1508,7 +1453,7 @@ function enemyMovementAndAttackCollision() {
     enemy2_3.changeAnimation('left');
   }
 
-  if (enemy2_3.collided(crate3)) {
+  if (enemy2_3.collided(crate3.getSprite())) {
     enemy2_3.vel.x = 1.2;
     enemy2_3.changeAnimation('left');
   }
@@ -1570,7 +1515,7 @@ function enemyMovementAndAttackCollision() {
     enemy2_4.changeAnimation('left');
   }
 
-  if (enemy2_4.collided(S2crate2)) {
+  if (enemy2_4.collided(S2crate2.getSprite())) {
     enemy2_4.vel.x = -1.2;
     enemy2_4.changeAnimation('right');
   }
@@ -1789,7 +1734,7 @@ function enemyMovementAndAttackCollision() {
     enemy3.changeAnimation('left');
   }
 
-  if (enemy3.collided(crate2)) {
+  if (enemy3.collided(crate2.getSprite())) {
     enemy3.vel.x = -1.2;
     enemy3.changeAnimation('right');
   }
@@ -1852,7 +1797,7 @@ function enemyMovementAndAttackCollision() {
     enemy4.changeAnimation('right');
   }
 
-  if (enemy4.collided(S2crate3)) {
+  if (enemy4.collided(S2crate3.getSprite())) {
     enemy4.vel.x = 1.6;
     enemy4.changeAnimation('left');
   }
@@ -2330,200 +2275,200 @@ function death() {
 }
 
 function removeCoins() {
-  if (geralt.overlaps(coin1)) {
-    coin1.remove();
+  if (geralt.overlaps(coin1.getSprite())) {
+    coin1.getSprite().remove();
     coin_sound.play();
   }
 
-  if (geralt.overlaps(coin2)) {
-    coin2.remove();
+  if (geralt.overlaps(coin2.getSprite())) {
+    coin2.getSprite().remove();
     coin_sound.play();
   }
 
-  if (geralt.overlaps(coin3)) {
-    coin3.remove();
+  if (geralt.overlaps(coin3.getSprite())) {
+    coin3.getSprite().remove();
     coin_sound.play();
   }
 
-  if (geralt.overlaps(coin4)) {
-    coin4.remove();
+  if (geralt.overlaps(coin4.getSprite())) {
+    coin4.getSprite().remove();
     coin_sound.play();
   }
 
-  if (geralt.overlaps(coin5)) {
-    coin5.remove();
+  if (geralt.overlaps(coin5.getSprite())) {
+    coin5.getSprite().remove();
     coin_sound.play();
   }
 
-  if (geralt.overlaps(coin6)) {
-    coin6.remove();
+  if (geralt.overlaps(coin6.getSprite())) {
+    coin6.getSprite().remove();
     coin_sound.play();
   }
 
-  if (geralt.overlaps(coin7)) {
-    coin7.remove();
+  if (geralt.overlaps(coin7.getSprite())) {
+    coin7.getSprite().remove();
     coin_sound.play();
   }
 
-  if (geralt.overlaps(coin8)) {
-    coin8.remove();
+  if (geralt.overlaps(coin8.getSprite())) {
+    coin8.getSprite().remove();
     coin_sound.play();
   }
 
-  if (geralt.overlaps(coin2_1)) {
-    coin2_1.remove();
+  if (geralt.overlaps(coin2_1.getSprite())) {
+    coin2_1.getSprite().remove();
     coin_sound.play();
   }
 
-  if (geralt.overlaps(coin2_2)) {
-    coin2_2.remove();
+  if (geralt.overlaps(coin2_2.getSprite())) {
+    coin2_2.getSprite().remove();
     coin_sound.play();
   }
 
-  if (geralt.overlaps(coin2_3)) {
-    coin2_3.remove();
+  if (geralt.overlaps(coin2_3.getSprite())) {
+    coin2_3.getSprite().remove();
     coin_sound.play();
   }
 
-  if (geralt.overlaps(coin2_4)) {
-    coin2_4.remove();
+  if (geralt.overlaps(coin2_4.getSprite())) {
+    coin2_4.getSprite().remove();
     coin_sound.play();
   }
 
-  if (geralt.overlaps(coin2_5)) {
-    coin2_5.remove();
-    coin_sound.play();
-  }
-
-
-  if (slash_attack.overlaps(coin1)) {
-    coin1.remove();
-    coin_sound.play();
-  }
-
-  if (slash_attack.overlaps(coin2)) {
-    coin2.remove();
-    coin_sound.play();
-  }
-
-  if (slash_attack.overlaps(coin3)) {
-    coin3.remove();
-    coin_sound.play();
-  }
-
-  if (slash_attack.overlaps(coin4)) {
-    coin4.remove();
-    coin_sound.play();
-  }
-
-  if (slash_attack.overlaps(coin5)) {
-    coin5.remove();
-    coin_sound.play();
-  }
-
-  if (slash_attack.overlaps(coin6)) {
-    coin6.remove();
-    coin_sound.play();
-  }
-
-  if (slash_attack.overlaps(coin7)) {
-    coin7.remove();
-    coin_sound.play();
-  }
-
-  if (slash_attack.overlaps(coin8)) {
-    coin8.remove();
-    coin_sound.play();
-  }
-
-  if (slash_attack.overlaps(coin2_1)) {
-    coin2_1.remove();
-    coin_sound.play();
-  }
-
-  if (slash_attack.overlaps(coin2_2)) {
-    coin2_2.remove();
-    coin_sound.play();
-  }
-
-  if (slash_attack.overlaps(coin2_3)) {
-    coin2_3.remove();
-    coin_sound.play();
-  }
-
-  if (slash_attack.overlaps(coin2_4)) {
-    coin2_4.remove();
-    coin_sound.play();
-  }
-
-  if (slash_attack.overlaps(coin2_5)) {
-    coin2_5.remove();
+  if (geralt.overlaps(coin2_5.getSprite())) {
+    coin2_5.getSprite().remove();
     coin_sound.play();
   }
 
 
-  if (slash_attack2.overlaps(coin1)) {
-    coin1.remove();
+  if (slash_attack.overlaps(coin1.getSprite())) {
+    coin1.getSprite().remove();
     coin_sound.play();
   }
 
-  if (slash_attack2.overlaps(coin2)) {
-    coin2.remove();
+  if (slash_attack.overlaps(coin2.getSprite())) {
+    coin2.getSprite().remove();
     coin_sound.play();
   }
 
-  if (slash_attack2.overlaps(coin3)) {
-    coin3.remove();
+  if (slash_attack.overlaps(coin3.getSprite())) {
+    coin3.getSprite().remove();
     coin_sound.play();
   }
 
-  if (slash_attack2.overlaps(coin4)) {
-    coin4.remove();
+  if (slash_attack.overlaps(coin4.getSprite())) {
+    coin4.getSprite().remove();
     coin_sound.play();
   }
 
-  if (slash_attack2.overlaps(coin5)) {
-    coin5.remove();
+  if (slash_attack.overlaps(coin5.getSprite())) {
+    coin5.getSprite().remove();
     coin_sound.play();
   }
 
-  if (slash_attack2.overlaps(coin6)) {
-    coin6.remove();
+  if (slash_attack.overlaps(coin6.getSprite())) {
+    coin6.getSprite().remove();
     coin_sound.play();
   }
 
-  if (slash_attack2.overlaps(coin7)) {
-    coin7.remove();
+  if (slash_attack.overlaps(coin7.getSprite())) {
+    coin7.getSprite().remove();
     coin_sound.play();
   }
 
-  if (slash_attack2.overlaps(coin8)) {
-    coin8.remove();
+  if (slash_attack.overlaps(coin8.getSprite())) {
+    coin8.getSprite().remove();
     coin_sound.play();
   }
 
-  if (slash_attack2.overlaps(coin2_1)) {
-    coin2_1.remove();
+  if (slash_attack.overlaps(coin2_1.getSprite())) {
+    coin2_1.getSprite().remove();
     coin_sound.play();
   }
 
-  if (slash_attack2.overlaps(coin2_2)) {
-    coin2_2.remove();
+  if (slash_attack.overlaps(coin2_2.getSprite())) {
+    coin2_2.getSprite().remove();
     coin_sound.play();
   }
 
-  if (slash_attack2.overlaps(coin2_3)) {
-    coin2_3.remove();
+  if (slash_attack.overlaps(coin2_3.getSprite())) {
+    coin2_3.getSprite().remove();
     coin_sound.play();
   }
 
-  if (slash_attack2.overlaps(coin2_4)) {
-    coin2_4.remove();
+  if (slash_attack.overlaps(coin2_4.getSprite())) {
+    coin2_4.getSprite().remove();
     coin_sound.play();
   }
 
-  if (slash_attack2.overlaps(coin2_5)) {
-    coin2_5.remove();
+  if (slash_attack.overlaps(coin2_5.getSprite())) {
+    coin2_5.getSprite().remove();
+    coin_sound.play();
+  }
+
+
+  if (slash_attack2.overlaps(coin1.getSprite())) {
+    coin1.getSprite().remove();
+    coin_sound.play();
+  }
+
+  if (slash_attack2.overlaps(coin2.getSprite())) {
+    coin2.getSprite().remove();
+    coin_sound.play();
+  }
+
+  if (slash_attack2.overlaps(coin3.getSprite())) {
+    coin3.getSprite().remove();
+    coin_sound.play();
+  }
+
+  if (slash_attack2.overlaps(coin4.getSprite())) {
+    coin4.getSprite().remove();
+    coin_sound.play();
+  }
+
+  if (slash_attack2.overlaps(coin5.getSprite())) {
+    coin5.getSprite().remove();
+    coin_sound.play();
+  }
+
+  if (slash_attack2.overlaps(coin6.getSprite())) {
+    coin6.getSprite().remove();
+    coin_sound.play();
+  }
+
+  if (slash_attack2.overlaps(coin7.getSprite())) {
+    coin7.getSprite().remove();
+    coin_sound.play();
+  }
+
+  if (slash_attack2.overlaps(coin8.getSprite())) {
+    coin8.getSprite().remove();
+    coin_sound.play();
+  }
+
+  if (slash_attack2.overlaps(coin2_1.getSprite())) {
+    coin2_1.getSprite().remove();
+    coin_sound.play();
+  }
+
+  if (slash_attack2.overlaps(coin2_2.getSprite())) {
+    coin2_2.getSprite().remove();
+    coin_sound.play();
+  }
+
+  if (slash_attack2.overlaps(coin2_3.getSprite())) {
+    coin2_3.getSprite().remove();
+    coin_sound.play();
+  }
+
+  if (slash_attack2.overlaps(coin2_4.getSprite())) {
+    coin2_4.getSprite().remove();
+    coin_sound.play();
+  }
+
+  if (slash_attack2.overlaps(coin2_5.getSprite())) {
+    coin2_5.getSprite().remove();
     coin_sound.play();
   }
 }

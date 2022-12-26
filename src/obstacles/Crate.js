@@ -4,7 +4,7 @@ class Crate {
         this.y = y;
         this.width = 65;
         this.height = 65;
-        this.image = loadImage('./assets/images/crate_cropped.png');
+        this.image = loadImage('./assets/images/Obstacles/crate.png');
 
         this.sprite = createSprite(this.x, this.y, this.width, this.height);
         this.sprite.visible = false;
@@ -15,7 +15,6 @@ class Crate {
     display() {
         this.sprite.collider = 'static';
 
-        this.image.resize(83, 74);
         this.sprite.addImage(this.image);
 
         this.sprite.visible = true;
@@ -25,5 +24,9 @@ class Crate {
 
     getSprite() {
         return this.sprite;
+    }
+
+    getX() {
+        return this.sprite.x;
     }
 }
