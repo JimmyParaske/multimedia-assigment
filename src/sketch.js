@@ -47,12 +47,8 @@ var slash_attack3;
 // Stage 1
 var S1barrel1;
 var S1barrel2;
-var S1crate;
-var S1crate1;
-var S1crate2;
-var S1crate3;
+
 var S1sign;
-var S1crate4;
 
 // Stage 2
 var crate;
@@ -399,23 +395,11 @@ function setup() {
   S1barrel2.collider = 'static';
   S1barrel2.addImage(barrelImg);
 
-  S1crate = createSprite(-3100, 470, 78, 70);
-  S1crate.collider = 'static';
-  crateImg.resize(83, 74);
-  S1crate.addImage(crateImg);
-
-  S1crate1 = createSprite(-2750, 404, 70, 65);
-  S1crate1.collider = 'static';
-  S1crate1.addImage(crateImg);
-
-  S1crate2 = createSprite(-2785, 470, 70, 65);
-  S1crate2.collider = 'static';
-  S1crate2.addImage(crateImg);
-
-  S1crate3 = createSprite(-2715, 470, 65, 65);
-  S1crate3.collider = 'static';
-  cratestackedImg.resize(70, 70);
-  S1crate3.addImage(cratestackedImg);
+  S1crate = new Crate(-3100, 470);
+  S1crate1 = new Crate(-2750, 404);
+  S1crate2 = new Crate(-2785, 470);
+  S1crate3 = new Crate(-2715, 470);
+  S1crate4 = new Crate(-1660, 470);
 
   S1wagon = new Wagon(-2100, 430);
 
@@ -424,10 +408,7 @@ function setup() {
   signImg.resize(70, 100);
   S1sign.addImage(signImg);
 
-  S1crate4 = createSprite(-1660, 470, 78, 70);
-  S1crate4.collider = 'static';
-  crateImg.resize(83, 74);
-  S1crate4.addImage(crateImg);
+  
 
   S1platform1a = createSprite(-1450, 320, 185, 20);
   S1platform1a.collider = 'static';
@@ -448,12 +429,7 @@ function setup() {
 
   S1barrel1.layer = 1;
   S1barrel2.layer = 1;
-  S1crate.layer = 1;
-  S1crate1.layer = 1;
-  S1crate2.layer = 1;
-  S1crate3.layer = 1;
   S1sign.layer = 1;
-  S1crate4.layer = 1;
   S1platform1a.layer = 1;
   S1platform1b.layer = 1;
   S1platform2a.layer = 1;
@@ -618,17 +594,16 @@ function setup() {
   obstacles = new Group();
   obstacles.add(S1barrel1);
   obstacles.add(S1barrel2);
-  obstacles.add(S1crate);
-  obstacles.add(S1crate1);
-  obstacles.add(S1crate2);
-  obstacles.add(S1crate3);
-  obstacles.add(S1crate4);
+  obstacles.add(S1crate.getSprite());
+  obstacles.add(S1crate1.getSprite());
+  obstacles.add(S1crate2.getSprite());
+  obstacles.add(S1crate3.getSprite());
+  obstacles.add(S1crate4.getSprite());
   obstacles.add(S1sign);
   obstacles.add(S1sign);
   obstacles.add(S1wagon.getSprite());
   obstacles.add(S1platform1a);
   obstacles.add(S1platform2a);
-  obstacles.add(S1crate);
   obstacles.add(crate);
   obstacles.add(barrel1);
   obstacles.add(barrel2);
@@ -699,7 +674,6 @@ function options() {
     animation(geraltAnimationIdleLeftGreen, skinButton.getX(), skinButton.getY() - 80);
   }
 
-
   // Draw options
   skinButton.display();
   soundButton.display();
@@ -719,8 +693,11 @@ function game() {
 
   S1wagon.display();
   wagon.display();
-
-  // enemy1.display();
+  S1crate.display();
+  S1crate1.display();
+  S1crate2.display();
+  S1crate3.display();
+  S1crate4.display();
 
   if (geralt.x <= -3200) {
     camera.x = -3150;
@@ -1084,7 +1061,7 @@ function jump(sprite) {
     }
   }
 
-  if (sprite.colliding(S1crate)) {
+  if (sprite.colliding(S1crate.getSprite())) {
     sprite.vel.y = 0;
 
     if (keyIsDown(UP_ARROW)) {
@@ -1092,7 +1069,7 @@ function jump(sprite) {
     }
   }
 
-  if (sprite.colliding(S1crate1)) {
+  if (sprite.colliding(S1crate1.getSprite())) {
     sprite.vel.y = 0;
 
     if (keyIsDown(UP_ARROW)) {
@@ -1100,7 +1077,7 @@ function jump(sprite) {
     }
   }
 
-  if (sprite.colliding(S1crate2)) {
+  if (sprite.colliding(S1crate2.getSprite())) {
     sprite.vel.y = 0;
 
     if (keyIsDown(UP_ARROW)) {
@@ -1108,7 +1085,7 @@ function jump(sprite) {
     }
   }
 
-  if (sprite.colliding(S1crate3)) {
+  if (sprite.colliding(S1crate3.getSprite())) {
     sprite.vel.y = 0;
 
     if (keyIsDown(UP_ARROW)) {
@@ -1137,7 +1114,7 @@ function jump(sprite) {
     sprite.vel.y = 0;
   }
 
-  if (sprite.colliding(S1crate4)) {
+  if (sprite.colliding(S1crate4.getSprite())) {
     sprite.vel.y = 0;
 
     if (keyIsDown(UP_ARROW)) {
@@ -1316,7 +1293,7 @@ function enemyMovementAndAttackCollision() {
     enemy1.changeAnimation('right');
   }
 
-  if (enemy1.collided(S1crate3)) {
+  if (enemy1.collided(S1crate3.getSprite())) {
     enemy1.vel.x = 1;
     enemy1.changeAnimation('left');
   }
@@ -1372,7 +1349,7 @@ function enemyMovementAndAttackCollision() {
     enemy2.changeAnimation('right');
   }
 
-  if (enemy2.collided(S1crate4)) {
+  if (enemy2.collided(S1crate4.getSprite())) {
     enemy2.vel.x = 1.2;
     enemy2.changeAnimation('left');
   }
