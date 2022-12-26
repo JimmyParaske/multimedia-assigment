@@ -6,8 +6,6 @@ let fallingSpeed = 0.2;
 let minHeight = 465;
 
 // Classes
-var land;
-var pl;
 var geralt;
 
 var enemy1;
@@ -41,7 +39,6 @@ var barrel1;
 var barrel2;
 var sign;
 
-var lamp;
 var floor1;
 var floor2;
 var well;
@@ -70,81 +67,23 @@ var attackRight = 'attackRightBlue';
 
 // Basic Functions
 function preload() {
-  //player assets
-  geraltAnimationIdleLeftBlue = loadAnimation('./assets/images/Knight/Blue/noBKG_KnightIdle_strip4.png', { size: [128, 128], frames: 15 });
-  geraltAnimationIdleLeftRed = loadAnimation('./assets/images/Knight/Red/noBKG_KnightIdle_strip4.png', { size: [128, 128], frames: 15 });
-  geraltAnimationIdleLeftGreen = loadAnimation('./assets/images/Knight/Green/noBKG_KnightIdle_strip4.png', { size: [128, 128], frames: 15 });
+  // Preload Sounds
+  preloadSounds();  
 
-  geraltAnimationIdleRightBlue = loadAnimation('./assets/images/Knight/Blue/noBKG_KnightIdle_strip4right.png', { size: [128, 128], frames: 15 });
-  geraltAnimationIdleRightRed = loadAnimation('./assets/images/Knight/Red/noBKG_KnightIdle_strip4right.png', { size: [128, 128], frames: 15 });
-  geraltAnimationIdleRightGreen = loadAnimation('./assets/images/Knight/Green/noBKG_KnightIdle_strip4right.png', { size: [128, 128], frames: 15 });
+  // Preload Player
+  preloadPlayer();
 
-  geraltAnimationRunLeftBlue = loadAnimation('./assets/images/Knight/Blue/noBKG_KnightRun_strip2.png', { size: [192, 128], frames: 8 });
-  geraltAnimationRunLeftRed = loadAnimation('./assets/images/Knight/Red/noBKG_KnightRun_strip2.png', { size: [192, 128], frames: 8 });
-  geraltAnimationRunLeftGreen = loadAnimation('./assets/images/Knight/Green/noBKG_KnightRun_strip2.png', { size: [192, 128], frames: 8 });
+  // Preload Enemies
+  preloadEnemies();
 
-  geraltAnimationRunRightBlue = loadAnimation('./assets/images/Knight/Blue/noBKG_KnightRun_strip2right.png', { size: [192, 128], frames: 8 });
-  geraltAnimationRunRightRed = loadAnimation('./assets/images/Knight/Red/noBKG_KnightRun_strip2right.png', { size: [192, 128], frames: 8 });
-  geraltAnimationRunRightGreen = loadAnimation('./assets/images/Knight/Green/noBKG_KnightRun_strip2right.png', { size: [192, 128], frames: 8 });
+  // Preload Attacks
+  preloadAttacks();
 
-  geraltAnimationAttackLeftBlue = loadAnimation('./assets/images/Knight/Blue/noBKG_KnightAttack_strip2.png', { size: [288, 128], frames: 22 });
-  geraltAnimationAttackLeftRed = loadAnimation('./assets/images/Knight/Red/noBKG_KnightAttack_strip2.png', { size: [288, 128], frames: 22 });
-  geraltAnimationAttackLeftGreen = loadAnimation('./assets/images/Knight/Green/noBKG_KnightAttack_strip2.png', { size: [288, 128], frames: 22 });
+  // Preload Objects
+  preloadObjects();
 
-  geraltAnimationAttackRightBlue = loadAnimation('./assets/images/Knight/Blue/noBKG_KnightAttack_strip2right.png', { size: [288, 128], frames: 22 });
-  geraltAnimationAttackRightRed = loadAnimation('./assets/images/Knight/Red/noBKG_KnightAttack_strip2right.png', { size: [288, 128], frames: 22 });
-  geraltAnimationAttackRightGreen = loadAnimation('./assets/images/Knight/Green/noBKG_KnightAttack_strip2right.png', { size: [288, 128], frames: 22 });
-
-  //attack and effects assets
-  slash_main = loadAnimation('./assets/images/Sword Slashes/slash.png', { size: [165, 120], frames: 20 });
-  slash_thinLeft = loadAnimation('./assets/images/Sword Slashes/slash_white_thin.png', { size: [68.75, 50], frames: 6 });
-  slash_thinRight = loadAnimation('./assets/images/Sword Slashes/slash_white_thinright.png', { size: [68.75, 50], frames: 6 });
-  slash_Right = loadAnimation('./assets/images/Sword Slashes/slash_red_right.png', { size: [89.5, 65], frames: 6 });
-  slash_Left = loadAnimation('./assets/images/Sword Slashes/slash_red_left.png', { size: [89.5, 65], frames: 6 });
-
-  //life of geralt asset 
-  lives = loadAnimation('./assets/images/hearts.png', { size: [40, 40], frames: 3 });
-
-  //obstacle assets
-  barrelImg = loadImage('./assets/images/barrel.png');
-  signImg = loadImage('./assets/images/sign.png');
-  floorImg = loadImage('./assets/images/floor.png');
-  floorshortImg = loadImage('./assets/images/floor_short.png');
-  wellImg = loadImage('./assets/images/well.png');
-  welltopImg = loadImage('./assets/images/welltop.png');
-  platformImg = loadImage('./assets/images/platform.png');
-  platform1Img = loadImage('./assets/images/platform1.png');
-  platform2Img = loadImage('./assets/images/platform2.png');
-
-  //enemies (3 types)
-  enemyAnimationLeft = loadAnimation('./assets/images/Goblin/RunLeft.png', { size: [220, 220], frames: 8 });
-  enemy2AnimationLeft = loadAnimation('./assets/images/Skeleton/WalkLeft.png', { size: [270, 270], frames: 4 });
-  enemyAnimationRight = loadAnimation('./assets/images/Goblin/RunRight.png', { size: [220, 220], frames: 8 });
-  enemy2AnimationRight = loadAnimation('./assets/images/Skeleton/WalkRight.png', { size: [270, 270], frames: 4 });
-  enemy3AnimationLeft = loadAnimation('./assets/images/bat_right.png', { size: [60.25, 64], frames: 4 });
-  enemy3AnimationRight = loadAnimation('./assets/images/bat_left.png', { size: [60.25, 64], frames: 4 });
-
-  enemyAnimationLeft.frameDelay = 10;
-  enemy2AnimationLeft.frameDelay = 15;
-  enemyAnimationRight.frameDelay = 10;
-  enemy2AnimationRight.frameDelay = 15;
-
-  //coins
-  coins = loadAnimation('./assets/images/coin3_16x16.png', { size: [16, 22], frames: 14 });
-
-  //sound effects
-  soundFormats('mp3');
-  geralt_hit = loadSound('./assets/sounds/geralt_hit');
-  geralt_death = loadSound('./assets/sounds/geralt_death');
-  coin_sound = loadSound('./assets/sounds/mario_coin_sound');
-  background_sound = loadSound('./assets/sounds/background_music');
-  enemy_hit = loadSound('./assets/sounds/enemy_hit');
-  goblin_death = loadSound('./assets/sounds/goblin_death');
-  skeleton_death = loadSound('./assets/sounds/skeleton_death');
-  bat_death = loadSound('./assets/sounds/zorua');
-  slash_sound = loadSound('./assets/sounds/slash_sound');
-  slash_main_sound = loadSound('./assets/sounds/slash_main');
-  slash_main_sound.rate(2);
+  // Preload Other Classes
+  preloadOther();
 }
 
 function setup() {
@@ -197,6 +136,88 @@ function draw() {
   } else if (stage == "endMenu") {
     drawEndMenu();
   }
+}
+
+// Preload Functions
+function preloadSounds() {
+  soundFormats('mp3');
+  geralt_hit = loadSound('./assets/sounds/geralt_hit');
+  geralt_death = loadSound('./assets/sounds/geralt_death');
+  coin_sound = loadSound('./assets/sounds/mario_coin_sound');
+  background_sound = loadSound('./assets/sounds/background_music');
+  enemy_hit = loadSound('./assets/sounds/enemy_hit');
+  goblin_death = loadSound('./assets/sounds/goblin_death');
+  skeleton_death = loadSound('./assets/sounds/skeleton_death');
+  bat_death = loadSound('./assets/sounds/zorua');
+  slash_sound = loadSound('./assets/sounds/slash_sound');
+  slash_main_sound = loadSound('./assets/sounds/slash_main');
+  slash_main_sound.rate(2);
+}
+
+function preloadPlayer() {
+  geraltAnimationIdleLeftBlue = loadAnimation('./assets/images/Knight/Blue/noBKG_KnightIdle_strip4.png', { size: [128, 128], frames: 15 });
+  geraltAnimationIdleLeftRed = loadAnimation('./assets/images/Knight/Red/noBKG_KnightIdle_strip4.png', { size: [128, 128], frames: 15 });
+  geraltAnimationIdleLeftGreen = loadAnimation('./assets/images/Knight/Green/noBKG_KnightIdle_strip4.png', { size: [128, 128], frames: 15 });
+
+  geraltAnimationIdleRightBlue = loadAnimation('./assets/images/Knight/Blue/noBKG_KnightIdle_strip4right.png', { size: [128, 128], frames: 15 });
+  geraltAnimationIdleRightRed = loadAnimation('./assets/images/Knight/Red/noBKG_KnightIdle_strip4right.png', { size: [128, 128], frames: 15 });
+  geraltAnimationIdleRightGreen = loadAnimation('./assets/images/Knight/Green/noBKG_KnightIdle_strip4right.png', { size: [128, 128], frames: 15 });
+
+  geraltAnimationRunLeftBlue = loadAnimation('./assets/images/Knight/Blue/noBKG_KnightRun_strip2.png', { size: [192, 128], frames: 8 });
+  geraltAnimationRunLeftRed = loadAnimation('./assets/images/Knight/Red/noBKG_KnightRun_strip2.png', { size: [192, 128], frames: 8 });
+  geraltAnimationRunLeftGreen = loadAnimation('./assets/images/Knight/Green/noBKG_KnightRun_strip2.png', { size: [192, 128], frames: 8 });
+
+  geraltAnimationRunRightBlue = loadAnimation('./assets/images/Knight/Blue/noBKG_KnightRun_strip2right.png', { size: [192, 128], frames: 8 });
+  geraltAnimationRunRightRed = loadAnimation('./assets/images/Knight/Red/noBKG_KnightRun_strip2right.png', { size: [192, 128], frames: 8 });
+  geraltAnimationRunRightGreen = loadAnimation('./assets/images/Knight/Green/noBKG_KnightRun_strip2right.png', { size: [192, 128], frames: 8 });
+
+  geraltAnimationAttackLeftBlue = loadAnimation('./assets/images/Knight/Blue/noBKG_KnightAttack_strip2.png', { size: [288, 128], frames: 22 });
+  geraltAnimationAttackLeftRed = loadAnimation('./assets/images/Knight/Red/noBKG_KnightAttack_strip2.png', { size: [288, 128], frames: 22 });
+  geraltAnimationAttackLeftGreen = loadAnimation('./assets/images/Knight/Green/noBKG_KnightAttack_strip2.png', { size: [288, 128], frames: 22 });
+
+  geraltAnimationAttackRightBlue = loadAnimation('./assets/images/Knight/Blue/noBKG_KnightAttack_strip2right.png', { size: [288, 128], frames: 22 });
+  geraltAnimationAttackRightRed = loadAnimation('./assets/images/Knight/Red/noBKG_KnightAttack_strip2right.png', { size: [288, 128], frames: 22 });
+  geraltAnimationAttackRightGreen = loadAnimation('./assets/images/Knight/Green/noBKG_KnightAttack_strip2right.png', { size: [288, 128], frames: 22 });
+}
+
+function preloadEnemies() {
+  enemyAnimationLeft = loadAnimation('./assets/images/Goblin/RunLeft.png', { size: [220, 220], frames: 8 });
+  enemy2AnimationLeft = loadAnimation('./assets/images/Skeleton/WalkLeft.png', { size: [270, 270], frames: 4 });
+  enemyAnimationRight = loadAnimation('./assets/images/Goblin/RunRight.png', { size: [220, 220], frames: 8 });
+  enemy2AnimationRight = loadAnimation('./assets/images/Skeleton/WalkRight.png', { size: [270, 270], frames: 4 });
+  enemy3AnimationLeft = loadAnimation('./assets/images/bat_right.png', { size: [60.25, 64], frames: 4 });
+  enemy3AnimationRight = loadAnimation('./assets/images/bat_left.png', { size: [60.25, 64], frames: 4 });
+
+  enemyAnimationLeft.frameDelay = 10;
+  enemy2AnimationLeft.frameDelay = 15;
+  enemyAnimationRight.frameDelay = 10;
+  enemy2AnimationRight.frameDelay = 15;
+}
+
+function preloadAttacks() {
+  slash_main = loadAnimation('./assets/images/Sword Slashes/slash.png', { size: [165, 120], frames: 20 });
+  slash_thinLeft = loadAnimation('./assets/images/Sword Slashes/slash_white_thin.png', { size: [68.75, 50], frames: 6 });
+  slash_thinRight = loadAnimation('./assets/images/Sword Slashes/slash_white_thinright.png', { size: [68.75, 50], frames: 6 });
+  slash_Right = loadAnimation('./assets/images/Sword Slashes/slash_red_right.png', { size: [89.5, 65], frames: 6 });
+  slash_Left = loadAnimation('./assets/images/Sword Slashes/slash_red_left.png', { size: [89.5, 65], frames: 6 });
+}
+
+function preloadObjects() {
+  barrelImg = loadImage('./assets/images/barrel.png');
+  signImg = loadImage('./assets/images/sign.png');
+  floorImg = loadImage('./assets/images/floor.png');
+  floorshortImg = loadImage('./assets/images/floor_short.png');
+  wellImg = loadImage('./assets/images/well.png');
+  welltopImg = loadImage('./assets/images/welltop.png');
+  platformImg = loadImage('./assets/images/platform.png');
+  platform1Img = loadImage('./assets/images/platform1.png');
+  platform2Img = loadImage('./assets/images/platform2.png');
+}
+
+function preloadOther() {
+  lives = loadAnimation('./assets/images/hearts.png', { size: [40, 40], frames: 3 });
+  
+  coins = loadAnimation('./assets/images/coin3_16x16.png', { size: [16, 22], frames: 14 });
 }
 
 // Setup Functions
