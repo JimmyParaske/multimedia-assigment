@@ -1,59 +1,9 @@
-// Game control
+// Game Control
 let stage = "startMenu";
-let geraltAnimationIdle;
+
 let hop = -8;
 let fallingSpeed = 0.2;
 let minHeight = 465;
-
-// Classes
-var geralt;
-
-var enemy1;
-var enemy2;
-var enemy3;
-var enemy4;
-var enemy5;
-var enemy2_1;
-var enemy2_2;
-var enemy2_3;
-var enemy2_4;
-var enemy2_5;
-var enemy2_6;
-var enemy2_7;
-var enemy2_8;
-var enemy2_9;
-var enemy2_10;
-
-var slash_attack;
-var slash_attack2;
-var slash_attack3;
-
-// Stage 1
-var S1barrel1;
-var S1barrel2;
-
-var S1sign;
-
-// Stage 2
-var barrel1;
-var barrel2;
-var sign;
-
-var floor1;
-var floor2;
-var well;
-var platform1a;
-var platform1b;
-var platform2a;
-var platform2b;
-
-//animation variables
-var coin_sheet;
-var coin_animation;
-var walk1_animation;
-var walk1_animation_reverse;
-var walk2_animation;
-var walk2_animation_reverse;
 
 // Skins
 var idleLeft = 'idleLeftBlue';
