@@ -2,8 +2,8 @@ class Crate {
     constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.width = 65;
-        this.height = 65;
+        this.width = 60;
+        this.height = 70;
         this.image = loadImage('./assets/images/Obstacles/crate.png');
 
         this.sprite = createSprite(this.x, this.y, this.width, this.height);

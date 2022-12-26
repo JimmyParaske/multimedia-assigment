@@ -68,6 +68,7 @@ var runRight = 'runRightBlue';
 var attackLeft = 'attackLeftBlue';
 var attackRight = 'attackRightBlue';
 
+// Basic Functions
 function preload() {
   //player assets
   geraltAnimationIdleLeftBlue = loadAnimation('./assets/images/Knight/Blue/noBKG_KnightIdle_strip4.png', { size: [128, 128], frames: 15 });
@@ -147,20 +148,69 @@ function preload() {
 }
 
 function setup() {
-  // Setup
+  // 
+  world.gravity.y = 10;
+
+  // Basic Setup
   createCanvas(900, 576);
 
   rectMode(CENTER);
   textAlign(CENTER);
   imageMode(CENTER);
 
+  // Setup Background & Music
+  setupBackground();
+
+  // Setup Buttons
+  setupButtons();
+
+  // Setup Player
+  setupPlayer();
+
+  // Setup Enemies
+  setupEnemies();
+
+  // Setup Attacks
+  setupAttacks();
+
+  // Setup Objects
+  setupObjects();
+
+  // Setup Other Classes
+  setupOther();
+
+  // Group All Classes
+  setupGroup();
+}
+
+function draw() {
+  clear();
+
+  rect(30, 20, 55, 55, 20);
+
+  if (stage == "startMenu") {
+    drawStartMenu();
+  } else if (stage == "options") {
+    drawOptions();
+  } else if (stage == "playing") {
+    drawGame();
+  } else if (stage == "endMenu") {
+    drawEndMenu();
+  }
+}
+
+// Setup Functions
+function setupBackground() {
   // Background
   land = new Landscape();
 
-  // Background Music
-  backgroundMusic();
+  // Music
+  background_sound.play();
+  background_sound.setVolume(0.2);
+  background_sound.loop();
+}
 
-  // Buttons
+function setupButtons() {
   playButton = new TextButton(width / 2, height / 2, "New Game");
   optionsButton = new TextButton(width / 2, playButton.getY() + 65, "Options");
   creditsButton = new TextButton(width / 2, optionsButton.getY() + 65, "Credits");
@@ -171,11 +221,9 @@ function setup() {
   returnButton = new ReturnButton(65, 65);
 
   replayButton = new TextButton(width / 2, height / 2, "Play Again");
+}
 
-  //world gravity
-  world.gravity.y = 10;
-
-  // Player
+function setupPlayer() {
   geralt = createSprite(-3200, 480, 67, 80);
   geralt.rotationLock = true;
 
@@ -202,27 +250,9 @@ function setup() {
   geralt.addAnimation('idleLeftGreen', geraltAnimationIdleLeftGreen);
   geralt.addAnimation('idleLeftRed', geraltAnimationIdleLeftRed);
   geralt.addAnimation('idleLeftBlue', geraltAnimationIdleLeftBlue);
+}
 
-
-  //geralt healthbar
-  kardia = new Heart(-3500, 50, lives);
-  kardia2 = new Heart(-3460, 50, lives.clone());
-  kardia3 = new Heart(-3420, 50, lives.clone());
-
-  //attack slash sprite (move horizontaly)
-  slash_attack = new Sprite();
-  slash_attack.addAnimation('white_slash_left', slash_thinLeft);
-  slash_attack.life = 0;
-
-  slash_attack2 = new Sprite();
-  slash_attack2.addAnimation('white_slash_right', slash_thinRight);
-  slash_attack2.life = 0;
-
-  slash_attack3 = new Sprite();
-  slash_attack3.addAnimation('red_yellow_slash', slash_main);
-  slash_attack3.life = 0;
-
-  //enemies (2 types)
+function setupEnemies() {
   enemy1 = createSprite(-2400, 465, 55, 100);
   enemy1.rotationLock = true;
 
@@ -309,35 +339,23 @@ function setup() {
   enemy5.addAnimation('left', enemy2AnimationLeft.clone());
   enemy5.addAnimation('right', enemy2AnimationRight.clone());
   enemy5.layer = 2;
+}
 
-  //coins picked up by geralt
-  coin1 = new Coin(-2750, 200, coins);
+function setupAttacks() {
+  slash_attack = new Sprite();
+  slash_attack.addAnimation('white_slash_left', slash_thinLeft);
+  slash_attack.life = 0;
 
-  coin2 = new Coin(-1950, 150, coins.clone());
+  slash_attack2 = new Sprite();
+  slash_attack2.addAnimation('white_slash_right', slash_thinRight);
+  slash_attack2.life = 0;
 
-  coin3 = new Coin(-1000, 50, coins.clone());
+  slash_attack3 = new Sprite();
+  slash_attack3.addAnimation('red_yellow_slash', slash_main);
+  slash_attack3.life = 0;
+}
 
-  coin4 = new Coin(300, 350, coins.clone());
-
-  coin5 = new Coin(1060, 80, coins.clone());
-
-  coin6 = new Coin(1700, 350, coins.clone());
-
-  coin7 = new Coin(2752, 180, coins.clone());
-
-  coin8 = new Coin(3850, 100, coins.clone());
-
-  //more coins vol 2
-  coin2_1 = new Coin(-1175, 350, coins.clone());
-
-  coin2_2 = new Coin(-130, 465, coins.clone());
-
-  coin2_3 = new Coin(970, 365, coins.clone());
-
-  coin2_4 = new Coin(2250, 365, coins.clone());
-
-  coin2_5 = new Coin(3655, 380, coins.clone());
-
+function setupObjects() {
   // STAGE 1 
   S1barrel1 = createSprite(-3550, 475, 45, 55);
   S1barrel1.collider = 'static';
@@ -458,9 +476,7 @@ function setup() {
 
   //  STAGE 3 
   S2crate1 = new Crate(1910, 404);
-
   S2crate2 = new Crate(1880, 470);
-
   S2crate3 = new Crate(1945, 470);
 
   S2well = createSprite(2750, 460, 110, 15);
@@ -513,7 +529,31 @@ function setup() {
   S2platform1b.layer = 1;
   S2platform2a.layer = 1;
   S2platform2b.layer = 1;
+}
 
+function setupOther() {
+  // Hearts
+  kardia = new Heart(-3500, 50, lives);
+  kardia2 = new Heart(-3460, 50, lives.clone());
+  kardia3 = new Heart(-3420, 50, lives.clone());
+
+  // Coins
+  coin1 = new Coin(-2750, 200, coins);
+  coin2 = new Coin(-1950, 150, coins.clone());
+  coin3 = new Coin(-1000, 50, coins.clone());
+  coin4 = new Coin(300, 350, coins.clone());
+  coin5 = new Coin(1060, 80, coins.clone());
+  coin6 = new Coin(1700, 350, coins.clone());
+  coin7 = new Coin(2752, 180, coins.clone());
+  coin8 = new Coin(3850, 100, coins.clone());
+  coin2_1 = new Coin(-1175, 350, coins.clone());
+  coin2_2 = new Coin(-130, 465, coins.clone());
+  coin2_3 = new Coin(970, 365, coins.clone());
+  coin2_4 = new Coin(2250, 365, coins.clone());
+  coin2_5 = new Coin(3655, 380, coins.clone());
+}
+
+function setupGroup() {
   obstacles = new Group();
   obstacles.add(S1barrel1);
   obstacles.add(S1barrel2);
@@ -551,29 +591,8 @@ function setup() {
   obstacles.add(S2platform2a);
 }
 
-function draw() {
-  clear();
-
-  rect(30, 20, 55, 55, 20);
-
-  if (stage == "startMenu") {
-    startMenu();
-  } else if (stage == "options") {
-    options();
-  } else if (stage == "playing") {
-    game();
-  } else if (stage == "endMenu") {
-    endMenu();
-  }
-}
-
-function backgroundMusic() {
-  background_sound.play();
-  background_sound.setVolume(0.2);
-  background_sound.loop();
-}
-
-function startMenu() {
+// Draw Functions
+function drawStartMenu() {
   // Draw background
   land.displayMenu();
 
@@ -584,7 +603,7 @@ function startMenu() {
   exitButton.display();
 }
 
-function options() {
+function drawOptions() {
   // Draw background
   land.displayMenu();
 
@@ -603,7 +622,7 @@ function options() {
   returnButton.display();
 }
 
-function game() {
+function drawGame() {
   // Control camera
   camera.on();
 
@@ -684,7 +703,7 @@ function game() {
   camera.off();
 }
 
-function endMenu() {
+function drawEndMenu() {
   // Draw background
   land.displayMenu();
 
@@ -695,32 +714,11 @@ function endMenu() {
   exitButton.display();
 }
 
+// Playing Functions
 function mouseClicked() {
   // If user clicks "New Game" on start menu 
   if ((stage == "startMenu") && (playButton.clicked())) {
     newGame();
-  }
-
-  // 
-  if ((stage == "startMenu") && (optionsButton.clicked())) {
-    settings();
-  }
-
-  if ((stage == "options") && (skinButton.clicked())) {
-    changeSkin();
-  }
-
-  if ((stage == "options") && (soundButton.clicked())) {
-    sound();
-  }
-
-  if ((stage == "options") && (returnButton.clicked())) {
-    back();
-  }
-
-  // 
-  if (((stage == "startMenu") || (stage == "endMenu")) && (creditsButton.clicked())) {
-    window.location.href = "../credits.html";
   }
 
   // If user clicks "Play again" on end menu
@@ -728,13 +726,58 @@ function mouseClicked() {
     playAgain();
   }
 
+  // If user clicks "Options" on start or end menu
+  if (((stage == "startMenu") || (stage == "endMenu")) && (optionsButton.clicked())) {
+    options();
+  }
+
+  // If user clicks "Credits" on start or end menu
+  if (((stage == "startMenu") || (stage == "endMenu")) && (creditsButton.clicked())) {
+    window.location.href = "../credits.html";
+  }
+
   // If user clicks "Exit" on start menu or end menu
   if (((stage == "startMenu") || (stage == "endMenu")) && (exitButton.clicked())) {
     // Exit
     window.location.href = "../index.html";
   }
+
+  // If user clicks "Change Skin" on options 
+  if ((stage == "options") && (skinButton.clicked())) {
+    changeSkin();
+  }
+
+  // If user clicks sound button on options
+  if ((stage == "options") && (soundButton.clicked())) {
+    sound();
+  }
+
+  // If user clicks return button on options
+  if ((stage == "options") && (returnButton.clicked())) {
+    back();
+  }
 }
 
+function keyPresses() {
+  //geralt movement
+  if (keyIsDown(LEFT_ARROW)) {
+    geralt.vel.x = -5;
+    geralt.changeAnimation(runRight);
+  } else if (keyIsDown(RIGHT_ARROW)) {
+    geralt.vel.x = +5;
+    geralt.changeAnimation(runLeft);
+  } else if (kb.released(LEFT_ARROW)) {
+    geralt.changeAnimation(idleRight);
+  } else if (kb.released(RIGHT_ARROW)) {
+    geralt.changeAnimation(idleLeft);
+  } else if (keyIsDown(ESCAPE)) {
+    window.location.href = "../play.html";
+  } else {
+    geralt.vel.x = 0;
+  }
+}
+
+// Menu Functions
 function newGame() {
   // Remove start menu buttons
   playButton.hide();
@@ -745,7 +788,21 @@ function newGame() {
   stage = "playing";
 }
 
-function settings() {
+function playAgain() {
+  // Remove end menu buttons
+  replayButton.hide();
+  optionsButton.hide();
+  creditsButton.hide();
+  exitButton.hide();
+
+  // 
+  life_counter = 0;
+
+  // Change stage to "playing"
+  stage = "playing";
+}
+
+function options() {
   // Remove start menu buttons
   playButton.hide();
   optionsButton.hide();
@@ -755,16 +812,11 @@ function settings() {
   stage = "options";
 }
 
-function playAgain() {
-  // Remove end menu buttons
-  replayButton.hide();
-  optionsButton.hide();
-  creditsButton.hide();
-  exitButton.hide();
-  // 
-  life_counter = 0;
-  // Change stage to "playing"
-  stage = "playing";
+function back() {
+  // Remove start menu buttons
+  skinButton.hide();
+
+  stage = "startMenu";
 }
 
 function changeSkin() {
@@ -808,33 +860,7 @@ function sound() {
   }
 }
 
-function back() {
-  // Remove start menu buttons
-  skinButton.hide();
-
-  stage = "startMenu";
-}
-
-// Moves
-function keyPresses() {
-  //geralt movement
-  if (keyIsDown(LEFT_ARROW)) {
-    geralt.vel.x = -5;
-    geralt.changeAnimation(runRight);
-  } else if (keyIsDown(RIGHT_ARROW)) {
-    geralt.vel.x = +5;
-    geralt.changeAnimation(runLeft);
-  } else if (kb.released(LEFT_ARROW)) {
-    geralt.changeAnimation(idleRight);
-  } else if (kb.released(RIGHT_ARROW)) {
-    geralt.changeAnimation(idleLeft);
-  } else if (keyIsDown(ESCAPE)) {
-    window.location.href = "../play.html";
-  } else {
-    geralt.vel.x = 0;
-  }
-}
-
+// Other Functions
 function attackStop() {
   if (kb.presses('b') || kb.presses('v')) {
     geralt.vel.x = 0;
