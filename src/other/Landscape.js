@@ -1,7 +1,7 @@
 class Landscape {
     constructor() {
-        this.imageMenu = loadImage('./assets/images/startMenuLandscape.png');
-        this.imagePlay = loadImage('./assets/images/landscape_long.png');
+        this.imageMenu = loadImage('./assets/images/Landscapes/menu.png');
+        this.imagePlay = loadImage('./assets/images/Landscapes/game.png');
     }
 
     displayMenu() {
