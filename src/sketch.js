@@ -1,4 +1,5 @@
 // Game control
+let stage = "startMenu";
 let geraltAnimationIdle;
 let hop = -8;
 let fallingSpeed = 0.2;
@@ -662,8 +663,6 @@ function setup() {
   obstacles.add(S2platform2a);
 }
 
-let stage = "startMenu";
-
 function draw() {
   clear();
 
@@ -702,7 +701,14 @@ function options() {
   land.displayMenu();
 
   // 
-  animation(geraltAnimationIdleLeftBlue, skinButton.getX(), skinButton.getY() - 80);
+  if (idleLeft == 'idleLeftBlue') {
+    animation(geraltAnimationIdleLeftBlue, skinButton.getX(), skinButton.getY() - 80);
+  } else if (idleLeft == 'idleLeftRed') {
+    animation(geraltAnimationIdleLeftRed, skinButton.getX(), skinButton.getY() - 80);
+  } else {
+    animation(geraltAnimationIdleLeftGreen, skinButton.getX(), skinButton.getY() - 80);
+  }
+
 
   // Draw options
   skinButton.display();
