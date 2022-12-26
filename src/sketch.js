@@ -51,7 +51,6 @@ var S1crate;
 var S1crate1;
 var S1crate2;
 var S1crate3;
-var S1wagon;
 var S1sign;
 var S1crate4;
 
@@ -60,7 +59,7 @@ var crate;
 var barrel1;
 var barrel2;
 var sign;
-var wagon;
+
 var lamp;
 var crate1;
 var crate2;
@@ -418,11 +417,7 @@ function setup() {
   cratestackedImg.resize(70, 70);
   S1crate3.addImage(cratestackedImg);
 
-  S1wagon = createSprite(-2100, 430);
-  S1wagon.collider = 'static';
-  S1wagon.diameter = 155;
-  wagonImg.resize(190, 170);
-  S1wagon.addImage(wagonImg);
+  S1wagon = new Wagon(-2100, 430);
 
   S1sign = createSprite(-1800, 340, 60, 85);
   S1sign.collider = 'static';
@@ -457,7 +452,6 @@ function setup() {
   S1crate1.layer = 1;
   S1crate2.layer = 1;
   S1crate3.layer = 1;
-  S1wagon.layer = 1;
   S1sign.layer = 1;
   S1crate4.layer = 1;
   S1platform1a.layer = 1;
@@ -485,11 +479,7 @@ function setup() {
   signImg.resize(70, 100);
   sign.addImage(signImg);
 
-  wagon = createSprite(0, 430);
-  wagon.collider = 'static';
-  wagon.diameter = 155;
-  wagonImg.resize(190, 170);
-  wagon.addImage(wagonImg);
+  wagon = new Wagon(0, 430);
 
   crate1 = createSprite(627, 404, 70, 65);
   crate1.collider = 'static';
@@ -544,7 +534,7 @@ function setup() {
   barrel1.layer = 1;
   barrel2.layer = 1;
   sign.layer = 1;
-  wagon.layer = 1;
+
   crate1.layer = 1;
   crate2.layer = 1;
   crate3.layer = 1;
@@ -635,7 +625,7 @@ function setup() {
   obstacles.add(S1crate4);
   obstacles.add(S1sign);
   obstacles.add(S1sign);
-  obstacles.add(S1wagon);
+  obstacles.add(S1wagon.getSprite());
   obstacles.add(S1platform1a);
   obstacles.add(S1platform2a);
   obstacles.add(S1crate);
@@ -643,7 +633,7 @@ function setup() {
   obstacles.add(barrel1);
   obstacles.add(barrel2);
   obstacles.add(sign);
-  obstacles.add(wagon);
+  obstacles.add(wagon.getSprite());
   obstacles.add(crate1);
   obstacles.add(crate2);
   obstacles.add(crate3);
@@ -726,6 +716,9 @@ function game() {
   kardia.display();
   kardia2.display();
   kardia3.display();
+
+  S1wagon.display();
+  wagon.display();
 
   // enemy1.display();
 
@@ -982,7 +975,7 @@ function jump(sprite) {
     }
   }
 
-  if (sprite.colliding(wagon)) {
+  if (sprite.colliding(wagon.getSprite())) {
     sprite.vel.y = 0;
 
     if (keyIsDown(UP_ARROW)) {
@@ -1123,7 +1116,7 @@ function jump(sprite) {
     }
   }
 
-  if (sprite.colliding(S1wagon)) {
+  if (sprite.colliding(S1wagon.getSprite())) {
     sprite.vel.y = 0;
 
     if (keyIsDown(UP_ARROW)) {
@@ -1318,7 +1311,7 @@ function enemyMovementAndAttackCollision() {
     enemy1.changeAnimation('left');
   }
 
-  if (enemy1.collided(S1wagon)) {
+  if (enemy1.collided(S1wagon.getSprite())) {
     enemy1.vel.x = -1;
     enemy1.changeAnimation('right');
   }
@@ -1824,7 +1817,7 @@ function enemyMovementAndAttackCollision() {
     enemy3.changeAnimation('right');
   }
 
-  if (enemy3.collided(wagon)) {
+  if (enemy3.collided(wagon.getSprite())) {
     enemy3.vel.x = 1.2;
     enemy3.changeAnimation('left');
   }
