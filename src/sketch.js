@@ -18,7 +18,7 @@ var attackRight = 'attackRightBlue';
 // Basic Functions
 function preload() {
   // Preload Sounds
-  preloadSounds();  
+  preloadSounds();
 
   // Preload Player
   preloadPlayer();
@@ -166,7 +166,7 @@ function preloadObjects() {
 
 function preloadOther() {
   lives = loadAnimation('./assets/images/hearts.png', { size: [40, 40], frames: 3 });
-  
+
   coins = loadAnimation('./assets/images/coin3_16x16.png', { size: [16, 22], frames: 14 });
 }
 
@@ -327,29 +327,47 @@ function setupAttacks() {
 }
 
 function setupObjects() {
-  // STAGE 1 
-  S1barrel1 = createSprite(-3550, 475, 45, 55);
-  S1barrel1.collider = 'static';
-  barrelImg.resize(55, 60);
-  S1barrel1.addImage(barrelImg);
+  // Barrels
+  S1barrel1 = new Barrel(-3550, 475);
+  S1barrel2 = new Barrel(-3500, 475);
+  barrel1 = new Barrel(-435, 475);
+  barrel2 = new Barrel(-370, 475);
+  S2barrel1 = new Barrel(3300, 475);
+  S2barrel2 = new Barrel(3360, 475);
 
-  S1barrel2 = createSprite(-3500, 475, 45, 55);
-  S1barrel2.collider = 'static';
-  S1barrel2.addImage(barrelImg);
-
+  // Crates
   S1crate = new Crate(-3100, 470);
   S1crate1 = new Crate(-2750, 404);
   S1crate2 = new Crate(-2785, 470);
   S1crate3 = new Crate(-2715, 470);
   S1crate4 = new Crate(-1660, 470);
+  crate = new Crate(-840, 470);
+  crate1 = new Crate(627, 404);
+  crate2 = new Crate(595, 470);
+  crate3 = new Crate(665, 470);
+  S2crate1 = new Crate(1910, 404);
+  S2crate2 = new Crate(1880, 470);
+  S2crate3 = new Crate(1945, 470);
 
+  // Wagons
   S1wagon = new Wagon(-2100, 430);
+  wagon = new Wagon(0, 430);
 
+  // Signs
   S1sign = createSprite(-1800, 340, 60, 85);
   S1sign.collider = 'static';
   signImg.resize(70, 100);
   S1sign.addImage(signImg);
 
+  sign = createSprite(-189, 405, 60, 85);
+  sign.collider = 'static';
+  signImg.resize(70, 100);
+  sign.addImage(signImg);
+
+  S1sign.layer = 1;
+  sign.layer = 1;
+
+  // Platforms
   S1platform1a = createSprite(-1450, 320, 185, 20);
   S1platform1a.collider = 'static';
   S1platform1a.visible = false;
@@ -366,55 +384,6 @@ function setupObjects() {
   S1platform2b.collider = 'none';
   platform2Img.resize(195, 235);
   S1platform2b.addImage(platform2Img);
-
-  S1barrel1.layer = 1;
-  S1barrel2.layer = 1;
-  S1sign.layer = 1;
-  S1platform1a.layer = 1;
-  S1platform1b.layer = 1;
-  S1platform2a.layer = 1;
-  S1platform2b.layer = 1;
-
-  // STAGE 2 
-  crate = new Crate(-840, 470);
-  crate1 = new Crate(627, 404);
-  crate2 = new Crate(595, 470);
-  crate3 = new Crate(665, 470);
-
-  barrel1 = createSprite(-435, 475, 45, 55);
-  barrel1.collider = 'static';
-  barrelImg.resize(55, 60);
-  barrel1.addImage(barrelImg);
-
-  barrel2 = createSprite(-370, 475, 45, 55);
-  barrel2.collider = 'static';
-  barrel2.addImage(barrelImg);
-
-  sign = createSprite(-189, 405, 60, 85);
-  sign.collider = 'static';
-  signImg.resize(70, 100);
-  sign.addImage(signImg);
-
-  wagon = new Wagon(0, 430);
-
-  floor1 = createSprite(842, 390, 145, 40);
-  floor1.collider = 'static';
-  floorImg.resize(160, 39);
-  floor1.addImage(floorImg);
-
-  floor2 = createSprite(957, 325, 120, 40);
-  floor2.collider = 'static';
-  floorshortImg.resize(127, 39);
-  floor2.addImage(floorshortImg);
-
-  well = createSprite(1205, 460, 110, 15);
-  well.collider = 'none';
-  wellImg.resize(100, 100);
-  well.addImage(wellImg);
-  welltop = createSprite(1201, 415, 95, 15);
-  welltop.collider = 'static';
-  welltopImg.resize(91, 20);
-  welltop.addImage(welltopImg);
 
   platform1a = createSprite(1435, 320, 185, 20);
   platform1a.collider = 'static';
@@ -433,47 +402,6 @@ function setupObjects() {
   platform2Img.resize(195, 235);
   platform2b.addImage(platform2Img);
 
-  barrel1.layer = 1;
-  barrel2.layer = 1;
-  sign.layer = 1;
-  floor1.layer = 1;
-  floor2.layer = 1;
-  well.layer = 1;
-  welltop.layer = 1;
-  platform1a.layer = 1;
-  platform1b.layer = 1;
-  platform2a.layer = 1;
-  platform2b.layer = 1;
-
-  //  STAGE 3 
-  S2crate1 = new Crate(1910, 404);
-  S2crate2 = new Crate(1880, 470);
-  S2crate3 = new Crate(1945, 470);
-
-  S2well = createSprite(2750, 460, 110, 15);
-  S2well.collider = 'none';
-  wellImg.resize(100, 100);
-  S2well.addImage(wellImg);
-  S2welltop = createSprite(2750, 415, 95, 15);
-  S2welltop.collider = 'static';
-  welltopImg.resize(91, 20);
-
-  S2welltop.visible = false;
-
-  S2barrel1 = createSprite(3300, 475, 45, 55);
-  S2barrel1.collider = 'static';
-  barrelImg.resize(55, 60);
-  S2barrel1.addImage(barrelImg);
-
-  S2barrel2 = createSprite(3360, 475, 45, 55);
-  S2barrel2.collider = 'static';
-  S2barrel2.addImage(barrelImg);
-
-  S2floor1 = createSprite(3655, 345, 145, 40);
-  S2floor1.collider = 'static';
-  floorImg.resize(160, 39);
-  S2floor1.addImage(floorImg);
-
   S2platform1a = createSprite(4030, 320, 185, 20);
   S2platform1a.collider = 'static';
   S2platform1a.visible = false;
@@ -491,15 +419,64 @@ function setupObjects() {
   platform2Img.resize(195, 235);
   S2platform2b.addImage(platform2Img);
 
-  S2well.layer = 1;
-  S2welltop.layer = 1;
-  S2barrel1.layer = 1;
-  S2barrel2.layer = 1;
-  S2floor1.layer = 1;
+  S1platform1a.layer = 1;
+  S1platform1b.layer = 1;
+  S1platform2a.layer = 1;
+  S1platform2b.layer = 1;
+  platform1a.layer = 1;
+  platform1b.layer = 1;
+  platform2a.layer = 1;
+  platform2b.layer = 1;
   S2platform1a.layer = 1;
   S2platform1b.layer = 1;
   S2platform2a.layer = 1;
   S2platform2b.layer = 1;
+
+  // Floors
+  floor1 = createSprite(842, 390, 145, 40);
+  floor1.collider = 'static';
+  floorImg.resize(160, 39);
+  floor1.addImage(floorImg);
+
+  floor2 = createSprite(957, 325, 120, 40);
+  floor2.collider = 'static';
+  floorshortImg.resize(127, 39);
+  floor2.addImage(floorshortImg);
+
+  S2floor1 = createSprite(3655, 345, 145, 40);
+  S2floor1.collider = 'static';
+  floorImg.resize(160, 39);
+  S2floor1.addImage(floorImg);
+
+  floor1.layer = 1;
+  floor2.layer = 1;
+  S2floor1.layer = 1;
+
+  // Wells
+  well = createSprite(1205, 460, 110, 15);
+  well.collider = 'none';
+  wellImg.resize(100, 100);
+  well.addImage(wellImg);
+
+  welltop = createSprite(1201, 415, 95, 15);
+  welltop.collider = 'static';
+  welltopImg.resize(91, 20);
+  welltop.addImage(welltopImg);
+
+  S2well = createSprite(2750, 460, 110, 15);
+  S2well.collider = 'none';
+  wellImg.resize(100, 100);
+  S2well.addImage(wellImg);
+
+  S2welltop = createSprite(2750, 415, 95, 15);
+  S2welltop.collider = 'static';
+  welltopImg.resize(91, 20);
+
+  S2welltop.visible = false;
+  well.layer = 1;
+  welltop.layer = 1;
+  S2well.layer = 1;
+  S2welltop.layer = 1; 
 }
 
 function setupOther() {
@@ -526,8 +503,8 @@ function setupOther() {
 
 function setupGroup() {
   obstacles = new Group();
-  obstacles.add(S1barrel1);
-  obstacles.add(S1barrel2);
+  obstacles.add(S1barrel1.getSprite());
+  obstacles.add(S1barrel2.getSprite());
   obstacles.add(S1crate.getSprite());
   obstacles.add(S1crate1.getSprite());
   obstacles.add(S1crate2.getSprite());
@@ -542,8 +519,8 @@ function setupGroup() {
   obstacles.add(crate1.getSprite());
   obstacles.add(crate2.getSprite());
   obstacles.add(crate3.getSprite());
-  obstacles.add(barrel1);
-  obstacles.add(barrel2);
+  obstacles.add(barrel1.getSprite());
+  obstacles.add(barrel2.getSprite());
   obstacles.add(sign);
   obstacles.add(wagon.getSprite());
   obstacles.add(floor1);
@@ -555,8 +532,8 @@ function setupGroup() {
   obstacles.add(S2crate2.getSprite());
   obstacles.add(S2crate3.getSprite());
   obstacles.add(S2welltop);
-  obstacles.add(S2barrel1);
-  obstacles.add(S2barrel2);
+  obstacles.add(S2barrel1.getSprite());
+  obstacles.add(S2barrel2.getSprite());
   obstacles.add(S2floor1);
   obstacles.add(S2platform1a);
   obstacles.add(S2platform2a);
@@ -600,10 +577,38 @@ function drawGame() {
   // Draw background
   land.displayGame();
 
+  // Barrels
+  S1barrel1.display();
+  S1barrel2.display();
+  barrel1.display();
+  barrel2.display();
+  S2barrel1.display();
+  S2barrel2.display();
+
+  // Crates
+  S1crate.display();
+  S1crate1.display();
+  S1crate2.display();
+  S1crate3.display();
+  S1crate4.display();
+  crate.display();
+  crate1.display();
+  crate2.display();
+  crate3.display();
+  S2crate1.display();
+  S2crate2.display();
+  S2crate3.display();
+
+  // Wagons
+  S1wagon.display();
+  wagon.display();
+
+  // Hearts
   kardia.display();
   kardia2.display();
   kardia3.display();
 
+  // Coins
   coin1.display();
   coin2.display();
   coin3.display();
@@ -617,22 +622,6 @@ function drawGame() {
   coin2_3.display();
   coin2_4.display();
   coin2_5.display();
-
-  S1wagon.display();
-  wagon.display();
-
-  crate.display();
-  crate1.display();
-  crate2.display();
-  crate3.display();
-  S1crate.display();
-  S1crate1.display();
-  S1crate2.display();
-  S1crate3.display();
-  S1crate4.display();
-  S2crate1.display();
-  S2crate2.display();
-  S2crate3.display();
 
   if (geralt.x <= -3200) {
     camera.x = -3150;
@@ -870,7 +859,7 @@ function jump(sprite) {
     }
   }
 
-  if (sprite.colliding(barrel1)) {
+  if (sprite.colliding(barrel1.getSprite())) {
     sprite.vel.y = 0;
 
     if (keyIsDown(UP_ARROW)) {
@@ -878,7 +867,7 @@ function jump(sprite) {
     }
   }
 
-  if (sprite.colliding(barrel2)) {
+  if (sprite.colliding(barrel2.getSprite())) {
     sprite.vel.y = 0;
 
     if (keyIsDown(UP_ARROW)) {
@@ -987,7 +976,7 @@ function jump(sprite) {
     sprite.vel.y = 0;
   }
 
-  if (sprite.colliding(S1barrel1)) {
+  if (sprite.colliding(S1barrel1.getSprite())) {
     sprite.vel.y = 0;
 
     if (keyIsDown(UP_ARROW)) {
@@ -995,7 +984,7 @@ function jump(sprite) {
     }
   }
 
-  if (sprite.colliding(S1barrel2)) {
+  if (sprite.colliding(S1barrel2.getSprite())) {
     sprite.vel.y = 0;
 
     if (keyIsDown(UP_ARROW)) {
@@ -1125,7 +1114,7 @@ function jump(sprite) {
     sprite.vel.y = 0;
   }
 
-  if (sprite.colliding(S2barrel1)) {
+  if (sprite.colliding(S2barrel1.getSprite())) {
     sprite.vel.y = 0;
 
     if (keyIsDown(UP_ARROW)) {
@@ -1134,7 +1123,7 @@ function jump(sprite) {
     }
   }
 
-  if (sprite.colliding(S2barrel2)) {
+  if (sprite.colliding(S2barrel2.getSprite())) {
     sprite.vel.y = 0;
 
     if (keyIsDown(UP_ARROW)) {
@@ -1399,7 +1388,7 @@ function enemyMovementAndAttackCollision() {
     enemy2_2.changeAnimation('left');
   }
 
-  if (enemy2_2.collided(barrel1)) {
+  if (enemy2_2.collided(barrel1.getSprite())) {
     enemy2_2.vel.x = -1.2;
     enemy2_2.changeAnimation('right');
   }
@@ -1564,7 +1553,7 @@ function enemyMovementAndAttackCollision() {
     enemy2_5.changeAnimation('right');
   }
 
-  if (enemy2_5.x <= S2barrel1.x) {
+  if (enemy2_5.x <= S2barrel1.getSprite().x) {
     enemy2_5.vel.x = 2;
     enemy2_5.changeAnimation('left');
   }
@@ -1618,7 +1607,7 @@ function enemyMovementAndAttackCollision() {
     enemy2_6.changeAnimation('left');
   }
 
-  if (enemy2_6.collided(S2barrel2)) {
+  if (enemy2_6.collided(S2barrel2.getSprite())) {
 
     enemy2_6.vel.x = 2;
     enemy2_6.changeAnimation('left');
@@ -1845,7 +1834,7 @@ function enemyMovementAndAttackCollision() {
     enemy5.changeAnimation('left');
   }
 
-  if (enemy5.collided(S2barrel1)) {
+  if (enemy5.collided(S2barrel1.getSprite())) {
     enemy5.vel.x = -1.4;
     enemy5.changeAnimation('right');
   }
