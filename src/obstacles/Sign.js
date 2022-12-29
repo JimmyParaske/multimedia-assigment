@@ -4,7 +4,7 @@ class Sign {
         this.y = y;
         this.width = 60;
         this.height = 85;
-        this.image = loadImage('./assets/images/sign.png');
+        this.image = loadImage('./assets/images/Obstacles/sign.png');
 
         this.sprite = createSprite(this.x, this.y, this.width, this.height);
         this.sprite.visible = false;
@@ -15,7 +15,6 @@ class Sign {
     display() {
         this.sprite.collider = 'static';
 
-        this.image.resize(70, 100);
         this.sprite.addImage(this.image);
 
         this.sprite.visible = true;

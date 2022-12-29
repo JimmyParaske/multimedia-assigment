@@ -1,21 +1,21 @@
-class Coin {
-    constructor(x, y, animation) {
+class Floor {
+    constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.width = 10;
-        this.height = 10;
+        this.width = 145;
+        this.height = 40;
+        this.image = loadImage('./assets/images/Obstacles/floor.png');
 
         this.sprite = createSprite(this.x, this.y, this.width, this.height);
         this.sprite.visible = false;
 
-        this.animation = animation;
-        this.sprite.rotationLock = true;
+        this.sprite.layer = 1;
     }
 
     display() {
         this.sprite.collider = 'static';
 
-        this.sprite.addAnimation(this.animation);
+        this.sprite.addImage(this.image);
 
         this.sprite.visible = true;
         
@@ -24,9 +24,5 @@ class Coin {
 
     getSprite() {
         return this.sprite;
-    } 
-
-    remove() {
-        this.sprite.remove();
     }
 }

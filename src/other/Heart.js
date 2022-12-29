@@ -13,10 +13,13 @@ class Heart {
     }
 
     display() {
-        this.sprite.visible = true;
         this.sprite.collider = 'static';
+        
         this.sprite.addAnimation(this.animation);
         this.sprite.animation.stop();
+
+        this.sprite.visible = true;
+        
         this.sprite.y = this.y;
     }
 

@@ -4,7 +4,7 @@ class Barrel {
         this.y = y;
         this.width = 45;
         this.height = 55;
-        this.image = loadImage('./assets/images/barrel.png');
+        this.image = loadImage('./assets/images/Obstacles/barrel.png');
 
         this.sprite = createSprite(this.x, this.y, this.width, this.height);
         this.sprite.visible = false;
@@ -15,7 +15,6 @@ class Barrel {
     display() {
         this.sprite.collider = 'static';
 
-        this.image.resize(55, 60);
         this.sprite.addImage(this.image);
 
         this.sprite.visible = true;
