@@ -153,8 +153,6 @@ function preloadAttacks() {
 }
 
 function preloadObjects() {
-  barrelImg = loadImage('./assets/images/barrel.png');
-  signImg = loadImage('./assets/images/sign.png');
   floorImg = loadImage('./assets/images/floor.png');
   floorshortImg = loadImage('./assets/images/floor_short.png');
   wellImg = loadImage('./assets/images/well.png');
@@ -354,18 +352,8 @@ function setupObjects() {
   wagon = new Wagon(0, 430);
 
   // Signs
-  S1sign = createSprite(-1800, 340, 60, 85);
-  S1sign.collider = 'static';
-  signImg.resize(70, 100);
-  S1sign.addImage(signImg);
-
-  sign = createSprite(-189, 405, 60, 85);
-  sign.collider = 'static';
-  signImg.resize(70, 100);
-  sign.addImage(signImg);
-
-  S1sign.layer = 1;
-  sign.layer = 1;
+  S1sign = new Sign(-1800, 340);
+  sign = new Sign(-189, 405);
 
   // Platforms
   S1platform1a = createSprite(-1450, 320, 185, 20);
@@ -505,14 +493,18 @@ function setupGroup() {
   obstacles = new Group();
   obstacles.add(S1barrel1.getSprite());
   obstacles.add(S1barrel2.getSprite());
+
   obstacles.add(S1crate.getSprite());
   obstacles.add(S1crate1.getSprite());
   obstacles.add(S1crate2.getSprite());
   obstacles.add(S1crate3.getSprite());
   obstacles.add(S1crate4.getSprite());
-  obstacles.add(S1sign);
-  obstacles.add(S1sign);
+
+  obstacles.add(S1sign.getSprite());
+  obstacles.add(sign.getSprite());
+
   obstacles.add(S1wagon.getSprite());
+
   obstacles.add(S1platform1a);
   obstacles.add(S1platform2a);
   obstacles.add(crate.getSprite());
@@ -521,7 +513,7 @@ function setupGroup() {
   obstacles.add(crate3.getSprite());
   obstacles.add(barrel1.getSprite());
   obstacles.add(barrel2.getSprite());
-  obstacles.add(sign);
+  obstacles.add(sign.getSprite());
   obstacles.add(wagon.getSprite());
   obstacles.add(floor1);
   obstacles.add(floor2);
@@ -602,6 +594,10 @@ function drawGame() {
   // Wagons
   S1wagon.display();
   wagon.display();
+
+  // Signs
+  S1sign.display();
+  sign.display();
 
   // Hearts
   kardia.display();
@@ -875,7 +871,7 @@ function jump(sprite) {
     }
   }
 
-  if (sprite.colliding(sign)) {
+  if (sprite.colliding(sign.getSprite())) {
     sprite.vel.y = 0;
 
     if (keyIsDown(UP_ARROW)) {
@@ -1032,7 +1028,7 @@ function jump(sprite) {
     }
   }
 
-  if (sprite.colliding(S1sign)) {
+  if (sprite.colliding(S1sign.getSprite())) {
     sprite.vel.y = 0;
 
     if (keyIsDown(UP_ARROW)) {
@@ -1041,7 +1037,7 @@ function jump(sprite) {
     }
   }
 
-  if (sprite.y >= S1sign.y && sprite.colliding(S1sign)) {
+  if (sprite.y >= S1sign.getSprite().y && sprite.colliding(S1sign.getSprite())) {
     sprite.vel.y = 0;
   }
 
@@ -1332,7 +1328,7 @@ function enemyMovementAndAttackCollision() {
     enemy2_1.changeAnimation('right');
   }
 
-  if (enemy2_1.x <= S1sign.x) {
+  if (enemy2_1.x <= S1sign.getSprite().x) {
     enemy2_1.vel.x = 1.2;
     enemy2_1.changeAnimation('left');
   }
