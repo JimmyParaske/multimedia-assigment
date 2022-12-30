@@ -153,17 +153,15 @@ function preloadAttacks() {
 }
 
 function preloadObjects() {
-  wellImg = loadImage('./assets/images/well.png');
-  welltopImg = loadImage('./assets/images/welltop.png');
   platformImg = loadImage('./assets/images/platform.png');
   platform1Img = loadImage('./assets/images/platform1.png');
   platform2Img = loadImage('./assets/images/platform2.png');
 }
 
 function preloadOther() {
-  lives = loadAnimation('./assets/images/hearts.png', { size: [40, 40], frames: 3 });
+  lives = loadAnimation('./assets/images/Other/hearts.png', { size: [40, 40], frames: 3 });
 
-  coins = loadAnimation('./assets/images/coin3_16x16.png', { size: [16, 22], frames: 14 });
+  coins = loadAnimation('./assets/images/Other/coins.png', { size: [16, 22], frames: 14 });
 }
 
 // Setup Functions
@@ -424,30 +422,8 @@ function setupObjects() {
   S2floor1 = new Floor(3655, 345);
 
   // Wells
-  well = createSprite(1205, 460, 110, 15);
-  well.collider = 'none';
-  wellImg.resize(100, 100);
-  well.addImage(wellImg);
-
-  welltop = createSprite(1201, 415, 95, 15);
-  welltop.collider = 'static';
-  welltopImg.resize(91, 20);
-  welltop.addImage(welltopImg);
-
-  S2well = createSprite(2750, 460, 110, 15);
-  S2well.collider = 'none';
-  wellImg.resize(100, 100);
-  S2well.addImage(wellImg);
-
-  S2welltop = createSprite(2750, 415, 95, 15);
-  S2welltop.collider = 'static';
-  welltopImg.resize(91, 20);
-
-  S2welltop.visible = false;
-  well.layer = 1;
-  welltop.layer = 1;
-  S2well.layer = 1;
-  S2welltop.layer = 1;
+  well = new Well(1205, 460);
+  S2well = new Well(2750, 460);
 }
 
 function setupOther() {
@@ -500,13 +476,13 @@ function setupGroup() {
   obstacles.add(wagon.getSprite());
   obstacles.add(floor1.getSprite());
   obstacles.add(floor2.getSprite());
-  obstacles.add(welltop);
+  obstacles.add(well.getSprite());
   obstacles.add(platform1a);
   obstacles.add(platform2a);
   obstacles.add(S2crate1.getSprite());
   obstacles.add(S2crate2.getSprite());
   obstacles.add(S2crate3.getSprite());
-  obstacles.add(S2welltop);
+  obstacles.add(S2well.getSprite());
   obstacles.add(S2barrel1.getSprite());
   obstacles.add(S2barrel2.getSprite());
   obstacles.add(S2floor1.getSprite());
@@ -586,6 +562,10 @@ function drawGame() {
   floor1.display();
   floor2.display();
   S2floor1.display();
+
+  // Wells
+  well.display();
+  S2well.display();
 
   // Hearts
   kardia.display();
@@ -923,7 +903,7 @@ function jump(sprite) {
     sprite.vel.y = 0;
   }
 
-  if (sprite.colliding(welltop)) {
+  if (sprite.colliding(well.getSprite())) {
     sprite.vel.y = 0;
 
     if (keyIsDown(UP_ARROW)) {
@@ -931,7 +911,7 @@ function jump(sprite) {
     }
   }
 
-  if (sprite.y >= welltop.y && sprite.colliding(welltop)) {
+  if (sprite.y >= well.getSprite().y && sprite.colliding(well.getSprite())) {
     sprite.vel.y = 0;
   }
 
@@ -1086,7 +1066,7 @@ function jump(sprite) {
     }
   }
 
-  if (sprite.colliding(S2welltop)) {
+  if (sprite.colliding(S2well.getSprite())) {
     sprite.vel.y = 0;
 
     if (keyIsDown(UP_ARROW)) {
@@ -1094,7 +1074,7 @@ function jump(sprite) {
     }
   }
 
-  if (sprite.y >= S2welltop.y && sprite.colliding(S2welltop)) {
+  if (sprite.y >= S2well.getSprite().y && sprite.colliding(S2well.getSprite())) {
     sprite.vel.y = 0;
   }
 
@@ -1428,7 +1408,7 @@ function enemyMovementAndAttackCollision() {
     enemy2_3.changeAnimation('left');
   }
 
-  if (enemy2_3.collided(welltop)) {
+  if (enemy2_3.collided(well.getSprite())) {
     enemy2_3.vel.x = -1.2;
     enemy2_3.changeAnimation('right');
   }
@@ -1480,7 +1460,7 @@ function enemyMovementAndAttackCollision() {
     enemy2_4.changeAnimation('left');
   }
 
-  if (enemy2_4.collided(welltop)) {
+  if (enemy2_4.collided(well.getSprite())) {
     enemy2_4.vel.x = 1.2;
     enemy2_4.changeAnimation('left');
   }
@@ -1762,7 +1742,7 @@ function enemyMovementAndAttackCollision() {
     enemy4.changeAnimation('left');
   }
 
-  if (enemy4.collided(S2welltop)) {
+  if (enemy4.collided(S2well.getSprite())) {
     enemy4.vel.x = -1.6;
     enemy4.changeAnimation('right');
   }
@@ -1823,7 +1803,7 @@ function enemyMovementAndAttackCollision() {
     enemy5.changeAnimation('right');
   }
 
-  if (enemy5.collided(S2welltop)) {
+  if (enemy5.collided(S2well.getSprite())) {
     enemy5.vel.x = 1.4;
     enemy5.changeAnimation('left');
   }

@@ -1,10 +1,10 @@
-class Well {
+class Platform {
     constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.width = 70;
-        this.height = 80;
-        this.image = loadImage('./assets/images/Obstacles/well.png');
+        this.width = 95;
+        this.height = 15;
+        this.image = loadImage('./assets/images/Obstacles/platformShort.png');
 
         this.sprite = createSprite(this.x, this.y, this.width, this.height);
         this.sprite.visible = false;
@@ -13,7 +13,7 @@ class Well {
     }
 
     display() {
-        this.sprite.collider = 'static';
+        this.sprite.collider = 'none';
 
         this.sprite.addImage(this.image);
 
