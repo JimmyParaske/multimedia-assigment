@@ -33,4 +33,12 @@ class PlatformShort {
     getSprite() {
         return this.topSprite;
     }
+
+    getX() {
+        return this.sprite.x;
+    }
+
+    getY() {
+        return this.sprite.y;
+    }
 }

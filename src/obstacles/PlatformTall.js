@@ -31,4 +31,12 @@ class PlatformTall {
     getSprite() {
         return this.sprite;
     }
+
+    getX() {
+        return this.sprite.x;
+    }
+
+    getY() {
+        return this.sprite.y;
+    }
 }

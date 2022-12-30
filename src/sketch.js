@@ -1,5 +1,6 @@
 // Game Control
 let stage = "startMenu";
+var jumped = false;
 
 let hop = -8;
 let fallingSpeed = 0.2;
@@ -128,17 +129,14 @@ function preloadPlayer() {
 }
 
 function preloadEnemies() {
-  enemyAnimationLeft = loadAnimation('./assets/images/Goblin/RunLeft.png', { size: [220, 220], frames: 8 });
-  enemy2AnimationLeft = loadAnimation('./assets/images/Skeleton/WalkLeft.png', { size: [270, 270], frames: 4 });
-  enemyAnimationRight = loadAnimation('./assets/images/Goblin/RunRight.png', { size: [220, 220], frames: 8 });
-  enemy2AnimationRight = loadAnimation('./assets/images/Skeleton/WalkRight.png', { size: [270, 270], frames: 4 });
-  enemy3AnimationLeft = loadAnimation('./assets/images/bat_right.png', { size: [60.25, 64], frames: 4 });
-  enemy3AnimationRight = loadAnimation('./assets/images/bat_left.png', { size: [60.25, 64], frames: 4 });
+  goblinLeft = loadAnimation('./assets/images/Goblin/RunLeft.png', { size: [220, 220], frames: 8 });
+  goblinRight = loadAnimation('./assets/images/Goblin/RunRight.png', { size: [220, 220], frames: 8 });
 
-  enemyAnimationLeft.frameDelay = 10;
-  enemy2AnimationLeft.frameDelay = 15;
-  enemyAnimationRight.frameDelay = 10;
-  enemy2AnimationRight.frameDelay = 15;
+  skeletonLeft = loadAnimation('./assets/images/Skeleton/WalkLeft.png', { size: [270, 270], frames: 4 });
+  skeletonRight = loadAnimation('./assets/images/Skeleton/WalkRight.png', { size: [270, 270], frames: 4 });
+
+  batLeft = loadAnimation('./assets/images/bat_right.png', { size: [60.25, 64], frames: 4 });
+  batRight = loadAnimation('./assets/images/bat_left.png', { size: [60.25, 64], frames: 4 });
 }
 
 function preloadAttacks() {
@@ -209,92 +207,18 @@ function setupPlayer() {
 }
 
 function setupEnemies() {
-  enemy1 = createSprite(-2400, 465, 55, 100);
-  enemy1.rotationLock = true;
-
-  enemy1.addAnimation('left', enemyAnimationLeft);
-  enemy1.addAnimation('right', enemyAnimationRight);
-  enemy1.layer = 2;
-
-  enemy2 = createSprite(-1400, 465, 55, 100);
-  enemy2.rotationLock = true;
-
-  enemy2.addAnimation('left', enemyAnimationLeft.clone());
-  enemy2.addAnimation('right', enemyAnimationRight.clone());
-  enemy2.layer = 2;
-
-  enemy2_1 = createSprite(-1170, 150, 55, 100);
-  enemy2_1.rotationLock = true;
-  enemy2_1.collider = 'kinematic';
-
-  enemy2_1.addAnimation('left', enemy3AnimationLeft);
-  enemy2_1.addAnimation('right', enemy3AnimationRight);
-  enemy2_1.layer = 2;
-
-  enemy2_2 = createSprite(-730, 465, 55, 100);
-  enemy2_2.rotationLock = true;
-
-  enemy2_2.addAnimation('left', enemyAnimationLeft.clone());
-  enemy2_2.addAnimation('right', enemyAnimationRight.clone());
-  enemy2_2.layer = 2;
-
-  enemy2_3 = createSprite(1100, 465, 55, 100);
-  enemy2_3.rotationLock = true;
-
-  enemy2_3.addAnimation('left', enemyAnimationLeft.clone());
-  enemy2_3.addAnimation('right', enemyAnimationRight.clone());
-  enemy2_3.layer = 2;
-
-  enemy2_4 = createSprite(1400, 465, 55, 100);
-  enemy2_4.rotationLock = true;
-
-  enemy2_4.addAnimation('left', enemyAnimationLeft.clone());
-  enemy2_4.addAnimation('right', enemyAnimationRight.clone());
-  enemy2_4.layer = 2;
-
-  enemy2_5 = createSprite(3650, 250, 55, 100);
-  enemy2_5.rotationLock = true;
-
-  enemy2_5.addAnimation('left', enemy3AnimationLeft.clone());
-  enemy2_5.addAnimation('right', enemy3AnimationRight.clone());
-  enemy2_5.layer = 2;
-  enemy2_5.collider = 'kinematic';
-
-  enemy2_6 = createSprite(3650, 465, 55, 100);
-  enemy2_6.rotationLock = true;
-
-  enemy2_6.addAnimation('left', enemyAnimationLeft.clone());
-  enemy2_6.addAnimation('right', enemyAnimationRight.clone());
-  enemy2_6.layer = 2;
-
-  enemy2_7 = createSprite(4295, 170, 55, 100);
-  enemy2_7.rotationLock = true;
-
-  enemy2_7.addAnimation('left', enemy3AnimationLeft.clone());
-  enemy2_7.addAnimation('right', enemy3AnimationRight.clone());
-  enemy2_7.layer = 2;
-  enemy2_7.collider = 'kinematic';
-
-  enemy3 = createSprite(300, 445, 55, 100);
-  enemy3.rotationLock = true;
-
-  enemy3.addAnimation('left', enemy2AnimationLeft);
-  enemy3.addAnimation('right', enemy2AnimationRight);
-  enemy3.layer = 2;
-
-  enemy4 = createSprite(2300, 465, 55, 100);
-  enemy4.rotationLock = true;
-
-  enemy4.addAnimation('left', enemyAnimationLeft.clone());
-  enemy4.addAnimation('right', enemyAnimationRight.clone());
-  enemy4.layer = 2;
-
-  enemy5 = createSprite(2800, 465, 55, 100);
-  enemy5.rotationLock = true;
-
-  enemy5.addAnimation('left', enemy2AnimationLeft.clone());
-  enemy5.addAnimation('right', enemy2AnimationRight.clone());
-  enemy5.layer = 2;
+  enemy1 = new Enemy(-2400, 465, goblinLeft, goblinRight);
+  enemy2 = new Enemy(-1400, 465, goblinLeft, goblinRight);
+  enemy3 = new Bat(-1170, 170, batLeft, batRight);
+  enemy4 = new Enemy(-730, 465, goblinLeft, goblinRight);
+  enemy5 = new Enemy(1100, 465, goblinLeft, goblinRight);
+  enemy6 = new Enemy(1400, 465, goblinLeft, goblinRight);
+  enemy7 = new Bat(3650, 250, batLeft, batRight);
+  enemy8 = new Enemy(3650, 465, goblinLeft, goblinRight);
+  enemy9 = new Bat(4295, 170, batLeft, batRight);
+  enemy10 = new Enemy(300, 445, skeletonLeft, skeletonRight);
+  enemy11 = new Enemy(2300, 465, goblinLeft, goblinRight);
+  enemy12 = new Enemy(2800, 465, skeletonLeft, skeletonRight);
 }
 
 function setupAttacks() {
@@ -314,7 +238,7 @@ function setupAttacks() {
 function setupObjects() {
   // Barrels
   S1barrel1 = new Barrel(-3550, 475);
-  S1barrel2 = new Barrel(-3500, 475);
+  S1barrel2 = new Barrel(-3490, 475);
   barrel1 = new Barrel(-435, 475);
   barrel2 = new Barrel(-370, 475);
   S2barrel1 = new Barrel(3300, 475);
@@ -322,8 +246,8 @@ function setupObjects() {
 
   // Crates
   S1crate = new Crate(-3100, 470);
-  S1crate1 = new Crate(-2750, 404);
-  S1crate2 = new Crate(-2785, 470);
+  S1crate1 = new Crate(-2750, 400);
+  S1crate2 = new Crate(-2790, 470);
   S1crate3 = new Crate(-2715, 470);
   S1crate4 = new Crate(-1660, 470);
   crate = new Crate(-840, 470);
@@ -470,6 +394,20 @@ function drawGame() {
 
   // Background
   land.displayGame();
+
+  // Enemies
+  enemy1.display();
+  enemy2.display();
+  enemy3.display();
+  enemy4.display();
+  enemy5.display();
+  enemy6.display();
+  enemy7.display();
+  enemy8.display();
+  enemy9.display();
+  enemy10.display();
+  enemy11.display();
+  enemy12.display();
 
   // Barrels
   S1barrel1.display();
@@ -749,9 +687,6 @@ function attackStop() {
   }
 }
 
-var jumped = false;
-
-//geralt jump
 function jump(sprite) {
   sprite.vel.y += fallingSpeed;
   sprite.y += sprite.vel.y;
@@ -837,7 +772,7 @@ function jump(sprite) {
     }
   }
 
-  if (sprite.y >= floor1.getSprite().y && sprite.colliding(floor1.getSprite())) {
+  if (sprite.y >= floor1.getY() && sprite.colliding(floor1.getSprite())) {
     sprite.vel.y = 0;
   }
 
@@ -849,7 +784,7 @@ function jump(sprite) {
     }
   }
 
-  if (sprite.y >= floor2.getSprite().y && sprite.colliding(floor2.getSprite())) {
+  if (sprite.y >= floor2.getY() && sprite.colliding(floor2.getSprite())) {
     sprite.vel.y = 0;
   }
 
@@ -861,7 +796,7 @@ function jump(sprite) {
     }
   }
 
-  if (sprite.y >= well.getSprite().y && sprite.colliding(well.getSprite())) {
+  if (sprite.y >= well.getY() && sprite.colliding(well.getSprite())) {
     sprite.vel.y = 0;
   }
 
@@ -873,7 +808,7 @@ function jump(sprite) {
     }
   }
 
-  if (sprite.y >= platform1.getSprite().y && sprite.colliding(platform1.getSprite())) {
+  if (sprite.y >= platform1.getY() && sprite.colliding(platform1.getSprite())) {
     sprite.vel.y = 0;
   }
 
@@ -886,7 +821,7 @@ function jump(sprite) {
     }
   }
 
-  if (sprite.y >= platform2.getSprite().y && sprite.colliding(platform2.getSprite())) {
+  if (sprite.y >= platform2.getY() && sprite.colliding(platform2.getSprite())) {
     sprite.vel.y = 0;
   }
 
@@ -955,7 +890,7 @@ function jump(sprite) {
     }
   }
 
-  if (sprite.y >= S1sign.getSprite().y && sprite.colliding(S1sign.getSprite())) {
+  if (sprite.y >= S1sign.getY() && sprite.colliding(S1sign.getSprite())) {
     sprite.vel.y = 0;
   }
 
@@ -975,7 +910,7 @@ function jump(sprite) {
     }
   }
 
-  if (sprite.y >= S1platform1.getSprite().y && sprite.colliding(S1platform1.getSprite())) {
+  if (sprite.y >= S1platform1.getY() && sprite.colliding(S1platform1.getSprite())) {
     sprite.vel.y = 0;
   }
 
@@ -988,7 +923,7 @@ function jump(sprite) {
     }
   }
 
-  if (sprite.y >= S1platform2.getSprite().y && sprite.colliding(S1platform2.getSprite())) {
+  if (sprite.y >= S1platform2.getY() && sprite.colliding(S1platform2.getSprite())) {
     sprite.vel.y = 0;
   }
 
@@ -1024,7 +959,7 @@ function jump(sprite) {
     }
   }
 
-  if (sprite.y >= S2well.getSprite().y && sprite.colliding(S2well.getSprite())) {
+  if (sprite.y >= S2well.getY() && sprite.colliding(S2well.getSprite())) {
     sprite.vel.y = 0;
   }
 
@@ -1055,7 +990,7 @@ function jump(sprite) {
     }
   }
 
-  if (sprite.y >= S2floor1.getSprite().y && sprite.colliding(S2floor1.getSprite())) {
+  if (sprite.y >= S2floor1.getY() && sprite.colliding(S2floor1.getSprite())) {
     sprite.vel.y = 0;
   }
 
@@ -1068,7 +1003,7 @@ function jump(sprite) {
     }
   }
 
-  if (sprite.y >= S2platform1.getSprite().y && sprite.colliding(S2platform1.getSprite())) {
+  if (sprite.y >= S2platform1.getY() && sprite.colliding(S2platform1.getSprite())) {
     sprite.vel.y = 0;
   }
 
@@ -1082,7 +1017,7 @@ function jump(sprite) {
 
   }
 
-  if (sprite.y >= S2platform2.getSprite().y && sprite.colliding(S2platform2.getSprite())) {
+  if (sprite.y >= S2platform2.getY() && sprite.colliding(S2platform2.getSprite())) {
     sprite.vel.y = 0;
   }
 }
@@ -1123,27 +1058,27 @@ var life_counter = 0;
 
 function enemyMovementAndAttackCollision() {
   //first enemy
-  if (enemy1.y > minHeight) {
-    enemy1.y = minHeight;
+  if (enemy1.getY() > minHeight) {
+    enemy1.getY() = minHeight;
   }
 
-  if (enemy1.x <= -2230 && collided == false) {
-    enemy1.vel.x = 1;
+  if (enemy1.getX() <= -2230 && collided == false) {
+    enemy1.setVelX(1);
     collided = true;
-    enemy1.changeAnimation('left');
+    enemy1.getSprite().changeAnimation('left');
   }
 
-  if (enemy1.collided(S1wagon.getSprite())) {
-    enemy1.vel.x = -1;
-    enemy1.changeAnimation('right');
+  if (enemy1.getSprite().collided(S1wagon.getSprite())) {
+    enemy1.setVelX(-1);
+    enemy1.getSprite().changeAnimation('right');
   }
 
-  if (enemy1.collided(S1crate3.getSprite())) {
-    enemy1.vel.x = 1;
-    enemy1.changeAnimation('left');
+  if (enemy1.getSprite().collided(S1crate3.getSprite())) {
+    enemy1.setVelX(1);
+    enemy1.getSprite().changeAnimation('left');
   }
 
-  if (enemy1.overlaps(geralt)) {
+  if (enemy1.getSprite().overlaps(geralt)) {
     life_counter++;
     if (life_counter < 6) {
       geralt_hit.play();
@@ -1169,37 +1104,37 @@ function enemyMovementAndAttackCollision() {
       geralt_death.play();
     }
 
-    if (geralt.x > enemy1.x) {
-      enemy1.vel.x = -1;
-      enemy1.changeAnimation('right');
+    if (geralt.x > enemy1.getX()) {
+      enemy1.setVelX(-1);
+      enemy1.getSprite().changeAnimation('right');
     } else {
-      enemy1.vel.x = 1;
-      enemy1.changeAnimation('left');
+      enemy1.setVelX(1);
+      enemy1.getSprite().changeAnimation('left');
     }
   }
 
   //second enemy 
-  if (enemy2.y > minHeight) {
-    enemy2.y = minHeight;
+  if (enemy2.getY() > minHeight) {
+    enemy2.getY() = minHeight;
   }
 
-  if (enemy2.x <= -840 && collided2nd == false) {
-    enemy2.vel.x = 1.2;
+  if (enemy2.getX() <= -840 && collided2nd == false) {
+    enemy2.setVelX(1.2);
     collided2nd = true;
-    enemy2.changeAnimation('left');
+    enemy2.getSprite().changeAnimation('left');
   }
 
-  if (enemy2.collided(crate.getSprite())) {
-    enemy2.vel.x = -1.2;
-    enemy2.changeAnimation('right');
+  if (enemy2.getSprite().collided(crate.getSprite())) {
+    enemy2.setVelX(-1.2);
+    enemy2.getSprite().changeAnimation('right');
   }
 
-  if (enemy2.collided(S1crate4.getSprite())) {
-    enemy2.vel.x = 1.2;
-    enemy2.changeAnimation('left');
+  if (enemy2.getSprite().collided(S1crate4.getSprite())) {
+    enemy2.setVelX(1.2);
+    enemy2.getSprite().changeAnimation('left');
   }
 
-  if (enemy2.overlaps(geralt)) {
+  if (enemy2.getSprite().overlaps(geralt)) {
     life_counter++
     if (life_counter < 6) {
       geralt_hit.play();
@@ -1225,33 +1160,33 @@ function enemyMovementAndAttackCollision() {
       geralt_death.play();
     }
 
-    if (geralt.x > enemy2.x) {
-      enemy2.vel.x = -1.2;
-      enemy2.changeAnimation('right');
+    if (geralt.x > enemy2.getX()) {
+      enemy2.setVelX(-1.2);
+      enemy2.getSprite().changeAnimation('right');
     } else {
-      enemy2.vel.x = 1.2;
-      enemy2.changeAnimation('left');
+      enemy2.setVelX(1.2);
+      enemy2.getSprite().changeAnimation('left');
     }
   }
 
   //first enemy vol2
-  if (enemy2_1.x <= -840 && collided2nd_vol2 == false) {
-    enemy2_1.vel.x = 1.2;
+  if (enemy3.getX() <= -840 && collided2nd_vol2 == false) {
+    enemy3.setVelX(1.2);
     collided2nd_vol2 = true;
-    enemy2_1.changeAnimation('left');
+    enemy3.getSprite().changeAnimation('left');
   }
 
-  if (enemy2_1.x >= crate.getX()) {
-    enemy2_1.vel.x = -1.2;
-    enemy2_1.changeAnimation('right');
+  if (enemy3.getX() >= crate.getX()) {
+    enemy3.setVelX(-1.2);
+    enemy3.getSprite().changeAnimation('right');
   }
 
-  if (enemy2_1.x <= S1sign.getSprite().x) {
-    enemy2_1.vel.x = 1.2;
-    enemy2_1.changeAnimation('left');
+  if (enemy3.getX() <= S1sign.getX()) {
+    enemy3.setVelX(1.2);
+    enemy3.getSprite().changeAnimation('left');
   }
 
-  if (enemy2_1.overlaps(geralt)) {
+  if (enemy3.getSprite().overlaps(geralt)) {
     life_counter++
     if (life_counter < 6) {
       geralt_hit.play();
@@ -1277,37 +1212,37 @@ function enemyMovementAndAttackCollision() {
       geralt_death.play();
     }
 
-    if (geralt.x > enemy2_1.x) {
-      enemy2_1.vel.x = -1.2;
-      enemy2_1.changeAnimation('right');
+    if (geralt.x > enemy3.getX()) {
+      enemy3.setVelX(-1.2);
+      enemy3.getSprite().changeAnimation('right');
     } else {
-      enemy2_1.vel.x = 1.2;
-      enemy2_1.changeAnimation('left');
+      enemy3.setVelX(1.2);
+      enemy3.getSprite().changeAnimation('left');
     }
   }
 
   //second enemy vol 2 
-  if (enemy2_2.y > minHeight) {
-    enemy2_2.y = minHeight;
+  if (enemy4.getY() > minHeight) {
+    enemy4.getY() = minHeight;
   }
 
-  if (enemy2_2.x <= -730 && collided3rd_vol2 == false) {
-    enemy2_2.vel.x = 1.2;
+  if (enemy4.getX() <= -730 && collided3rd_vol2 == false) {
+    enemy4.setVelX(1.2);
     collided3rd_vol2 = true;
-    enemy2_2.changeAnimation('left');
+    enemy4.getSprite().changeAnimation('left');
   }
 
-  if (enemy2_2.collided(crate.getSprite())) {
-    enemy2_2.vel.x = 1.2;
-    enemy2_2.changeAnimation('left');
+  if (enemy4.getSprite().collided(crate.getSprite())) {
+    enemy4.setVelX(1.2);
+    enemy4.getSprite().changeAnimation('left');
   }
 
-  if (enemy2_2.collided(barrel1.getSprite())) {
-    enemy2_2.vel.x = -1.2;
-    enemy2_2.changeAnimation('right');
+  if (enemy4.getSprite().collided(barrel1.getSprite())) {
+    enemy4.setVelX(-1.2);
+    enemy4.getSprite().changeAnimation('right');
   }
 
-  if (enemy2_2.overlaps(geralt)) {
+  if (enemy4.getSprite().overlaps(geralt)) {
     life_counter++
     if (life_counter < 6) {
       geralt_hit.play();
@@ -1333,37 +1268,37 @@ function enemyMovementAndAttackCollision() {
       geralt_death.play();
     }
 
-    if (geralt.x > enemy2_2.x) {
-      enemy2_2.vel.x = -1.2;
-      enemy2_2.changeAnimation('right');
+    if (geralt.x > enemy4.getX()) {
+      enemy4.setVelX(-1.2);
+      enemy4.getSprite().changeAnimation('right');
     } else {
-      enemy2_2.vel.x = 1.2;
-      enemy2_2.changeAnimation('left');
+      enemy4.setVelX(1.2);
+      enemy4.getSprite().changeAnimation('left');
     }
   }
 
   //third enemy vol 2
-  if (enemy2_3.y > minHeight) {
-    enemy2_3.y = minHeight;
+  if (enemy5.getY() > minHeight) {
+    enemy5.getY() = minHeight;
   }
 
-  if (enemy2_3.x <= 1200 && collided4th_vol2 == false) {
-    enemy2_3.vel.x = 1.2;
+  if (enemy5.getX() <= 1200 && collided4th_vol2 == false) {
+    enemy5.setVelX(1.2);
     collided4th_vol2 = true;
-    enemy2_3.changeAnimation('left');
+    enemy5.getSprite().changeAnimation('left');
   }
 
-  if (enemy2_3.collided(crate3.getSprite())) {
-    enemy2_3.vel.x = 1.2;
-    enemy2_3.changeAnimation('left');
+  if (enemy5.getSprite().collided(crate3.getSprite())) {
+    enemy5.setVelX(1.2);
+    enemy5.getSprite().changeAnimation('left');
   }
 
-  if (enemy2_3.collided(well.getSprite())) {
-    enemy2_3.vel.x = -1.2;
-    enemy2_3.changeAnimation('right');
+  if (enemy5.getSprite().collided(well.getSprite())) {
+    enemy5.setVelX(-1.2);
+    enemy5.getSprite().changeAnimation('right');
   }
 
-  if (enemy2_3.overlaps(geralt)) {
+  if (enemy5.getSprite().overlaps(geralt)) {
     life_counter++
 
     if (life_counter < 6) {
@@ -1390,37 +1325,37 @@ function enemyMovementAndAttackCollision() {
       geralt_death.play();
     }
 
-    if (geralt.x > enemy2_3.x) {
-      enemy2_3.vel.x = -1.2;
-      enemy2_3.changeAnimation('right');
+    if (geralt.x > enemy5.getX()) {
+      enemy5.setVelX(-1.2);
+      enemy5.getSprite().changeAnimation('right');
     } else {
-      enemy2_3.vel.x = 1.2;
-      enemy2_3.changeAnimation('left');
+      enemy5.setVelX(1.2);
+      enemy5.getSprite().changeAnimation('left');
     }
   }
 
   //fourth enemy vol 2
-  if (enemy2_4.y > minHeight) {
-    enemy2_4.y = minHeight;
+  if (enemy6.getY() > minHeight) {
+    enemy6.getY() = minHeight;
   }
 
-  if (enemy2_4.x <= 1400 && collided5th_vol2 == false) {
-    enemy2_4.vel.x = 1.2;
+  if (enemy6.getX() <= 1400 && collided5th_vol2 == false) {
+    enemy6.setVelX(1.2);
     collided5th_vol2 = true;
-    enemy2_4.changeAnimation('left');
+    enemy6.getSprite().changeAnimation('left');
   }
 
-  if (enemy2_4.collided(well.getSprite())) {
-    enemy2_4.vel.x = 1.2;
-    enemy2_4.changeAnimation('left');
+  if (enemy6.getSprite().collided(well.getSprite())) {
+    enemy6.setVelX(1.2);
+    enemy6.getSprite().changeAnimation('left');
   }
 
-  if (enemy2_4.collided(S2crate2.getSprite())) {
-    enemy2_4.vel.x = -1.2;
-    enemy2_4.changeAnimation('right');
+  if (enemy6.getSprite().collided(S2crate2.getSprite())) {
+    enemy6.setVelX(-1.2);
+    enemy6.getSprite().changeAnimation('right');
   }
 
-  if (enemy2_4.overlaps(geralt)) {
+  if (enemy6.getSprite().overlaps(geralt)) {
     life_counter++
     if (life_counter < 6) {
       geralt_hit.play();
@@ -1446,33 +1381,33 @@ function enemyMovementAndAttackCollision() {
       geralt_death.play();
     }
 
-    if (geralt.x > enemy2_4.x) {
-      enemy2_4.vel.x = -1.2;
-      enemy2_4.changeAnimation('right');
+    if (geralt.x > enemy6.getX()) {
+      enemy6.setVelX(-1.2);
+      enemy6.getSprite().changeAnimation('right');
     } else {
-      enemy2_4.vel.x = 1.2;
-      enemy2_4.changeAnimation('left');
+      enemy6.setVelX(1.2);
+      enemy6.getSprite().changeAnimation('left');
     }
   }
 
   //fifth enemy vol 2
-  if (enemy2_5.x <= 3700 && collided7th_vol2 == false) {
-    enemy2_5.vel.x = 2;
+  if (enemy7.getX() <= 3700 && collided7th_vol2 == false) {
+    enemy7.setVelX(2);
     collided7th_vol2 = true;
-    enemy2_5.changeAnimation('left');
+    enemy7.getSprite().changeAnimation('left');
   }
 
-  if (enemy2_5.x >= S2platform1.getSprite().x) {
-    enemy2_5.vel.x = -2;
-    enemy2_5.changeAnimation('right');
+  if (enemy7.getX() >= S2platform1.getX()) {
+    enemy7.setVelX(-2);
+    enemy7.getSprite().changeAnimation('right');
   }
 
-  if (enemy2_5.x <= S2barrel1.getSprite().x) {
-    enemy2_5.vel.x = 2;
-    enemy2_5.changeAnimation('left');
+  if (enemy7.getX() <= S2barrel1.getX()) {
+    enemy7.setVelX(2);
+    enemy7.getSprite().changeAnimation('left');
   }
 
-  if (enemy2_5.overlaps(geralt)) {
+  if (enemy7.getSprite().overlaps(geralt)) {
     life_counter++
 
     if (life_counter < 6) {
@@ -1499,40 +1434,40 @@ function enemyMovementAndAttackCollision() {
       geralt_death.play();
     }
 
-    if (geralt.x > enemy2_5.x) {
-      enemy2_5.vel.x = -2;
-      enemy2_5.changeAnimation('right');
+    if (geralt.x > enemy7.getX()) {
+      enemy7.gsetVelX(-2);
+      enemy7.getSprite().changeAnimation('right');
 
     } else {
-      enemy2_5.vel.x = 2;
-      enemy2_5.changeAnimation('left');
+      enemy7.setVelX(2);
+      enemy7.getSprite().changeAnimation('left');
     }
   }
 
   //sixth enemy vol 2
-  if (enemy2_6.y > minHeight) {
-    enemy2_6.y = minHeight;
+  if (enemy8.getY() > minHeight) {
+    enemy8.getY() = minHeight;
   }
 
-  if (enemy2_6.x <= 3800 && collided6th_vol2 == false) {
+  if (enemy8.getX() <= 3800 && collided6th_vol2 == false) {
 
-    enemy2_6.vel.x = 2;
+    enemy8.setVelX(2);
     collided6th_vol2 = true;
-    enemy2_6.changeAnimation('left');
+    enemy8.getSprite().changeAnimation('left');
   }
 
-  if (enemy2_6.collided(S2barrel2.getSprite())) {
+  if (enemy8.getSprite().collided(S2barrel2.getSprite())) {
 
-    enemy2_6.vel.x = 2;
-    enemy2_6.changeAnimation('left');
+    enemy8.setVelX(2);
+    enemy8.getSprite().changeAnimation('left');
   }
 
-  if (enemy2_6.x >= 4480) {
-    enemy2_6.vel.x = -2;
-    enemy2_6.changeAnimation('right');
+  if (enemy8.getX() >= 4480) {
+    enemy8.setVelX(-2);
+    enemy8.getSprite().changeAnimation('right');
   }
 
-  if (enemy2_6.overlaps(geralt)) {
+  if (enemy8.getSprite().overlaps(geralt)) {
     life_counter++
     if (life_counter < 6) {
       geralt_hit.play();
@@ -1558,35 +1493,35 @@ function enemyMovementAndAttackCollision() {
       geralt_death.play();
     }
 
-    if (geralt.x > enemy2_6.x) {
-      enemy2_6.vel.x = -2;
-      enemy2_6.changeAnimation('right');
+    if (geralt.x > enemy8.getX()) {
+      enemy8.setVelX(-2);
+      enemy8.getSprite().changeAnimation('right');
     } else {
-      enemy2_6.vel.x = 2;
-      enemy2_6.changeAnimation('left');
+      enemy8.setVelX(2);
+      enemy8.getSprite().changeAnimation('left');
     }
   }
 
   //seventh enemy vol 2
-  if (enemy2_7.x <= 3700 && collided8th_vol2 == false) {
-    enemy2_7.vel.x = -1.5;
+  if (enemy9.getX() <= 3700 && collided8th_vol2 == false) {
+    enemy9.setVelX(-1.5);
     collided8th_vol2 = true;
-    enemy2_7.changeAnimation('right');
+    enemy9.getSprite().changeAnimation('right');
 
   }
 
-  if (enemy2_7.x >= S2platform2.getSprite().x) {
-    enemy2_7.vel.x = -1.5;
-    enemy2_7.changeAnimation('right');
+  if (enemy9.getX() >= S2platform2.getX()) {
+    enemy9.setVelX(-1.5);
+    enemy9.getSprite().changeAnimation('right');
 
   }
 
-  if (enemy2_7.x <= S2floor1.getSprite().x) {
-    enemy2_7.vel.x = 1.5;
-    enemy2_7.changeAnimation('left');
+  if (enemy9.getX() <= S2floor1.getX()) {
+    enemy9.setVelX(1.5);
+    enemy9.getSprite().changeAnimation('left');
   }
 
-  if (enemy2_7.overlaps(geralt)) {
+  if (enemy9.getSprite().overlaps(geralt)) {
     life_counter++
 
     if (life_counter < 6) {
@@ -1613,38 +1548,38 @@ function enemyMovementAndAttackCollision() {
       geralt_death.play();
     }
 
-    if (geralt.x > enemy2_7.x) {
-      enemy2_7.vel.x = -1.5;
-      enemy2_7.changeAnimation('right');
+    if (geralt.x > enemy9.getX()) {
+      enemy9.setVelX(-1.5);
+      enemy9.getSprite().changeAnimation('right');
 
     } else {
-      enemy2_7.vel.x = 1.5;
-      enemy2_7.changeAnimation('left');
+      enemy9.setVelX(1.5);
+      enemy9.getSprite().changeAnimation('left');
     }
   }
 
   //third enemy
-  if (enemy3.y > minHeight) {
-    enemy3.y = minHeight;
+  if (enemy10.getY() > minHeight) {
+    enemy10.getY() = minHeight;
   }
 
-  if (enemy3.x <= 595 && collided3rd == false) {
-    enemy3.vel.x = 1.2;
+  if (enemy10.getX() <= 595 && collided3rd == false) {
+    enemy10.setVelX(1.2);
     collided3rd = true;
-    enemy3.changeAnimation('left');
+    enemy10.getSprite().changeAnimation('left');
   }
 
-  if (enemy3.collided(crate2.getSprite())) {
-    enemy3.vel.x = -1.2;
-    enemy3.changeAnimation('right');
+  if (enemy10.getSprite().collided(crate2.getSprite())) {
+    enemy10.setVelX(-1.2);
+    enemy10.getSprite().changeAnimation('right');
   }
 
-  if (enemy3.collided(wagon.getSprite())) {
-    enemy3.vel.x = 1.2;
-    enemy3.changeAnimation('left');
+  if (enemy10.getSprite().collided(wagon.getSprite())) {
+    enemy10.setVelX(1.2);
+    enemy10.getSprite().changeAnimation('left');
   }
 
-  if (enemy3.overlaps(geralt)) {
+  if (enemy10.getSprite().overlaps(geralt)) {
     life_counter++;
 
     if (life_counter < 6) {
@@ -1671,38 +1606,38 @@ function enemyMovementAndAttackCollision() {
     else {
       geralt_death.play();
     }
-    if (geralt.x > enemy3.x) {
-      enemy3.vel.x = -1.2;
-      enemy3.changeAnimation('right');
+    if (geralt.x > enemy10.getX()) {
+      enemy10.setVelX(-1.2);
+      enemy10.getSprite().changeAnimation('right');
     }
     else {
-      enemy3.vel.x = 1.2;
-      enemy3.changeAnimation('left');
+      enemy10.setVelX(1.2);
+      enemy10.getSprite().changeAnimation('left');
     }
   }
 
   //fourth enemy
-  if (enemy4.y > minHeight) {
-    enemy4.y = minHeight;
+  if (enemy11.getY() > minHeight) {
+    enemy11.getY() = minHeight;
   }
 
-  if (enemy4.x <= 2740 && collided4th == false) {
-    enemy4.vel.x = 1.6;
+  if (enemy11.getX() <= 2740 && collided4th == false) {
+    enemy11.setVelX(1.6);
     collided4th = true;
-    enemy4.changeAnimation('left');
+    enemy11.getSprite().changeAnimation('left');
   }
 
-  if (enemy4.collided(S2well.getSprite())) {
-    enemy4.vel.x = -1.6;
-    enemy4.changeAnimation('right');
+  if (enemy11.getSprite().collided(S2well.getSprite())) {
+    enemy11.setVelX(-1.6);
+    enemy11.getSprite().changeAnimation('right');
   }
 
-  if (enemy4.collided(S2crate3.getSprite())) {
-    enemy4.vel.x = 1.6;
-    enemy4.changeAnimation('left');
+  if (enemy11.getSprite().collided(S2crate3.getSprite())) {
+    enemy11.setVelX(1.6);
+    enemy11.getSprite().changeAnimation('left');
   }
 
-  if (enemy4.overlaps(geralt)) {
+  if (enemy11.getSprite().overlaps(geralt)) {
     life_counter++;
     if (life_counter < 6) {
       geralt_hit.play();
@@ -1728,37 +1663,37 @@ function enemyMovementAndAttackCollision() {
       geralt_death.play();
     }
 
-    if (geralt.x > enemy4.x) {
-      enemy4.vel.x = -1.6;
-      enemy4.changeAnimation('right');
+    if (geralt.x > enemy11.getX()) {
+      enemy11.setVelX(-1.6);
+      enemy11.getSprite().changeAnimation('right');
     } else {
-      enemy4.vel.x = 1.6;
-      enemy4.changeAnimation('left');
+      enemy11.setVelX(1.6);
+      enemy11.getSprite().changeAnimation('left');
     }
   }
 
   //fifth enemy
-  if (enemy5.y > minHeight) {
-    enemy5.y = minHeight;
+  if (enemy12.getY() > minHeight) {
+    enemy12.getY() = minHeight;
   }
 
-  if (enemy5.x <= 3290 && collided5th == false) {
-    enemy5.vel.x = 1.4;
+  if (enemy12.getX() <= 3290 && collided5th == false) {
+    enemy12.setVelX(1.4);
     collided5th = true;
-    enemy5.changeAnimation('left');
+    enemy12.getSprite().changeAnimation('left');
   }
 
-  if (enemy5.collided(S2barrel1.getSprite())) {
-    enemy5.vel.x = -1.4;
-    enemy5.changeAnimation('right');
+  if (enemy12.getSprite().collided(S2barrel1.getSprite())) {
+    enemy12.setVelX(-1.4);
+    enemy12.getSprite().changeAnimation('right');
   }
 
-  if (enemy5.collided(S2well.getSprite())) {
-    enemy5.vel.x = 1.4;
-    enemy5.changeAnimation('left');
+  if (enemy12.getSprite().collided(S2well.getSprite())) {
+    enemy12.setVelX(1.4);
+    enemy12.getSprite().changeAnimation('left');
   }
 
-  if (enemy5.overlaps(geralt)) {
+  if (enemy12.getSprite().overlaps(geralt)) {
     life_counter++;
 
     if (life_counter > 6) {
@@ -1781,383 +1716,383 @@ function enemyMovementAndAttackCollision() {
       }
     }
 
-    if (geralt.x > enemy5.x) {
-      enemy5.vel.x = -1.4;
-      enemy5.changeAnimation('right');
+    if (geralt.x > enemy12.getX()) {
+      enemy12.setVelX(-1.4);
+      enemy12.getSprite().changeAnimation('right');
     }
     else {
-      enemy5.vel.x = 1.4;
-      enemy5.changeAnimation('left');
+      enemy12.setVelX(1.4);
+      enemy12.getSprite().changeAnimation('left');
     }
   }
 
-  if (slash_attack.overlaps(enemy1)) {
+  if (slash_attack.overlaps(enemy1.getSprite())) {
     slash_attack.remove();
     attackingB = false;
     enemy_hit.play();
     counter_attack[0]++;
 
     if (counter_attack[0] == 2) {
-      enemy1.remove();
+      enemy1.getSprite().remove();
       goblin_death.play();
     }
   }
 
-  if (slash_attack.overlaps(enemy2)) {
+  if (slash_attack.overlaps(enemy2.getSprite())) {
     slash_attack.remove();
     attackingB = false;
     enemy_hit.play();
     counter_attack[1]++;
 
     if (counter_attack[1] == 2) {
-      enemy2.remove();
+      enemy2.getSprite().remove();
       goblin_death.play();
     }
   }
 
-  if (slash_attack.overlaps(enemy2_1)) {
+  if (slash_attack.overlaps(enemy3.getSprite())) {
     slash_attack.remove();
     attackingB = false;
     enemy_hit.play();
     counter_attack[3]++;
 
     if (counter_attack[3] == 2) {
-      enemy2_1.remove();
+      enemy3.getSprite().remove();
       bat_death.play();
     }
   }
 
-  if (slash_attack.overlaps(enemy2_2)) {
+  if (slash_attack.overlaps(enemy4.getSprite())) {
     slash_attack.remove();
     attackingB = false;
     enemy_hit.play();
     counter_attack[4]++;
 
     if (counter_attack[4] == 2) {
-      enemy2_2.remove();
+      enemy4.getSprite().remove();
       goblin_death.play();
     }
   }
 
-  if (slash_attack.overlaps(enemy2_3)) {
+  if (slash_attack.overlaps(enemy5.getSprite())) {
     slash_attack.remove();
     attackingB = false;
     enemy_hit.play();
     counter_attack[5]++;
 
     if (counter_attack[5] == 2) {
-      enemy2_3.remove();
+      enemy5.getSprite().remove();
       goblin_death.play();
     }
   }
 
-  if (slash_attack.overlaps(enemy2_4)) {
+  if (slash_attack.overlaps(enemy6.getSprite())) {
     slash_attack.remove();
     attackingB = false;
     enemy_hit.play();
     counter_attack[6]++;
 
     if (counter_attack[6] == 2) {
-      enemy2_4.remove();
+      enemy6.getSprite().remove();
       goblin_death.play();
     }
   }
 
-  if (slash_attack.overlaps(enemy2_5)) {
+  if (slash_attack.overlaps(enemy7.getSprite())) {
     slash_attack.remove();
     attackingB = false;
     enemy_hit.play();
     counter_attack[7]++;
 
     if (counter_attack[7] == 2) {
-      enemy2_5.remove();
+      enemy7.getSprite().remove();
       bat_death.play();
     }
   }
 
-  if (slash_attack.overlaps(enemy2_6)) {
+  if (slash_attack.overlaps(enemy8.getSprite())) {
     slash_attack.remove();
     attackingB = false;
     enemy_hit.play();
     counter_attack[8]++;
 
     if (counter_attack[8] == 2) {
-      enemy2_6.remove();
+      enemy8.getSprite().remove();
       goblin_death.play();
     }
   }
 
-  if (slash_attack.overlaps(enemy2_7)) {
+  if (slash_attack.overlaps(enemy9.getSprite())) {
     slash_attack.remove();
     attackingB = false;
     enemy_hit.play();
     counter_attack[9]++;
 
     if (counter_attack[9] == 2) {
-      enemy2_7.remove();
+      enemy9.getSprite().remove();
       bat_death.play();
     }
   }
 
-  if (slash_attack.overlaps(enemy3)) {
+  if (slash_attack.overlaps(enemy10.getSprite())) {
     slash_attack.remove();
     attackingB = false;
     enemy_hit.play();
     counter_attack_skeleton[0]++;
 
     if (counter_attack_skeleton[0] == 4) {
-      enemy3.remove();
+      enemy10.getSprite().remove();
       skeleton_death.play();
     }
   }
 
-  if (slash_attack.overlaps(enemy4)) {
+  if (slash_attack.overlaps(enemy11.getSprite())) {
     slash_attack.remove();
     attackingB = false;
     enemy_hit.play();
     counter_attack[2]++;
 
     if (counter_attack[2] == 2) {
-      enemy4.remove();
+      enemy11.getSprite().remove();
       goblin_death.play();
     }
   }
 
-  if (slash_attack.overlaps(enemy5)) {
+  if (slash_attack.overlaps(enemy12.getSprite())) {
     slash_attack.remove();
     attackingB = false;
     enemy_hit.play();
     counter_attack_skeleton[1]++;
 
     if (counter_attack_skeleton[1] == 4) {
-      enemy5.remove();
+      enemy12.getSprite().remove();
       skeleton_death.play();
     }
   }
 
-  if (slash_attack2.overlaps(enemy1)) {
+  if (slash_attack2.overlaps(enemy1.getSprite())) {
     slash_attack2.remove();
     attackingC = false;
     enemy_hit.play();
     counter_attack[0]++;
 
     if (counter_attack[0] == 2) {
-      enemy1.remove();
+      enemy1.getSprite().remove();
       goblin_death.play();
     }
   }
 
-  if (slash_attack2.overlaps(enemy2)) {
+  if (slash_attack2.overlaps(enemy2.getSprite())) {
     slash_attack2.remove();
     attackingC = false;
     enemy_hit.play();
     counter_attack[1]++;
 
     if (counter_attack[1] == 2) {
-      enemy2.remove();
+      enemy2.getSprite().remove();
       goblin_death.play();
     }
   }
 
-  if (slash_attack2.overlaps(enemy2_1)) {
+  if (slash_attack2.overlaps(enemy3.getSprite())) {
     slash_attack2.remove();
     attackingC = false;
     enemy_hit.play();
     counter_attack[3]++;
 
     if (counter_attack[3] == 2) {
-      enemy2_1.remove();
+      enemy3.getSprite().remove();
       bat_death.play();
     }
   }
 
-  if (slash_attack2.overlaps(enemy2_2)) {
+  if (slash_attack2.overlaps(enemy4.getSprite())) {
     slash_attack2.remove();
     attackingC = false;
     enemy_hit.play();
     counter_attack[4]++;
 
     if (counter_attack[4] == 2) {
-      enemy2_2.remove();
+      enemy4.getSprite().remove();
       goblin_death.play();
     }
   }
 
-  if (slash_attack2.overlaps(enemy2_3)) {
+  if (slash_attack2.overlaps(enemy5.getSprite())) {
     slash_attack2.remove();
     attackingC = false;
     enemy_hit.play();
     counter_attack[5]++;
 
     if (counter_attack[5] == 2) {
-      enemy2_3.remove();
+      enemy5.getSprite().remove();
       goblin_death.play();
     }
   }
 
-  if (slash_attack2.overlaps(enemy2_4)) {
+  if (slash_attack2.overlaps(enemy6.getSprite())) {
     slash_attack2.remove();
     attackingC = false;
     enemy_hit.play();
     counter_attack[6]++;
 
     if (counter_attack[6] == 2) {
-      enemy2_4.remove();
+      enemy6.getSprite().remove();
       goblin_death.play();
     }
   }
 
-  if (slash_attack2.overlaps(enemy2_5)) {
+  if (slash_attack2.overlaps(enemy7.getSprite())) {
     slash_attack2.remove();
     attackingC = false;
     enemy_hit.play();
     counter_attack[7]++;
 
     if (counter_attack[7] == 2) {
-      enemy2_5.remove();
+      enemy7.getSprite().remove();
       goblin_death.play();
     }
   }
 
-  if (slash_attack2.overlaps(enemy2_6)) {
+  if (slash_attack2.overlaps(enemy8.getSprite())) {
     slash_attack2.remove();
     attackingC = false;
     enemy_hit.play();
     counter_attack[8]++;
 
     if (counter_attack[8] == 2) {
-      enemy2_6.remove();
+      enemy8.getSprite().remove();
       goblin_death.play();
     }
   }
 
-  if (slash_attack2.overlaps(enemy2_7)) {
+  if (slash_attack2.overlaps(enemy9.getSprite())) {
     slash_attack2.remove();
     attackingC = false;
     enemy_hit.play();
     counter_attack[9]++;
 
     if (counter_attack[9] == 2) {
-      enemy2_7.remove();
+      enemy9.getSprite().remove();
       goblin_death.play();
     }
   }
 
-  if (slash_attack2.overlaps(enemy3)) {
+  if (slash_attack2.overlaps(enemy10.getSprite())) {
     slash_attack2.remove();
     attackingC = false;
     enemy_hit.play();
     counter_attack_skeleton[0]++;
 
     if (counter_attack_skeleton[0] == 4) {
-      enemy3.remove();
+      enemy10.getSprite().remove();
       skeleton_death.play();
     }
   }
 
-  if (slash_attack2.overlaps(enemy4)) {
+  if (slash_attack2.overlaps(enemy11.getSprite())) {
     slash_attack2.remove();
     attackingC = false;
     enemy_hit.play();
     counter_attack[2]++;
 
     if (counter_attack[2] == 2) {
-      enemy4.remove();
+      enemy11.getSprite().remove();
       goblin_death.play();
     }
   }
 
-  if (slash_attack2.overlaps(enemy5)) {
+  if (slash_attack2.overlaps(enemy12.getSprite())) {
     slash_attack2.remove();
     attackingC = false;
     enemy_hit.play();
     counter_attack_skeleton[1]++;
 
     if (counter_attack_skeleton[1] == 4) {
-      enemy5.remove();
+      enemy12.getSprite().remove();
       skeleton_death.play();
     }
   }
 
-  if (slash_attack3.overlaps(enemy1)) {
-    enemy1.remove();
+  if (slash_attack3.overlaps(enemy1.getSprite())) {
+    enemy1.getSprite().remove();
     slash_attack3.remove();
     attackingV = false;
     goblin_death.play();
   }
 
-  if (slash_attack3.overlaps(enemy2)) {
-    enemy2.remove();
+  if (slash_attack3.overlaps(enemy2.getSprite())) {
+    enemy2.getSprite().remove();
     slash_attack3.remove();
     attackingV = false;
     goblin_death.play();
   }
 
-  if (slash_attack3.overlaps(enemy2_1)) {
-    enemy2_1.remove();
+  if (slash_attack3.overlaps(enemy3.getSprite())) {
+    enemy3.getSprite().remove();
     slash_attack3.remove();
     attackingV = false;
     bat_death.play();
   }
 
-  if (slash_attack3.overlaps(enemy2_2)) {
-    enemy2_2.remove();
+  if (slash_attack3.overlaps(enemy4.getSprite())) {
+    enemy4.getSprite().remove();
     slash_attack3.remove();
     attackingV = false;
     goblin_death.play();
   }
 
-  if (slash_attack3.overlaps(enemy2_3)) {
-    enemy2_3.remove();
+  if (slash_attack3.overlaps(enemy5.getSprite())) {
+    enemy5.getSprite().remove();
     slash_attack3.remove();
     attackingV = false;
     goblin_death.play();
   }
 
-  if (slash_attack3.overlaps(enemy2_4)) {
-    enemy2_4.remove();
+  if (slash_attack3.overlaps(enemy6.getSprite())) {
+    enemy6.getSprite().remove();
     slash_attack3.remove();
     attackingV = false;
     goblin_death.play();
   }
 
-  if (slash_attack3.overlaps(enemy2_5)) {
-    enemy2_5.remove();
+  if (slash_attack3.overlaps(enemy7.getSprite())) {
+    enemy7.getSprite().remove();
     slash_attack3.remove();
     attackingV = false;
     goblin_death.play();
   }
 
-  if (slash_attack3.overlaps(enemy2_6)) {
-    enemy2_6.remove();
+  if (slash_attack3.overlaps(enemy8.getSprite())) {
+    enemy8.getSprite().remove();
     slash_attack3.remove();
     attackingV = false;
     goblin_death.play();
   }
 
-  if (slash_attack3.overlaps(enemy2_7)) {
-    enemy2_7.remove();
+  if (slash_attack3.overlaps(enemy9.getSprite())) {
+    enemy9.getSprite().remove();
     slash_attack3.remove();
     attackingV = false;
     goblin_death.play();
   }
 
-  if (slash_attack3.overlaps(enemy3)) {
-    enemy3.remove();
+  if (slash_attack3.overlaps(enemy10.getSprite())) {
+    enemy10.getSprite().remove();
     slash_attack3.remove();
     attackingV = false;
     skeleton_death.play();
   }
 
-  if (slash_attack3.overlaps(enemy4)) {
-    enemy4.remove();
+  if (slash_attack3.overlaps(enemy11.getSprite())) {
+    enemy11.getSprite().remove();
     slash_attack3.remove();
     attackingV = false;
     goblin_death.play();
   }
 
-  if (slash_attack3.overlaps(enemy5)) {
-    enemy5.remove();
+  if (slash_attack3.overlaps(enemy12.getSprite())) {
+    enemy12.getSprite().remove();
     slash_attack3.remove();
     attackingV = false;
     skeleton_death.play();
@@ -2408,13 +2343,13 @@ function spawnAttack() {
     attackingV = true;
   }
 
-  if (slash_attack.y >= minHeight) {   //COLLIDING ANTI GIA OVERLAPS AMA THELOUME NA KANEI KAI KNOCKBACK TO enemy1
+  if (slash_attack.y >= minHeight) {   //COLLIDING ANTI GIA OVERLAPS AMA THELOUME NA KANEI KAI KNOCKBACK TO enemy1.getSprite()
     slash_attack.y = minHeight;
     slash_attack.remove();
     attackingB = false;
   }
 
-  if (slash_attack2.y >= minHeight) {   //COLLIDING ANTI GIA OVERLAPS AMA THELOUME NA KANEI KAI KNOCKBACK TO enemy1
+  if (slash_attack2.y >= minHeight) {   //COLLIDING ANTI GIA OVERLAPS AMA THELOUME NA KANEI KAI KNOCKBACK TO enemy1.getSprite()
     slash_attack2.remove();
     attackingC = false;
   }
