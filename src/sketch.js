@@ -29,9 +29,6 @@ function preload() {
   // Preload Attacks
   preloadAttacks();
 
-  // Preload Objects
-  preloadObjects();
-
   // Preload Other Classes
   preloadOther();
 }
@@ -150,12 +147,6 @@ function preloadAttacks() {
   slash_thinRight = loadAnimation('./assets/images/Sword Slashes/slash_white_thinright.png', { size: [68.75, 50], frames: 6 });
   slash_Right = loadAnimation('./assets/images/Sword Slashes/slash_red_right.png', { size: [89.5, 65], frames: 6 });
   slash_Left = loadAnimation('./assets/images/Sword Slashes/slash_red_left.png', { size: [89.5, 65], frames: 6 });
-}
-
-function preloadObjects() {
-  platformImg = loadImage('./assets/images/platform.png');
-  platform1Img = loadImage('./assets/images/platform1.png');
-  platform2Img = loadImage('./assets/images/platform2.png');
 }
 
 function preloadOther() {
@@ -352,69 +343,12 @@ function setupObjects() {
   sign = new Sign(-189, 405);
 
   // Platforms
-  S1platform1a = createSprite(-1450, 320, 185, 20);
-  S1platform1a.collider = 'static';
-  S1platform1a.visible = false;
-
-  S1platform1b = createSprite(-1450, 405, 185, 20);
-  S1platform1b.collider = 'none';
-  platform1Img.resize(195, 195);
-  S1platform1b.addImage(platform1Img);
-
-  S1platform2a = createSprite(-1190, 285, 185, 20);
-  S1platform2a.collider = 'static';
-
-  S1platform2b = createSprite(-1190, 383, 185, 20);
-  S1platform2b.collider = 'none';
-  platform2Img.resize(195, 235);
-  S1platform2b.addImage(platform2Img);
-
-  platform1a = createSprite(1435, 320, 185, 20);
-  platform1a.collider = 'static';
-  platform1a.visible = false;
-
-  platform1b = createSprite(1435, 405, 185, 20);
-  platform1b.collider = 'none';
-  platform1Img.resize(195, 195);
-  platform1b.addImage(platform1Img);
-
-  platform2a = createSprite(1695, 285, 185, 20);
-  platform2a.collider = 'static';
-
-  platform2b = createSprite(1695, 383, 185, 20);
-  platform2b.collider = 'none';
-  platform2Img.resize(195, 235);
-  platform2b.addImage(platform2Img);
-
-  S2platform1a = createSprite(4030, 320, 185, 20);
-  S2platform1a.collider = 'static';
-  S2platform1a.visible = false;
-
-  S2platform1b = createSprite(4030, 405, 185, 20);
-  S2platform1b.collider = 'none';
-  platform1Img.resize(195, 195);
-  S2platform1b.addImage(platform1Img);
-
-  S2platform2a = createSprite(4295, 285, 185, 20);
-  S2platform2a.collider = 'static';
-
-  S2platform2b = createSprite(4295, 383, 185, 20);
-  S2platform2b.collider = 'none';
-  platform2Img.resize(195, 235);
-  S2platform2b.addImage(platform2Img);
-
-  S1platform1a.layer = 1;
-  S1platform1b.layer = 1;
-  S1platform2a.layer = 1;
-  S1platform2b.layer = 1;
-  platform1a.layer = 1;
-  platform1b.layer = 1;
-  platform2a.layer = 1;
-  platform2b.layer = 1;
-  S2platform1a.layer = 1;
-  S2platform1b.layer = 1;
-  S2platform2a.layer = 1;
-  S2platform2b.layer = 1;
+  S1platform1 = new PlatformShort(-1450, 415);
+  S1platform2 = new PlatformTall(-1190, 390);
+  platform1 = new PlatformShort(1435, 415);
+  platform2 = new PlatformTall(1695, 390);
+  S2platform1 = new PlatformShort(4030, 415);
+  S2platform2 = new PlatformTall(4295, 390);
 
   // Floors
   floor1 = new Floor(842, 390);
@@ -450,44 +384,53 @@ function setupOther() {
 
 function setupGroup() {
   obstacles = new Group();
+
+  // Barrels
   obstacles.add(S1barrel1.getSprite());
   obstacles.add(S1barrel2.getSprite());
+  obstacles.add(barrel1.getSprite());
+  obstacles.add(barrel2.getSprite());
+  obstacles.add(S2barrel1.getSprite());
+  obstacles.add(S2barrel2.getSprite());
 
+  // Crates
   obstacles.add(S1crate.getSprite());
   obstacles.add(S1crate1.getSprite());
   obstacles.add(S1crate2.getSprite());
   obstacles.add(S1crate3.getSprite());
   obstacles.add(S1crate4.getSprite());
-
-  obstacles.add(S1sign.getSprite());
-  obstacles.add(sign.getSprite());
-
-  obstacles.add(S1wagon.getSprite());
-
-  obstacles.add(S1platform1a);
-  obstacles.add(S1platform2a);
   obstacles.add(crate.getSprite());
   obstacles.add(crate1.getSprite());
   obstacles.add(crate2.getSprite());
   obstacles.add(crate3.getSprite());
-  obstacles.add(barrel1.getSprite());
-  obstacles.add(barrel2.getSprite());
-  obstacles.add(sign.getSprite());
-  obstacles.add(wagon.getSprite());
-  obstacles.add(floor1.getSprite());
-  obstacles.add(floor2.getSprite());
-  obstacles.add(well.getSprite());
-  obstacles.add(platform1a);
-  obstacles.add(platform2a);
   obstacles.add(S2crate1.getSprite());
   obstacles.add(S2crate2.getSprite());
   obstacles.add(S2crate3.getSprite());
-  obstacles.add(S2well.getSprite());
-  obstacles.add(S2barrel1.getSprite());
-  obstacles.add(S2barrel2.getSprite());
+
+  // Wagons
+  obstacles.add(S1wagon.getSprite());
+  obstacles.add(wagon.getSprite());
+
+  // Signs
+  obstacles.add(S1sign.getSprite());
+  obstacles.add(sign.getSprite());
+
+  // Platforms
+  obstacles.add(S1platform1.getSprite());
+  obstacles.add(S1platform2.getSprite());
+  obstacles.add(platform1.getSprite());
+  obstacles.add(platform2.getSprite());
+  obstacles.add(S2platform1.getSprite());
+  obstacles.add(S2platform2.getSprite());
+
+  // Floors
+  obstacles.add(floor1.getSprite());
+  obstacles.add(floor2.getSprite());
   obstacles.add(S2floor1.getSprite());
-  obstacles.add(S2platform1a);
-  obstacles.add(S2platform2a);
+
+  // Wells
+  obstacles.add(well.getSprite());
+  obstacles.add(S2well.getSprite());
 }
 
 // Draw Functions
@@ -525,7 +468,7 @@ function drawGame() {
   // Control camera
   camera.on();
 
-  // Draw background
+  // Background
   land.displayGame();
 
   // Barrels
@@ -557,6 +500,14 @@ function drawGame() {
   // Signs
   S1sign.display();
   sign.display();
+
+  // Platforms
+  S1platform1.display();
+  S1platform2.display();
+  platform1.display();
+  platform2.display();
+  S2platform1.display();
+  S2platform2.display();
 
   // Floors
   floor1.display();
@@ -604,7 +555,7 @@ function drawGame() {
   slashCollisionObjects();
   death();
 
-  //BOUNDARIES FOR PLAYER
+  // Player's Boundaries
   if (geralt.x <= -3550) {
     geralt.x = -3550;
   }
@@ -615,7 +566,6 @@ function drawGame() {
 
   jump(geralt);
 
-  //camera.y = geralt.y;
   if (geralt.x >= -3200 && geralt.x <= 4000) {
     camera.x = geralt.x + 50;
     kardia.setX(geralt.x - 320);
@@ -623,7 +573,7 @@ function drawGame() {
     kardia3.setX(geralt.x - 248);
   }
 
-  // Stop controlling camera
+  // Stop Controlling Camera
   camera.off();
 }
 
@@ -915,7 +865,7 @@ function jump(sprite) {
     sprite.vel.y = 0;
   }
 
-  if (sprite.colliding(platform1a)) {
+  if (sprite.colliding(platform1.getSprite())) {
     sprite.vel.y = 0;
 
     if (keyIsDown(UP_ARROW)) {
@@ -923,11 +873,11 @@ function jump(sprite) {
     }
   }
 
-  if (sprite.y >= platform1a.y && sprite.colliding(platform1a)) {
+  if (sprite.y >= platform1.getSprite().y && sprite.colliding(platform1.getSprite())) {
     sprite.vel.y = 0;
   }
 
-  if (sprite.colliding(platform2a)) {
+  if (sprite.colliding(platform2.getSprite())) {
     sprite.vel.y = 0;
 
     if (keyIsDown(UP_ARROW)) {
@@ -936,7 +886,7 @@ function jump(sprite) {
     }
   }
 
-  if (sprite.y >= platform2a.y && sprite.colliding(platform2a)) {
+  if (sprite.y >= platform2.getSprite().y && sprite.colliding(platform2.getSprite())) {
     sprite.vel.y = 0;
   }
 
@@ -1017,7 +967,7 @@ function jump(sprite) {
     }
   }
 
-  if (sprite.colliding(S1platform1a)) {
+  if (sprite.colliding(S1platform1.getSprite())) {
     sprite.vel.y = 0;
 
     if (keyIsDown(UP_ARROW)) {
@@ -1025,11 +975,11 @@ function jump(sprite) {
     }
   }
 
-  if (sprite.y >= S1platform1a.y && sprite.colliding(S1platform1a)) {
+  if (sprite.y >= S1platform1.getSprite().y && sprite.colliding(S1platform1.getSprite())) {
     sprite.vel.y = 0;
   }
 
-  if (sprite.colliding(S1platform2a)) {
+  if (sprite.colliding(S1platform2.getSprite())) {
     sprite.vel.y = 0;
 
     if (keyIsDown(UP_ARROW)) {
@@ -1038,7 +988,7 @@ function jump(sprite) {
     }
   }
 
-  if (sprite.y >= S1platform2a.y && sprite.colliding(S1platform2a)) {
+  if (sprite.y >= S1platform2.getSprite().y && sprite.colliding(S1platform2.getSprite())) {
     sprite.vel.y = 0;
   }
 
@@ -1109,7 +1059,7 @@ function jump(sprite) {
     sprite.vel.y = 0;
   }
 
-  if (sprite.colliding(S2platform1a)) {
+  if (sprite.colliding(S2platform1.getSprite())) {
     sprite.vel.y = 0;
 
     if (keyIsDown(UP_ARROW)) {
@@ -1118,11 +1068,11 @@ function jump(sprite) {
     }
   }
 
-  if (sprite.y >= S2platform1a.y && sprite.colliding(S2platform1a)) {
+  if (sprite.y >= S2platform1.getSprite().y && sprite.colliding(S2platform1.getSprite())) {
     sprite.vel.y = 0;
   }
 
-  if (sprite.colliding(S2platform2a)) {
+  if (sprite.colliding(S2platform2.getSprite())) {
     sprite.vel.y = 0;
 
     if (keyIsDown(UP_ARROW)) {
@@ -1132,7 +1082,7 @@ function jump(sprite) {
 
   }
 
-  if (sprite.y >= S2platform2a.y && sprite.colliding(S2platform2a)) {
+  if (sprite.y >= S2platform2.getSprite().y && sprite.colliding(S2platform2.getSprite())) {
     sprite.vel.y = 0;
   }
 }
@@ -1512,7 +1462,7 @@ function enemyMovementAndAttackCollision() {
     enemy2_5.changeAnimation('left');
   }
 
-  if (enemy2_5.x >= S2platform1a.x) {
+  if (enemy2_5.x >= S2platform1.getSprite().x) {
     enemy2_5.vel.x = -2;
     enemy2_5.changeAnimation('right');
   }
@@ -1625,7 +1575,7 @@ function enemyMovementAndAttackCollision() {
 
   }
 
-  if (enemy2_7.x >= S2platform2a.x) {
+  if (enemy2_7.x >= S2platform2.getSprite().x) {
     enemy2_7.vel.x = -1.5;
     enemy2_7.changeAnimation('right');
 

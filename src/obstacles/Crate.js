@@ -9,6 +9,7 @@ class Crate {
         this.sprite = createSprite(this.x, this.y, this.width, this.height);
         this.sprite.visible = false;
 
+        this.sprite.rotationLock = true;
         this.sprite.layer = 1;
     }
 
