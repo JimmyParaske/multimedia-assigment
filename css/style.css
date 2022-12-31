@@ -1,0 +1,104 @@
+* {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+}
+
+body {
+    background: orange;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+#navigation {
+    background: wheat;
+}
+
+#navigation .right {
+    float: right;
+}
+
+#navigation ul {
+    list-style-type: none;
+    height: 64px;
+    font-weight: bold;
+}
+
+#navigation ul .active {
+    background: red;
+}
+
+#navigation ul li {
+    float: left;
+}
+
+#navigation ul li:hover {
+    background: #fff;
+    color: #8b0000;
+}
+
+#navigation ul li a {
+    height: 64px;
+    line-height: 64px;
+    text-decoration: none;
+    padding: 0 15px;
+    color: black;
+}
+
+#main {
+    text-align: center;
+}
+
+#game {
+    display: flex;
+
+    /* This centers our sketch horizontally. */
+    justify-content: center;
+
+    /* This centers our sketch vertically. */
+    align-items: center;
+}
+
+#footer {
+    height: 50px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: #ebebeb;
+    line-height: 50px;
+    color: #7b7b7b;
+}
+
+#footer a {
+    color: #7b7b7b;
+    text-decoration: none;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#footer a:hover {
+    color: #000;
+}
+
+#footer .left {
+    float: left;
+}
+
+#footer .right {
+    float: right;
+}
+
+.button {
+    border: none;
+    color: white;
+    background-color: #4CAF50;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}

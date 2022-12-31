@@ -2,70 +2,41 @@
 <html lang="el">
 
 <head>
-    <title>Game</title>
-    <link rel="icon" type="image/x-icon" href="./assets/images/icon-small.png">
+    <title>Home</title>
+    <link rel="icon" type="image/x-icon" href="/assets/logo.png" alt="Λογότυπο">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="author" content="co-authored by Anastasios Mpourtsouklis, Dimitrios Paraskeuiotis">
-    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
-    <header class="header">
-        <nav class="menu">
-            <a class="logo" href="index.html">
-                <img src="./assets/images/icon.png">
-            </a>
+    <header id="header">
+        <nav id="navigation">
+            <ul>
+                <li class="active"><a href="/index.html">HOME</a></li>
+                <li><a href="/credits.html">CREDITS</a></li>
 
-            <div class="left-section">
-                <div class="item">
-                    <a href="">
-                        CONTROLLS
-                    </a>
+                <div class="right">
+                    <li><a href="">LOG IN</a></li>
+                    <li><a href="">SIGN UP</a></li>
                 </div>
-
-                <div class="item">
-                    <a href="">
-                        CREDITS
-                    </a>
-                </div>
-            </div>
-
-            <div class="right-section">
-                <div class="item">
-                    <a href="">
-                        LOG IN
-                    </a>
-                </div>
-
-                <div class="item">
-                    <a href="">
-                        SIGN UP
-                    </a>
-                </div>
-            </div>
+            </ul>
         </nav>
     </header>
 
-    <main>
-        <section class="game">
-            <h1 class="title">GAME</h1>
+    <main id="main">
+        <h1 class="title">GAME</h1>
 
-            <p class="description">prloupipes</p>
+        <p class="description">prloupipes</p>
 
-            <a href="play.html">
-                <button class="button">PLAY NOW</button>
-            </a>
-        </section>
-
-        <section class="previews">
-
-        </section>
+        <a href="play.html"><button class="button">PLAY NOW</button></a>
     </main>
 
-    <footer>
-
+    <footer id="footer">
+        <p class="left"> <a href="/index.html">Home</a> <span>|</span> <a href="/credits.html">Credits</a></p>
+        <p class="right">2022.</a></p>
     </footer>
 </body>
 

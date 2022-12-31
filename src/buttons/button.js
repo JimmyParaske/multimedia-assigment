@@ -18,12 +18,4 @@ class Button {
     getY() {
         return this.y;
     }
-
-    getWidth() {
-        return this.width;
-    }
-
-    getHeight() {
-        return this.height;
-    }
 }

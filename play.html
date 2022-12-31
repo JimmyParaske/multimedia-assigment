@@ -8,51 +8,72 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="author" content="co-authored by Anastasios Mpourtsouklis, Dimitrios Paraskeuiotis">
-  <link rel="stylesheet" href="./css/play.css">
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
-  <!-- libraries -->
-  <script src="./libraries/p5.min.js"></script>
-  <script src="./libraries/p5.sound.min.js"></script>
-  <script src="./libraries/p5.play.js"></script>
-  <script src="./libraries/planck.min.js"></script>
-  <script src="./libraries/p5.collide2d.js"></script>
-  <script src="./libraries/p5.collide2d.min.js"></script>
-  <script src="./libraries/auto-bump-version.js"></script>
+  <header id="header">
+    <nav id="navigation">
+      <ul>
+        <li><a href="/index.html">HOME</a></li>
+        <li><a href="/credits.html">CREDITS</a></li>
 
-  <!-- Background -->
-  <script src="./src/other/Landscape.js"></script>
+        <div class="right">
+          <li><a href="">LOG IN</a></li>
+          <li><a href="">SIGN UP</a></li>
+        </div>
+      </ul>
+    </nav>
+  </header>
 
-  <!-- Buttons -->
-  <script src="./src/buttons/Button.js"></script>
-  <script src="./src/buttons/TextButton.js"></script>
-  <script src="./src/buttons/ReturnButton.js"></script>
-  <script src="./src/buttons/SoundButton.js"></script>
+  <main>
+    <!-- libraries -->
+    <script src="./libraries/p5.min.js"></script>
+    <script src="./libraries/p5.sound.min.js"></script>
+    <script src="./libraries/p5.play.js"></script>
+    <script src="./libraries/planck.min.js"></script>
+    <script src="./libraries/p5.collide2d.js"></script>
+    <script src="./libraries/p5.collide2d.min.js"></script>
+    <script src="./libraries/auto-bump-version.js"></script>
 
-  <!-- Attacks -->
-  <script src="./src/attacks/SlashAttack.js"></script>
+    <!-- Background -->
+    <script src="./src/other/Landscape.js"></script>
 
-  <!-- Enemies -->
-  <script src="./src/enemies/Enemy.js"></script>
-  <script src="./src/enemies/Bat.js"></script>
+    <!-- Buttons -->
+    <script src="./src/buttons/Button.js"></script>
+    <script src="./src/buttons/TextButton.js"></script>
+    <script src="./src/buttons/ReturnButton.js"></script>
+    <script src="./src/buttons/SoundButton.js"></script>
 
-  <!-- Obstacles -->
-  <script src="./src/obstacles/Obstacle.js"></script>
-  <script src="./src/obstacles/Wagon.js"></script>
-  <script src="./src/obstacles/Crate.js"></script>
-  <script src="./src/obstacles/Barrel.js"></script>
-  <script src="./src/obstacles/Sign.js"></script>
-  <script src="./src/obstacles/Floor.js"></script>
-  <script src="./src/obstacles/Well.js"></script>
-  <script src="./src/obstacles/PlatformShort.js"></script>
-  <script src="./src/obstacles/PlatformTall.js"></script>
+    <!-- Attacks -->
+    <script src="./src/attacks/SlashAttack.js"></script>
 
-  <!-- Other game classes -->
-  <script src="./src/other/Heart.js"></script>
-  <script src="./src/other/Coin.js"></script>
+    <!-- Enemies -->
+    <script src="./src/enemies/Enemy.js"></script>
+    <script src="./src/enemies/Bat.js"></script>
 
-  <script src="./src/sketch.js"></script>
+    <!-- Obstacles -->
+    <script src="./src/obstacles/Obstacle.js"></script>
+    <script src="./src/obstacles/Wagon.js"></script>
+    <script src="./src/obstacles/Crate.js"></script>
+    <script src="./src/obstacles/Barrel.js"></script>
+    <script src="./src/obstacles/Sign.js"></script>
+    <script src="./src/obstacles/Floor.js"></script>
+    <script src="./src/obstacles/Well.js"></script>
+    <script src="./src/obstacles/PlatformShort.js"></script>
+    <script src="./src/obstacles/PlatformTall.js"></script>
+
+    <!-- Other game classes -->
+    <script src="./src/other/Heart.js"></script>
+    <script src="./src/other/Coin.js"></script>
+
+    <script id="game" src="./src/sketch.js"></script>
+  </main>
+
+  <footer id="footer">
+    <p class="left"> <a href="/index.html">Home</a> <span>|</span> <a href="/credits.html">Credits</a></p>
+    <p class="right">2022.</a></p>
+  </footer>
 </body>
 
 </html>

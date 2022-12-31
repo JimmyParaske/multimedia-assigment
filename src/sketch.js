@@ -166,15 +166,15 @@ function setupBackground() {
 
 function setupButtons() {
   playButton = new TextButton(width / 2, height / 2, "New Game");
-  optionsButton = new TextButton(width / 2, playButton.getY() + 65, "Options");
-  creditsButton = new TextButton(width / 2, optionsButton.getY() + 65, "Credits");
-  exitButton = new TextButton(width / 2, creditsButton.getY() + 65, "Exit");
+  optionsButton = new TextButton(playButton.getX(), playButton.getY() + 65, "Options");
+  creditsButton = new TextButton(playButton.getX(), optionsButton.getY() + 65, "Credits");
+  exitButton = new TextButton(playButton.getX(), creditsButton.getY() + 65, "Exit");
 
-  skinButton = new TextButton(width / 2, height / 2, "Change Skin");
+  skinButton = new TextButton(playButton.getX(), playButton.getY(), "Change Skin");
   soundButton = new SoundButton(width - 65, 65);
   returnButton = new ReturnButton(65, 65);
 
-  replayButton = new TextButton(width / 2, height / 2, "Play Again");
+  replayButton = new TextButton(playButton.getX(), playButton.getY(), "Play Again");
 }
 
 function setupPlayer() {

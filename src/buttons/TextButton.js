@@ -11,7 +11,7 @@ class TextButton extends Button {
   display() {
     this.button.show();
     this.button.size(this.width, this.height);
-    this.button.position(this.x - this.width / 2, this.y - this.height / 2);
+    this.button.position(this.x - this.width / 2, (this.y - this.height / 2) + 62);
     this.button.style("font-family", "Comic Sans MS");
     this.button.style("font-size", "30px");
     this.button.style("color", color(161, 97, 82));
