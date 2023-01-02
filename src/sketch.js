@@ -6,6 +6,8 @@ let hop = -8;
 let fallingSpeed = 0.2;
 let minHeight = 465;
 
+let coins_collected = 0;
+
 // Skins
 var idleLeft = 'idleLeftBlue';
 var idleRight = 'idleRightBlue';
@@ -503,7 +505,7 @@ function drawGame() {
   }
 
   jump(geralt);
-
+ 
   if (geralt.x >= -3200 && geralt.x <= 4000) {
     camera.x = geralt.x + 50;
     kardia.setX(geralt.x - 320);
@@ -609,6 +611,7 @@ function playAgain() {
 
   // 
   life_counter = 0;
+  coins_collected =0;
 
   // Change stage to "playing"
   stage = "playing";
@@ -1021,6 +1024,10 @@ function jump(sprite) {
     sprite.vel.y = 0;
   }
 }
+
+
+
+
 
 function slashCollisionObjects() {
   if (slash_attack.collided(obstacles)) {
@@ -2113,21 +2120,25 @@ function removeCoins() {
   if (geralt.overlaps(coin1.getSprite())) {
     coin1.getSprite().remove();
     coin_sound.play();
+    coins_collected++;
   }
 
   if (geralt.overlaps(coin2.getSprite())) {
     coin2.getSprite().remove();
     coin_sound.play();
+    coins_collected++;
   }
 
   if (geralt.overlaps(coin3.getSprite())) {
     coin3.getSprite().remove();
     coin_sound.play();
+    coins_collected++;
   }
 
   if (geralt.overlaps(coin4.getSprite())) {
     coin4.getSprite().remove();
     coin_sound.play();
+    coins_collected++;
   }
 
   if (geralt.overlaps(coin5.getSprite())) {
@@ -2138,173 +2149,207 @@ function removeCoins() {
   if (geralt.overlaps(coin6.getSprite())) {
     coin6.getSprite().remove();
     coin_sound.play();
+    coins_collected++;
   }
 
   if (geralt.overlaps(coin7.getSprite())) {
     coin7.getSprite().remove();
     coin_sound.play();
+    coins_collected++;
   }
 
   if (geralt.overlaps(coin8.getSprite())) {
     coin8.getSprite().remove();
     coin_sound.play();
+    coins_collected++;
   }
 
   if (geralt.overlaps(coin2_1.getSprite())) {
     coin2_1.getSprite().remove();
     coin_sound.play();
+    coins_collected++;
   }
 
   if (geralt.overlaps(coin2_2.getSprite())) {
     coin2_2.getSprite().remove();
     coin_sound.play();
+    coins_collected++;
   }
 
   if (geralt.overlaps(coin2_3.getSprite())) {
     coin2_3.getSprite().remove();
     coin_sound.play();
+    coins_collected++;
   }
 
   if (geralt.overlaps(coin2_4.getSprite())) {
     coin2_4.getSprite().remove();
     coin_sound.play();
+    coins_collected++;
   }
 
   if (geralt.overlaps(coin2_5.getSprite())) {
     coin2_5.getSprite().remove();
     coin_sound.play();
+    coins_collected++;
   }
 
 
   if (slash_attack.overlaps(coin1.getSprite())) {
     coin1.getSprite().remove();
     coin_sound.play();
+    coins_collected++;
   }
 
   if (slash_attack.overlaps(coin2.getSprite())) {
     coin2.getSprite().remove();
     coin_sound.play();
+    coins_collected++;
   }
 
   if (slash_attack.overlaps(coin3.getSprite())) {
     coin3.getSprite().remove();
     coin_sound.play();
+    coins_collected++;
   }
 
   if (slash_attack.overlaps(coin4.getSprite())) {
     coin4.getSprite().remove();
     coin_sound.play();
+    coins_collected++;
   }
 
   if (slash_attack.overlaps(coin5.getSprite())) {
     coin5.getSprite().remove();
     coin_sound.play();
+    coins_collected++;
   }
 
   if (slash_attack.overlaps(coin6.getSprite())) {
     coin6.getSprite().remove();
     coin_sound.play();
+    coins_collected++;
   }
 
   if (slash_attack.overlaps(coin7.getSprite())) {
     coin7.getSprite().remove();
     coin_sound.play();
+    coins_collected++;
   }
 
   if (slash_attack.overlaps(coin8.getSprite())) {
     coin8.getSprite().remove();
     coin_sound.play();
+    coins_collected++;
   }
 
   if (slash_attack.overlaps(coin2_1.getSprite())) {
     coin2_1.getSprite().remove();
     coin_sound.play();
+    coins_collected++;
   }
 
   if (slash_attack.overlaps(coin2_2.getSprite())) {
     coin2_2.getSprite().remove();
     coin_sound.play();
+    coins_collected++;
   }
 
   if (slash_attack.overlaps(coin2_3.getSprite())) {
     coin2_3.getSprite().remove();
     coin_sound.play();
+    coins_collected++;
   }
 
   if (slash_attack.overlaps(coin2_4.getSprite())) {
     coin2_4.getSprite().remove();
     coin_sound.play();
+    coins_collected++;
   }
 
   if (slash_attack.overlaps(coin2_5.getSprite())) {
     coin2_5.getSprite().remove();
     coin_sound.play();
+    coins_collected++;
   }
 
 
   if (slash_attack2.overlaps(coin1.getSprite())) {
     coin1.getSprite().remove();
     coin_sound.play();
+    coins_collected++;
   }
 
   if (slash_attack2.overlaps(coin2.getSprite())) {
     coin2.getSprite().remove();
     coin_sound.play();
+    coins_collected++;
   }
 
   if (slash_attack2.overlaps(coin3.getSprite())) {
     coin3.getSprite().remove();
     coin_sound.play();
+    coins_collected++;
   }
 
   if (slash_attack2.overlaps(coin4.getSprite())) {
     coin4.getSprite().remove();
     coin_sound.play();
+    coins_collected++;
   }
 
   if (slash_attack2.overlaps(coin5.getSprite())) {
     coin5.getSprite().remove();
     coin_sound.play();
+    coins_collected++;
   }
 
   if (slash_attack2.overlaps(coin6.getSprite())) {
     coin6.getSprite().remove();
     coin_sound.play();
+    coins_collected++;
   }
 
   if (slash_attack2.overlaps(coin7.getSprite())) {
     coin7.getSprite().remove();
     coin_sound.play();
+    coins_collected++;
   }
 
   if (slash_attack2.overlaps(coin8.getSprite())) {
     coin8.getSprite().remove();
     coin_sound.play();
+    coins_collected++;
   }
 
   if (slash_attack2.overlaps(coin2_1.getSprite())) {
     coin2_1.getSprite().remove();
     coin_sound.play();
+    coins_collected++;
   }
 
   if (slash_attack2.overlaps(coin2_2.getSprite())) {
     coin2_2.getSprite().remove();
     coin_sound.play();
+    coins_collected++;
   }
 
   if (slash_attack2.overlaps(coin2_3.getSprite())) {
     coin2_3.getSprite().remove();
     coin_sound.play();
+    coins_collected++;
   }
 
   if (slash_attack2.overlaps(coin2_4.getSprite())) {
     coin2_4.getSprite().remove();
     coin_sound.play();
+    coins_collected++;
   }
 
   if (slash_attack2.overlaps(coin2_5.getSprite())) {
     coin2_5.getSprite().remove();
     coin_sound.play();
+    coins_collected++;
   }
 }
 
