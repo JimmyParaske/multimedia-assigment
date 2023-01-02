@@ -135,8 +135,8 @@ function preloadEnemies() {
   skeletonLeft = loadAnimation('./assets/images/Skeleton/WalkLeft.png', { size: [270, 270], frames: 4 });
   skeletonRight = loadAnimation('./assets/images/Skeleton/WalkRight.png', { size: [270, 270], frames: 4 });
 
-  batLeft = loadAnimation('./assets/images/bat_right.png', { size: [60.25, 64], frames: 4 });
-  batRight = loadAnimation('./assets/images/bat_left.png', { size: [60.25, 64], frames: 4 });
+  batLeft = loadAnimation('./assets/images/Bat/right.png', { size: [60.25, 64], frames: 4 });
+  batRight = loadAnimation('./assets/images/Bat/left.png', { size: [60.25, 64], frames: 4 });
 }
 
 function preloadAttacks() {

@@ -13,7 +13,7 @@ a:visited {
 }
 
 #navigation {
-    background: wheat;
+    background: purple;
 }
 
 #navigation .right {
@@ -27,7 +27,7 @@ a:visited {
 }
 
 #navigation ul .active {
-    background: red;
+    background: brown;
 }
 
 #navigation ul li {
@@ -35,7 +35,7 @@ a:visited {
 }
 
 #navigation ul li:hover {
-    background: #fff;
+    background: black;
     color: #8b0000;
 }
 
@@ -44,21 +44,11 @@ a:visited {
     line-height: 64px;
     text-decoration: none;
     padding: 0 15px;
-    color: black;
+    color: white;
 }
 
 #main {
     text-align: center;
-}
-
-#game {
-    display: flex;
-
-    /* This centers our sketch horizontally. */
-    justify-content: center;
-
-    /* This centers our sketch vertically. */
-    align-items: center;
 }
 
 #footer {
@@ -66,20 +56,20 @@ a:visited {
     position: absolute;
     bottom: 0;
     width: 100%;
-    background: #ebebeb;
+    background: purple;
     line-height: 50px;
-    color: #7b7b7b;
+    color: white;
 }
 
 #footer a {
-    color: #7b7b7b;
+    color: white;
     text-decoration: none;
     padding-left: 10px;
     padding-right: 10px;
 }
 
 #footer a:hover {
-    color: #000;
+    color: orange;
 }
 
 #footer .left {
@@ -90,15 +80,85 @@ a:visited {
     float: right;
 }
 
-.button {
-    border: none;
-    color: white;
-    background-color: #4CAF50;
-    padding: 15px 32px;
+#title {
+    font-size: 40px;
+    margin-top: 2%;
+}
+
+/* Index */
+#preview {
     text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
+    margin-left: 1%;
+    margin-right: 1%;
+    margin-top: 3%;
+}
+
+#preview li {
+    display: inline;
+    float: left;
+    margin-left: 10px;
+}
+
+#preview li img {
+    width: 450px;
+    height: 285px;
+}
+
+#button {
+    border: none;
+    color: orange;
+    background-color: purple;
+    padding: 20px 50px;
+    font-size: 20px;
     cursor: pointer;
+    margin-top: 3%;
+}
+
+/* Credits */
+#cards {
+    text-align: center;
+    margin-left: 1%;
+    margin-right: 1%;
+    margin-top: 1%;
+}
+
+.card {
+    display: inline-block;
+    width: auto;
+    background-color: wheat;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    margin: 8px;
+}
+
+.container {
+    padding: 0 16px;
+}
+
+.container::after,
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.card img {
+    width: 200px;
+    height: 200px;
+}
+
+.card button {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    color: white;
+    background-color: purple;
+    text-align: center;
+    cursor: pointer;
+    width: 50%;
+    margin-top: 5px;
+}
+
+.card button:hover {
+    background-color: #555;
 }
