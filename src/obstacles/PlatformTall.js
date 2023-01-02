@@ -13,10 +13,10 @@ class PlatformTall {
         this.sprite.visible = false;
 
         this.topSprite.rotationLock = true;
-        this.topSprite.layer = 1;
+        this.topSprite.layer = 0;
 
         this.sprite.rotationLock = true;
-        this.sprite.layer = 1;
+        this.sprite.layer = 0;
     }
 
     display() {
