@@ -12,7 +12,10 @@ class PlatformTall {
         this.sprite = createSprite(this.x, this.y, this.width, this.height);
         this.sprite.visible = false;
 
+        this.topSprite.rotationLock = true;
         this.topSprite.layer = 1;
+
+        this.sprite.rotationLock = true;
         this.sprite.layer = 1;
     }
 
@@ -21,7 +24,6 @@ class PlatformTall {
         this.sprite.collider = 'none';
 
         this.sprite.addImage(this.image);
-
         this.sprite.visible = true;
 
         this.topSprite.y = (this.y - 112);
@@ -29,7 +31,7 @@ class PlatformTall {
     }
 
     getSprite() {
-        return this.sprite;
+        return this.topSprite;
     }
 
     getX() {
