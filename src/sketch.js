@@ -7,6 +7,8 @@ let fallingSpeed = 0.2;
 let minHeight = 465;
 
 let coins_collected = 0;
+let enemies_dead = 0;
+
 
 // Skins
 var idleLeft = 'idleLeftBlue';
@@ -94,6 +96,7 @@ function preloadSounds() {
   geralt_hit = loadSound('./assets/sounds/geralt_hit');
   geralt_death = loadSound('./assets/sounds/geralt_death');
   coin_sound = loadSound('./assets/sounds/mario_coin_sound');
+  coin_sound.setVolume(0.2);
   background_sound = loadSound('./assets/sounds/background_music');
   enemy_hit = loadSound('./assets/sounds/enemy_hit');
   goblin_death = loadSound('./assets/sounds/goblin_death');
@@ -489,10 +492,10 @@ function drawGame() {
   keyPresses();
   attackStop();
   enemyMovementAndAttackCollision();
-
   removeCoins();
   spawnAttack();
   slashCollisionObjects();
+  finished();
   death();
 
   // Player's Boundaries
@@ -570,6 +573,7 @@ function mouseClicked() {
   if ((stage == "options") && (returnButton.clicked())) {
     back();
   }
+
 }
 
 function keyPresses() {
@@ -1742,6 +1746,7 @@ function enemyMovementAndAttackCollision() {
     if (counter_attack[0] == 2) {
       enemy1.getSprite().remove();
       goblin_death.play();
+      enemies_dead++;
     }
   }
 
@@ -1754,6 +1759,7 @@ function enemyMovementAndAttackCollision() {
     if (counter_attack[1] == 2) {
       enemy2.getSprite().remove();
       goblin_death.play();
+      enemies_dead++;
     }
   }
 
@@ -1766,6 +1772,7 @@ function enemyMovementAndAttackCollision() {
     if (counter_attack[3] == 2) {
       enemy3.getSprite().remove();
       bat_death.play();
+      enemies_dead++;
     }
   }
 
@@ -1778,6 +1785,7 @@ function enemyMovementAndAttackCollision() {
     if (counter_attack[4] == 2) {
       enemy4.getSprite().remove();
       goblin_death.play();
+      enemies_dead++;
     }
   }
 
@@ -1790,6 +1798,7 @@ function enemyMovementAndAttackCollision() {
     if (counter_attack[5] == 2) {
       enemy5.getSprite().remove();
       goblin_death.play();
+      enemies_dead++;
     }
   }
 
@@ -1802,6 +1811,7 @@ function enemyMovementAndAttackCollision() {
     if (counter_attack[6] == 2) {
       enemy6.getSprite().remove();
       goblin_death.play();
+      enemies_dead++;
     }
   }
 
@@ -1814,6 +1824,7 @@ function enemyMovementAndAttackCollision() {
     if (counter_attack[7] == 2) {
       enemy7.getSprite().remove();
       bat_death.play();
+      enemies_dead++;
     }
   }
 
@@ -1826,6 +1837,7 @@ function enemyMovementAndAttackCollision() {
     if (counter_attack[8] == 2) {
       enemy8.getSprite().remove();
       goblin_death.play();
+      enemies_dead++;
     }
   }
 
@@ -1838,6 +1850,7 @@ function enemyMovementAndAttackCollision() {
     if (counter_attack[9] == 2) {
       enemy9.getSprite().remove();
       bat_death.play();
+      enemies_dead++;
     }
   }
 
@@ -1850,6 +1863,7 @@ function enemyMovementAndAttackCollision() {
     if (counter_attack_skeleton[0] == 4) {
       enemy10.getSprite().remove();
       skeleton_death.play();
+      enemies_dead++;
     }
   }
 
@@ -1862,6 +1876,7 @@ function enemyMovementAndAttackCollision() {
     if (counter_attack[2] == 2) {
       enemy11.getSprite().remove();
       goblin_death.play();
+      enemies_dead++;
     }
   }
 
@@ -1874,6 +1889,7 @@ function enemyMovementAndAttackCollision() {
     if (counter_attack_skeleton[1] == 4) {
       enemy12.getSprite().remove();
       skeleton_death.play();
+      enemies_dead++;
     }
   }
 
@@ -1886,6 +1902,7 @@ function enemyMovementAndAttackCollision() {
     if (counter_attack[0] == 2) {
       enemy1.getSprite().remove();
       goblin_death.play();
+      enemies_dead++;
     }
   }
 
@@ -1898,6 +1915,7 @@ function enemyMovementAndAttackCollision() {
     if (counter_attack[1] == 2) {
       enemy2.getSprite().remove();
       goblin_death.play();
+      enemies_dead++;
     }
   }
 
@@ -1910,6 +1928,7 @@ function enemyMovementAndAttackCollision() {
     if (counter_attack[3] == 2) {
       enemy3.getSprite().remove();
       bat_death.play();
+      enemies_dead++;
     }
   }
 
@@ -1922,6 +1941,7 @@ function enemyMovementAndAttackCollision() {
     if (counter_attack[4] == 2) {
       enemy4.getSprite().remove();
       goblin_death.play();
+      enemies_dead++;
     }
   }
 
@@ -1934,6 +1954,7 @@ function enemyMovementAndAttackCollision() {
     if (counter_attack[5] == 2) {
       enemy5.getSprite().remove();
       goblin_death.play();
+      enemies_dead++;
     }
   }
 
@@ -1946,6 +1967,7 @@ function enemyMovementAndAttackCollision() {
     if (counter_attack[6] == 2) {
       enemy6.getSprite().remove();
       goblin_death.play();
+      enemies_dead++;
     }
   }
 
@@ -1958,6 +1980,7 @@ function enemyMovementAndAttackCollision() {
     if (counter_attack[7] == 2) {
       enemy7.getSprite().remove();
       goblin_death.play();
+      enemies_dead++;
     }
   }
 
@@ -1970,6 +1993,7 @@ function enemyMovementAndAttackCollision() {
     if (counter_attack[8] == 2) {
       enemy8.getSprite().remove();
       goblin_death.play();
+      enemies_dead++;
     }
   }
 
@@ -1982,6 +2006,7 @@ function enemyMovementAndAttackCollision() {
     if (counter_attack[9] == 2) {
       enemy9.getSprite().remove();
       goblin_death.play();
+      enemies_dead++;
     }
   }
 
@@ -1994,6 +2019,7 @@ function enemyMovementAndAttackCollision() {
     if (counter_attack_skeleton[0] == 4) {
       enemy10.getSprite().remove();
       skeleton_death.play();
+      enemies_dead++;
     }
   }
 
@@ -2006,6 +2032,7 @@ function enemyMovementAndAttackCollision() {
     if (counter_attack[2] == 2) {
       enemy11.getSprite().remove();
       goblin_death.play();
+      enemies_dead++;
     }
   }
 
@@ -2018,6 +2045,7 @@ function enemyMovementAndAttackCollision() {
     if (counter_attack_skeleton[1] == 4) {
       enemy12.getSprite().remove();
       skeleton_death.play();
+      enemies_dead++;
     }
   }
 
@@ -2026,6 +2054,7 @@ function enemyMovementAndAttackCollision() {
     slash_attack3.remove();
     attackingV = false;
     goblin_death.play();
+    enemies_dead++;
   }
 
   if (slash_attack3.overlaps(enemy2.getSprite())) {
@@ -2033,6 +2062,7 @@ function enemyMovementAndAttackCollision() {
     slash_attack3.remove();
     attackingV = false;
     goblin_death.play();
+    enemies_dead++;
   }
 
   if (slash_attack3.overlaps(enemy3.getSprite())) {
@@ -2040,6 +2070,7 @@ function enemyMovementAndAttackCollision() {
     slash_attack3.remove();
     attackingV = false;
     bat_death.play();
+    enemies_dead++;
   }
 
   if (slash_attack3.overlaps(enemy4.getSprite())) {
@@ -2047,6 +2078,7 @@ function enemyMovementAndAttackCollision() {
     slash_attack3.remove();
     attackingV = false;
     goblin_death.play();
+    enemies_dead++;
   }
 
   if (slash_attack3.overlaps(enemy5.getSprite())) {
@@ -2054,6 +2086,7 @@ function enemyMovementAndAttackCollision() {
     slash_attack3.remove();
     attackingV = false;
     goblin_death.play();
+    enemies_dead++;
   }
 
   if (slash_attack3.overlaps(enemy6.getSprite())) {
@@ -2061,6 +2094,7 @@ function enemyMovementAndAttackCollision() {
     slash_attack3.remove();
     attackingV = false;
     goblin_death.play();
+    enemies_dead++;
   }
 
   if (slash_attack3.overlaps(enemy7.getSprite())) {
@@ -2068,6 +2102,7 @@ function enemyMovementAndAttackCollision() {
     slash_attack3.remove();
     attackingV = false;
     goblin_death.play();
+    enemies_dead++;
   }
 
   if (slash_attack3.overlaps(enemy8.getSprite())) {
@@ -2075,6 +2110,7 @@ function enemyMovementAndAttackCollision() {
     slash_attack3.remove();
     attackingV = false;
     goblin_death.play();
+    enemies_dead++;
   }
 
   if (slash_attack3.overlaps(enemy9.getSprite())) {
@@ -2082,6 +2118,7 @@ function enemyMovementAndAttackCollision() {
     slash_attack3.remove();
     attackingV = false;
     goblin_death.play();
+    enemies_dead++;
   }
 
   if (slash_attack3.overlaps(enemy10.getSprite())) {
@@ -2089,6 +2126,7 @@ function enemyMovementAndAttackCollision() {
     slash_attack3.remove();
     attackingV = false;
     skeleton_death.play();
+    enemies_dead++;
   }
 
   if (slash_attack3.overlaps(enemy11.getSprite())) {
@@ -2096,6 +2134,7 @@ function enemyMovementAndAttackCollision() {
     slash_attack3.remove();
     attackingV = false;
     goblin_death.play();
+    enemies_dead++;
   }
 
   if (slash_attack3.overlaps(enemy12.getSprite())) {
@@ -2103,6 +2142,7 @@ function enemyMovementAndAttackCollision() {
     slash_attack3.remove();
     attackingV = false;
     skeleton_death.play();
+    enemies_dead++;
   }
 }
 
@@ -2115,6 +2155,18 @@ function death() {
     stage = "endMenu";
   }
 }
+
+function finished(){
+ 
+  if(coins_collected == 13 && enemies_dead == 12 ){
+    for (let i = allSprites.length; i--;) {
+      allSprites[i].remove();
+    }
+    background_sound.stop();
+    stage = "endMenu";
+  }
+}
+
 
 function removeCoins() {
   if (geralt.overlaps(coin1.getSprite())) {
@@ -2144,6 +2196,7 @@ function removeCoins() {
   if (geralt.overlaps(coin5.getSprite())) {
     coin5.getSprite().remove();
     coin_sound.play();
+    coins_collected++;
   }
 
   if (geralt.overlaps(coin6.getSprite())) {
