@@ -39,6 +39,6 @@ class PlatformShort {
     }
 
     getY() {
-        return this.sprite.y;
+        return this.topSprite.y;
     }
 }
