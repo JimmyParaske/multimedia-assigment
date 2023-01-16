@@ -165,7 +165,7 @@ function setupBackground() {
 
   // Music
   background_sound.play();
-  background_sound.setVolume(0.2);
+  background_sound.setVolume(0.1);
   background_sound.loop();
 }
 
